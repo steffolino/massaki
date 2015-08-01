@@ -7,21 +7,51 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Rechnungstool für Massak',
+	'name'=>'My Web Application',
+	'name'=>'*Rechnungstool*',
+	'defaultController' => 'site/index',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-	'aliases' => array(
-       
-        'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change this if necessary
+	
+
+	//added by stef
+	/*Requires a User to Log-In for viewing pages
+	'behaviors' => array(
+		'onBeginRequest' => array(
+			'class' => 'application.components.RequireLogin'
+		)
+	),
+	*/
+	//yiistrap stuff
+    // path aliases
+    'aliases' => array(
+        // yiistrap configuration
+        'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change if necessary
+        // yiiwheels configuration
+        //'yiiwheels' => realpath(__DIR__ . '/../extensions/yiiwheels'), // change if necessary		
+		'vendor.twbs.bootstrap.dist' => realpath(__DIR__ . '/../extensions/bootstrap'),
     ),
+
+	
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		
-	),
 
+		//yiistrap
+        'bootstrap.helpers.TbHtml',
+        //'bootstrap.helpers.TbApi',
+        'bootstrap.helpers.TbArray',
+		//'bootstrap.helpers.*',
+		//'bootstrap.components.*',
+		//'bootstrap.widgets.TbBreadcrumb',
+		'bootstrap.behaviors.TbWidget',
+		'bootstrap.widgets.TbActiveForm',
+		'bootstrap.assets.css.*',
+		'bootstrap.assets.js.*',
+	),
+	
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		/*
@@ -32,18 +62,28 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 		*/
+		//yiistrap
+		'gii' => array(
+            'generatorPaths' => array('bootstrap.gii'),
+        ),
 	),
 
 	// application components
 	'components'=>array(
-
+	
+	    // yiistrap configuration
+        'bootstrap' => array(
+            'class' => 'bootstrap.components.TbApi',
+        ),
+        // yiiwheels configuration
+        /*'yiiwheels' => array(
+            'class' => 'yiiwheels.YiiWheels',   
+        ),
+		*/
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		 'bootstrap' => array(
-            'class' => 'bootstrap.components.bootstrap',   
-        ),
 
 		// uncomment the following to enable URLs in path-format
 		/*
@@ -74,10 +114,12 @@ return array(
 				),
 				// uncomment the following to show log messages on web pages
 				/*
+				
 				array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
+				
 			),
 		),
 
