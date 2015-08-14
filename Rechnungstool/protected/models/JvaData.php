@@ -5,7 +5,7 @@ ActiveRecord Class to represent JVAs
 
 ***/
 
-class Jva_data extends CActiveRecord {
+class JvaData extends CActiveRecord {
 
 	//MUST HAVE
 	public static function model($className=__CLASS__) {
@@ -17,7 +17,8 @@ class Jva_data extends CActiveRecord {
 		
 		//EXAMPLE: 'VarName'=>array('RelationsTyp', 'KlassenName', 'FremdSchlüssel', ...Zusätzliche Optionen)
         return array(
-			'columDefinitions' => array(self::HAS_ONE, 'Colum_Definitons', array('jvaColConfig'=>'colDefId')),
+			//'colDef' => array(self::HAS_ONE, 'ColDef', array('jvaColConfig'=>'colDefId')),
+			'defaultColConfig' => array(self::HAS_ONE, 'DefaultColConfig', array('colConfigId'=>'jvaColConfig')),
 			//'contacts' => array(self::HAS_MANY, 'UserContacts', array('userID'=>'userID')),
         );
     }
