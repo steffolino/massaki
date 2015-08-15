@@ -245,6 +245,7 @@ CREATE TABLE `jvadata` (
   `jvaFooter` text,
   `jvaCustNum` varchar(45) DEFAULT NULL,
   `jvaCustNumDesc` varchar(45) DEFAULT NULL,
+  `jvaDeactivated` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`jvaDataId`),
   KEY `jvaColConfig_idx` (`jvaColConfig`),
   CONSTRAINT `jvaColConfig` FOREIGN KEY (`jvaColConfig`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -257,7 +258,7 @@ CREATE TABLE `jvadata` (
 
 LOCK TABLES `jvadata` WRITE;
 /*!40000 ALTER TABLE `jvadata` DISABLE KEYS */;
-INSERT INTO `jvadata` VALUES (0,'JVA Ebing','Am Schwana 3 96147 Rattelsdorf',1,'IK','Herzlichst, Ihr Bjoern Zenkone',NULL,NULL),(9,'JVA Hauptsi','Hauptsi 30 96052 Bamberg',8,'drunter','Adela Tschuessikowski!','','');
+INSERT INTO `jvadata` VALUES (0,'JVA Ebing','Am Schwana 3 96147 Rattelsdorf',1,'IK','Herzlichst, Ihr Bjoern Zenkone',NULL,NULL,NULL),(9,'JVA Hauptsi','Hauptsi 30 96052 Bamberg',8,'drunter','Adela Tschuessikowski!','','',NULL);
 /*!40000 ALTER TABLE `jvadata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,4 +319,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-15 16:38:29
+-- Dump completed on 2015-08-15 18:24:56

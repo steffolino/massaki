@@ -65,6 +65,30 @@ class JvaModel extends CFormModel
 		return DefaultColConfig::model()->findByPK($jva->jvaColConfig);
 	}
 	
+	public function activateJvaByName($name,$ext){
+		$jva = $this->getJvaByName($name,$ext);
+		$jva->deactivated = "n";
+		$jva->save();
+	}
+	
+	public function activateJvaByCustNum($custNum){
+		$jva = $this->getJvaByCustNum($custNum);
+		$jva->deactivated = "n";
+		$jva->save();
+	}
+	public function deactivateJvaByName($name,$ext){
+		$jva = $this->getJvaByName($name,$ext);
+		$jva->deactivated = "y";
+		$jva->save();
+		
+	}
+	
+	public function deactivateJvaByCustNum($custNum){
+		$jva = $this->getJvaByCustNum($custNum);
+		$jva->deactivated = "y";
+		$jva->save();
+	}
+	
 	public function deleteJvaById($id){
 		$jva = JvaData::model()->findByPK($id);
 		$colConfigId = $jva->jvaColConfig;
