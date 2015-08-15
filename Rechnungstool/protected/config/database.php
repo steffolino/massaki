@@ -8,7 +8,8 @@ return array(
 	'emulatePrepare' => true,
 	'username' => 'root',
 	'password' => '',
-	'charset' => 'utf8',	
+	'charset' => 'utf8',
+	'schemaCachingDuration' =>'10',
 	
 	/*
 	'connectionString' => 'mysql:host=mysql1.000webhost.com;dbname=a7235298_rechnun',
