@@ -20,45 +20,16 @@ class SiteController extends Controller
 			),
 		);
 	}
-
+	
+	
+	
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
 	public function actionIndex()
 	{
-		$jva = JvaData::model()
-		->with(
-		'defaultColConfig',
-		'defaultColConfig.colDef1',
-		'defaultColConfig.colDef2',
-		'defaultColConfig.colDef3',
-		'defaultColConfig.colDef4',
-		'defaultColConfig.colDef5',
-		'defaultColConfig.colDef6',
-		'defaultColConfig.colDef7',
-		'defaultColConfig.colDef8',
-		'defaultColConfig.colDef9',
-		'defaultColConfig.colDef10',
-		'defaultColConfig.colDef11',
-		'defaultColConfig.colDef12'
-		)
-		->find(
-			array(
-						'condition'=>
-							't.jvaDataId=:jvaDataId',
-						'params'=>array(
-							':jvaDataId'=>0
-						)					
-				)
-			);
-
-		echo "<pre>";
-		var_dump($jva);
-		echo $jva->defaultColConfig->colDef1->colName;
-		echo "</pre>";
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
+		
 		$this->render('index');
 	}
 
