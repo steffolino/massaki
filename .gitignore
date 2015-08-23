@@ -3,3 +3,6 @@ Rechnungstool/assets/*
 
 #demos
 Rechnungstool/demos/*
+
+#application.log
+Rechnungstool/protected/runtime/*
