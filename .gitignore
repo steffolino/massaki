@@ -1,8 +1,16 @@
-#assets
-Rechnungstool/assets/*
-
 #demos
 Rechnungstool/demos/*
 
 #application.log
 Rechnungstool/protected/runtime/*
+
+#database.php
+Rechnungstool/protected/config/database.php
+
+#yii gitignore template
+Rechnungstool/assets/*
+!Rechnungstool/assets/.gitignore
+Rechnungstool/protected/runtime/*
+!Rechnungstool/protected/runtime/.gitignore
+Rechnungstool/protected/data/*.db
+Rechnungstool/themes/classic/views/
