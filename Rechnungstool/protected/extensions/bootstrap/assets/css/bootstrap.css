@@ -6356,3 +6356,13 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+/*CUSTOM CSS */
+
+#content {
+	margin-top: 50px;
+}
+
+body {
+	overflow-x: hidden;
+}
