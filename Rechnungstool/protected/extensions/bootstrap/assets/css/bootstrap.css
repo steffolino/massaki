@@ -1266,6 +1266,8 @@ dd {
     text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
+	/* CUSTOM ADDED */
+	margin-bottom:10px;
   }
   .dl-horizontal dd {
     margin-left: 180px;
@@ -3502,7 +3504,7 @@ tbody.collapse.in {
 .btn-group-justified > .btn-group {
   display: table-cell;
   float: none;
-  width: 1%;
+  /* width: 1%;  COMMENT: RUINS LAYOUT - NO IDEA WHY THIS EXISTS*/
 }
 .btn-group-justified > .btn-group .btn {
   width: 100%;
@@ -4673,7 +4675,7 @@ a.list-group-item.active > .badge,
 }
 @media screen and (min-width: 768px) {
   .jumbotron {
-    padding: 48px 0;
+    padding: 48px 24px;
   }
   .container .jumbotron {
     padding-right: 60px;
