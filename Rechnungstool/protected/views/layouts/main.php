@@ -9,18 +9,10 @@
 	<?php 	
 		//yiistrap stuff
 		Yii::app()->bootstrap->register(); 
-	?>
-	<!-- blueprint CSS framework -->
-	<?php /*
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print">
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
-	<![endif]-->
+		$baseUrl = Yii::app()->baseUrl; 
+		$cs = Yii::app()->getClientScript();
+		$cs->registerCssFile($baseUrl.'/css/font-awesome.min.css');
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css">
-	*/
 	?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -29,38 +21,37 @@
 <body>
 
 <div class="container" id="page">
-
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
-	<div id="header">
-		<?php 
-		/*<div id="logo"><?php echo CHtml::encode(Yii::app()->name); 
-		?>
-		</div> 
-		*/
-		?>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		
-		<?php 
-		
+
+	<?php
 		$this->widget('bootstrap.widgets.TbNavbar', array(
 		'color' => TbHtml::NAVBAR_COLOR_INVERSE,
-        //'brandLabel' => 'Title',
-        'display' => null, // default is static to top
         'items' => array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-         
+				array(
+					'class' => 'bootstrap.widgets.TbNav',
+					'items' => array(
+//						array('label'=>'<span class="glyphicon glyphicon-shopping-cart">', 'url'=>array('/site/index')),
+//						array('label' => Html::tag('span','','class' => 'glyphicon glyphicon-lock')),
+						array('label'=>'JVA', 'url'=>array('/jva/listJVAs'), 'icon' => 'glyphicon glyphicon-shopping-cart'),
+						array('label'=>'Rechnungen', 'url'=>array('/invoice/invoicesth'), 'icon' => 'glyphicon glyphicon-file'),
+						array('label'=>'Suchen', 'url'=>array('/search/search'), 'icon' => 'glyphicon glyphicon-search'),
+//						array('label'=>'Contact', 'url'=>array('/site/contact')),
+//						array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+//						array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+					),
+				),
 		)
 		)); ?>
 
   
+	</div><!-- mainmenu -->
+	
+			),
+		)); 
+		?>
 	</div><!-- mainmenu -->
 
 	<?php echo $content; ?>
@@ -68,12 +59,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
 		Copyright &copy; <?php echo date('Y'); ?> by Stefan Stretz - Medientechnik - Hu ha ha.<br/>
-
-
 	</div><!-- footer -->
 
 </div><!-- page -->
