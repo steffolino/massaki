@@ -75,6 +75,7 @@ return array(
         'bootstrap' => array(
             'class' => 'bootstrap.components.TbApi',
         ),
+		
         // yiiwheels configuration
         /*'yiiwheels' => array(
             'class' => 'yiiwheels.YiiWheels',   

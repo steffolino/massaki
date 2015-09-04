@@ -7,6 +7,16 @@ class JvaModel extends CFormModel
 	public $allColNames;
 	public $allCols;
 	
+	public $jvaName;
+	public $jvaNameExt;
+	public $jvaAddress;
+    public $jvaColConfig;
+    public $jvaFooter;
+	public $jvaCustNum;
+	public $jvaCustNumDesc;
+	
+   
+	
 	public function getAllJvas(){
 		$this->allJvas = JvaData::model()->with(	
 			'defaultColConfig',
@@ -24,6 +34,35 @@ class JvaModel extends CFormModel
 			'defaultColConfig.colDef12')
 		->findAll();
 			
+	}
+	
+	public function getJvaById($id){
+		$selectedJVA = JvaData::model()->with(
+				'defaultColConfig',
+				'defaultColConfig.colDef1',
+				'defaultColConfig.colDef2',
+				'defaultColConfig.colDef3',
+				'defaultColConfig.colDef4',
+				'defaultColConfig.colDef5',
+				'defaultColConfig.colDef6',
+				'defaultColConfig.colDef7',
+				'defaultColConfig.colDef8',
+				'defaultColConfig.colDef9',
+				'defaultColConfig.colDef10',
+				'defaultColConfig.colDef11',
+				'defaultColConfig.colDef12'
+			)->findByPK($id);
+		
+			return $selectedJVA;
+		
+	}
+	
+	
+	public function getJvaByIdPartial($id){
+		$selectedJVA = JvaData::model()->findByPK($id);
+		
+			return $selectedJVA;
+		
 	}
 	
 	public function getAllJvasNamesAndExtensions(){
@@ -156,7 +195,7 @@ class JvaModel extends CFormModel
 		return $result;
 	}
 	
-	public function updateJva($oldName,$oldNameExt,$name,$nameExt,$address,$footer,$custNum,$custNumDesc,$col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$col9,$col10,$col11,$col12){
+	public function updateJva($name,$nameExt,$address,$footer,$custNum,$custNumDesc,$col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$col9,$col10,$col11,$col12){
 		$result = "false";
 		$jvaCol1 = $this->getColIdByName($col1);
 		$jvaCol2 = $this->getColIdByName($col2);
@@ -171,7 +210,7 @@ class JvaModel extends CFormModel
 		$jvaCol11 = $this->getColIdByName($col11);
 		$jvaCol12 = $this->getColIdByName($col12);
 		
-		$updateJva = $this->getJvaByName($oldName,$oldNameExt);
+		$updateJva = $this->getJvaByName($name,$nameExt);
 		$updateJva->jvaName = $name;
 		$updateJva->jvaNameExt = $nameExt;
 		$updateJva->jvaAddress = $address;
