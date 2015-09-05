@@ -3565,3 +3565,31 @@ Stack trace:
 REQUEST_URI=/rechnungstool/index.php?r=jva/listJVAs
 HTTP_REFERER=http://localhost/rechnungstool/index.php
 ---
+2015/09/05 20:27:28 [error] [php] include(JvaAddModel.php): failed to open stream: No such file or directory (C:\inetpub\wwwroot\massaki\framework\YiiBase.php:432)
+Stack trace:
+#0 C:\inetpub\wwwroot\massaki\Rechnungstool\protected\controllers\JvaController.php(48): spl_autoload_call()
+#1 C:\inetpub\wwwroot\massaki\framework\web\actions\CInlineAction.php(49): JvaController->actionListJVAs()
+#2 C:\inetpub\wwwroot\massaki\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\inetpub\wwwroot\massaki\framework\web\CController.php(286): JvaController->runAction()
+#4 C:\inetpub\wwwroot\massaki\framework\web\CController.php(265): JvaController->runActionWithFilters()
+#5 C:\inetpub\wwwroot\massaki\framework\web\CWebApplication.php(282): JvaController->run()
+#6 C:\inetpub\wwwroot\massaki\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 C:\inetpub\wwwroot\massaki\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\inetpub\wwwroot\massaki\Rechnungstool\index.php(13): CWebApplication->run()
+REQUEST_URI=/massaki/rechnungstool/index.php?r=jva/listJVAs
+in C:\inetpub\wwwroot\massaki\Rechnungstool\protected\controllers\JvaController.php (48)
+in C:\inetpub\wwwroot\massaki\Rechnungstool\index.php (13)
+2015/09/05 20:28:21 [error] [php] include(JvaAddModel.php): failed to open stream: No such file or directory (C:\inetpub\wwwroot\massaki\framework\YiiBase.php:432)
+Stack trace:
+#0 C:\inetpub\wwwroot\massaki\Rechnungstool\protected\controllers\JvaController.php(48): spl_autoload_call()
+#1 C:\inetpub\wwwroot\massaki\framework\web\actions\CInlineAction.php(49): JvaController->actionListJVAs()
+#2 C:\inetpub\wwwroot\massaki\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\inetpub\wwwroot\massaki\framework\web\CController.php(286): JvaController->runAction()
+#4 C:\inetpub\wwwroot\massaki\framework\web\CController.php(265): JvaController->runActionWithFilters()
+#5 C:\inetpub\wwwroot\massaki\framework\web\CWebApplication.php(282): JvaController->run()
+#6 C:\inetpub\wwwroot\massaki\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 C:\inetpub\wwwroot\massaki\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\inetpub\wwwroot\massaki\Rechnungstool\index.php(13): CWebApplication->run()
+REQUEST_URI=/massaki/rechnungstool/index.php?r=jva/listJVAs
+in C:\inetpub\wwwroot\massaki\Rechnungstool\protected\controllers\JvaController.php (48)
+in C:\inetpub\wwwroot\massaki\Rechnungstool\index.php (13)

@@ -17,3 +17,4 @@ Rechnungstool/protected/runtime/*
 Rechnungstool/protected/data/*.db
 Rechnungstool/themes/classic/views/
 Rechnungstool/protected/runtime/application.log
+Rechnungstool/protected/runtime/application.log
