@@ -54,18 +54,21 @@ if(isset($jvaEditFormModel) && $jvaEditFormModel !== ""){
 		<br>
 		<br>
 		<?php
+		echo $form->textField($jvaEditFormModel->defaultColConfig->colDef1, 'colName');
 		echo $form->dropDownList($jvaEditFormModel->defaultColConfig->colDef1,'colName',$colNames,array('class'=>'col-sm-5','id'=>'colName1'));
 		echo $form->labelEx($jvaEditFormModel->defaultColConfig->colDef1,'colName');
 		?><br>
 		<br>
 		<br>
 		<?php
+		echo $form->textField($jvaEditFormModel->defaultColConfig->colDef2, 'colName');
 		echo $form->dropDownList($jvaEditFormModel->defaultColConfig->colDef2,'colName',$colNames,array('class'=>'col-sm-5','id'=>'colName2'));
 		echo $form->labelEx($jvaEditFormModel->defaultColConfig->colDef1,'colName');
 		?><br>
 		<br>
 		<br>
 		<?php
+		echo $form->textField($jvaEditFormModel->defaultColConfig->colDef3, 'colName');
 		echo $form->dropDownList($jvaEditFormModel->defaultColConfig->colDef3,'colName',$colNames,array('class'=>'col-sm-5','id'=>'colName3'));
 		echo $form->labelEx($jvaEditFormModel->defaultColConfig->colDef1,'colName');
 		?><br>
