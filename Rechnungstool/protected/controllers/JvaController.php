@@ -45,8 +45,22 @@ class JvaController extends Controller
 		$jvaModel->getAllColNames();
 		$colNames = $jvaModel->allColNames;
 		$jvaList = $jvaModel->allJvas;
-		$jvaEditFormModel = "";
-		$this->render('jvaList', array('jvaListAR' => $jvaList, 'jvaEditFormModel' => $jvaEditFormModel, 'colNames'=>$colNames));
+		$jvaEditFormModel = JvaData::model()->with(	
+			'defaultColConfig',
+			'defaultColConfig.colDef1',
+			'defaultColConfig.colDef2',
+			'defaultColConfig.colDef3',
+			'defaultColConfig.colDef4',
+			'defaultColConfig.colDef5',
+			'defaultColConfig.colDef6',
+			'defaultColConfig.colDef7',
+			'defaultColConfig.colDef8',
+			'defaultColConfig.colDef9',
+			'defaultColConfig.colDef10',
+			'defaultColConfig.colDef11',
+			'defaultColConfig.colDef12');
+	var_dump($jvaEditFormModel);
+		// $this->render('jvaList', array('jvaListAR' => $jvaList, 'jvaEditFormModel' => $jvaEditFormModel, 'colNames'=>$colNames));
 	}
 	
 	public function actionLoadJVAEditForm () {

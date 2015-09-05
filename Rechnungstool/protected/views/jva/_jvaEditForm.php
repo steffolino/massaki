@@ -1,5 +1,5 @@
 <?php 
-if(isset($jvaEditFormModel) && $jvaEditFormModel !== ""){
+if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !== ""){
 	$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'jvaEditForm',
 	//'enableAjaxValidation'=>true,

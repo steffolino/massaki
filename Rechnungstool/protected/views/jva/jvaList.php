@@ -25,7 +25,7 @@
 									<div class="col-md-12">
 										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
 											<a role=button class="btn btn-danger"><i class='fa fa-minus'> JVA entfernen</i></a>								
-											<a role=button class="btn btn-success"><i class='fa fa-plus'> JVA hinzuf&uuml;gen</i></a>
+											<a role=button class="btn btn-success"><i class='fa fa-plus' id="buttonAddJva"> JVA hinzuf&uuml;gen</i></a>
 										</div>
 									</div>
 								</div>
@@ -39,9 +39,13 @@
 							</div>
 							<div class="panel-content">
 								<!--dl class="dl-horizontal"-->								
-										<div id="jvaDetailsContent">
+										<div id="jvaDetailsEditContent">
 										   <?php $this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=>$jvaEditFormModel,'colNames'=>$colNames)); ?>
 										</div>	
+									<div id="jvaDetailsAddContent">
+										   <?php $this->renderPartial('_jvaAddForm', array('jvaEditFormModel'=>$jvaEditFormModel,'colNames'=>$colNames)); ?>
+										</div>	
+
 <?php										
 /*											foreach ($jvaListAR as $jva) {
 												echo "<dt style='margin-bottom: 5px;'>Name</dt><dd>".$jva->jvaName."</dd><dt>Adresse</dt><dd>".$jva->jvaAddress."</dd><dt>Grussformel</dt><dd>".$jva->jvaFooter."</dd>";
@@ -83,14 +87,21 @@
 //TODO: put in extra file
 	$(document).ready(function () {
 			changeJvaNameHeader();
-		
+			$("#jvaDetailsAddContent").hide();
 			$(".jvaListItem").on('click', function () {
 				console.log("clicked " + $(this).val());
 				submitJVAId($(this).val());
 			});
 			
+			$("#buttonAddJva").on('click', function(){
+				console.log("add");
+				$("#jvaDetailsEditContent").hide();
+				$("#jvaDetailsAddContent").show();
+				
+			});
+			
 			$("#changeJva").on('click', function(){
-					
+					saveJvaData();
 			});	
 	});
 	
@@ -102,7 +113,7 @@
 		})
 		  .done(function( data ) {
 			console.log( "Data Saved: " + data );
-			$("#jvaDetailsContent").html(data);
+			$("#jvaDetailsEditContent").html(data);
 			changeJvaNameHeader();
 		  });
 	}
