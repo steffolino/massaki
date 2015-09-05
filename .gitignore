@@ -4,7 +4,7 @@
 Rechnungstool/demos/*
 
 #application.log
-Rechnungstool/protected/runtime/*
+rechnungstool/protected/runtime/*
 
 #database.php
 Rechnungstool/protected/config/database.php
@@ -16,4 +16,4 @@ Rechnungstool/protected/runtime/*
 !Rechnungstool/protected/runtime/.gitignore
 Rechnungstool/protected/data/*.db
 Rechnungstool/themes/classic/views/
-Rechnungstool/protected/runtime/application.log
+*.log

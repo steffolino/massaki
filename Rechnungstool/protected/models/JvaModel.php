@@ -32,7 +32,7 @@ class JvaModel extends CFormModel
 			'defaultColConfig.colDef10',
 			'defaultColConfig.colDef11',
 			'defaultColConfig.colDef12')
-		->findAll('jvaDeactivated is NULL or jvaDeactivated like "y"');
+		->findAll();
 			
 	}
 	
@@ -120,11 +120,6 @@ class JvaModel extends CFormModel
 		$jva->deactivated = "y";
 		$jva->save();
 		
-	}
-	public function deactivateJvaById($id){
-		$jva = $this->getJvaById($id);
-		$jva->deactivated = "y";
-		$jva->save();
 	}
 	
 	public function deactivateJvaByCustNum($custNum){

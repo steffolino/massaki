@@ -12,9 +12,7 @@ class JvaData extends CActiveRecord {
 			return parent::model($className);
 		}
 	
-	
-	
-	
+
 	
 	public function relations()
     {
