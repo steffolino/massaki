@@ -7,12 +7,14 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
 	'name'=>'*Rechnungstool*',
 	'defaultController' => 'site/index',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array(
+		'log',
+		'booster',
+	),
 	
 
 	//added by stef
@@ -28,6 +30,7 @@ return array(
     'aliases' => array(
         // yiistrap configuration
         'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change if necessary
+		'booster' => realpath (__DIR__ . '/../extensions/yiibooster'),
         // yiiwheels configuration
         //'yiiwheels' => realpath(__DIR__ . '/../extensions/yiiwheels'), // change if necessary		
 		'vendor.twbs.bootstrap.dist' => realpath(__DIR__ . '/../extensions/bootstrap'),
@@ -38,7 +41,6 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-
 		//yiistrap
         'bootstrap.helpers.TbHtml',
         //'bootstrap.helpers.TbApi',
@@ -75,7 +77,9 @@ return array(
         'bootstrap' => array(
             'class' => 'bootstrap.components.TbApi',
         ),
-		
+		'booster' => array(
+			'class' => 'booster.components.booster',
+		),
         // yiiwheels configuration
         /*'yiiwheels' => array(
             'class' => 'yiiwheels.YiiWheels',   

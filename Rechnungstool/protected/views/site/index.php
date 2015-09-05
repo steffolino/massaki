@@ -20,7 +20,7 @@
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<div class='col-sm-6 col-md-4'>
-					<div class='thumbnail' style='height:380px; text-align:center;'>
+					<div class='thumbnail' style='height:420px; text-align:center;'>
 					<!--i class='img-circle icon-ok' style='max-height:160px;' alt="JVAs verwalten"></i-->
 					<span class="glyphicon glyphicon-shopping-cart" style="text-align:center; padding:20px 20px; font-size:5em; border-radius:50%;  background-color:#dddddd;" aria-label="JVas bearbeiten" aria-hidden="true"></span> 
 					<div class='caption'>				
@@ -45,7 +45,7 @@
 
 				<!-- ACTION 2-->
 				<div class='col-sm-6 col-md-4'>
-					<div class='thumbnail' style='height:380px; text-align:center;'>
+					<div class='thumbnail' style='height:420px; text-align:center;'>
 					<!--i class='img-circle icon-ok' style='max-height:160px;' alt="JVAs verwalten"></i-->
 					<span class="glyphicon glyphicon-file" style="text-align:center; padding:20px 20px; font-size:5em; border-radius:50%;  background-color:#dddddd;" aria-label="JVas bearbeiten" aria-hidden="true"></span> 
 					<div class='caption'>
@@ -66,7 +66,7 @@
 				?>
 				<!-- ACTION 3 -->
 				<div class='col-sm-6 col-md-4'>
-					<div class='thumbnail' style='height:380px; text-align:center;'>
+					<div class='thumbnail' style='height:420px; text-align:center;'>
 					<!--i class='img-circle icon-ok' style='max-height:160px;' alt="JVAs verwalten"></i-->
 					<span class="glyphicon glyphicon-search" style="text-align:center; padding:20px 20px; font-size:5em; border-radius:50%;  background-color:#dddddd;" aria-label="JVas bearbeiten" aria-hidden="true"></span> 
 					<div class='caption'>
