@@ -16,3 +16,4 @@ Rechnungstool/protected/runtime/*
 !Rechnungstool/protected/runtime/.gitignore
 Rechnungstool/protected/data/*.db
 Rechnungstool/themes/classic/views/
+Rechnungstool/protected/runtime/application.log
