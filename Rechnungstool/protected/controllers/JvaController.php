@@ -45,7 +45,7 @@ class JvaController extends Controller
 		$jvaModel->getAllColNames();
 		$colNames = $jvaModel->allColNames;
 		$jvaList = $jvaModel->allJvas;
-		$jvaEditFormModel ="";
+		$jvaEditFormModel = "";
 		$this->render('jvaList', array('jvaListAR' => $jvaList, 'jvaEditFormModel' => $jvaEditFormModel, 'colNames'=>$colNames));
 	}
 	

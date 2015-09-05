@@ -54,7 +54,7 @@ class Booster extends CApplicationComponent {
 	 * @var boolean Whether to register any CSS at all.
 	 * Defaults to true.
 	 */
-	public $coreCss = true;
+	public $coreCss = false;
 
 	/**
 	 * @var boolean Whether to register the Bootstrap core CSS (bootstrap.min.css).

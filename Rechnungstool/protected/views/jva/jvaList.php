@@ -39,7 +39,7 @@
 							</div>
 							<div class="panel-content">
 								<!--dl class="dl-horizontal"-->								
-										<div id="jvaDetailsEditContent">
+										<div id="jvaDetailsEditContent" class="col-md-12">
 										   <?php $this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=>$jvaEditFormModel,'colNames'=>$colNames)); ?>
 										</div>	
 									<div id="jvaDetailsAddContent">
@@ -57,7 +57,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
-											<a role=button class="btn btn-warning" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
+											<a role=button id="resetButt" class="btn btn-warning" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
 											<a role=button class="btn btn-info" id ='changeJva'><i class='fa fa-check'> Änderungen übernehmen</i></a>
 										</div>
 									</div>
@@ -86,6 +86,13 @@
 <script>
 //TODO: put in extra file
 	$(document).ready(function () {
+		
+		$("#resetButt").on('click', function (e) {
+			e.preventDefault();
+			$("#jvaAddForm")[0].reset();
+			$("#jvaEditForm")[0].reset();
+		});
+		
 			changeJvaNameHeader();
 			$("#jvaDetailsAddContent").hide();
 			$(".jvaListItem").on('click', function () {
@@ -112,7 +119,7 @@
 		  data: { jvaID: jvaID}
 		})
 		  .done(function( data ) {
-			console.log( "Data Saved: " + data );
+			//console.log( "Data Saved: " + data );
 			$("#jvaDetailsEditContent").html(data);
 			changeJvaNameHeader();
 		  });
