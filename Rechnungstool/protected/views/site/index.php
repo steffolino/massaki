@@ -12,7 +12,7 @@
 		<div class=row>
 			<div class="col-md-8 col-md-offset-2" style="text-align:center">
 				<!--h2>Willkommen</h2-->
-				<h1 class=lead>Was möchten Sie tun? </h1>
+				<h1 class=lead>Was m&ouml;chten Sie tun? </h1>
 			</div>
 		</div>
 
