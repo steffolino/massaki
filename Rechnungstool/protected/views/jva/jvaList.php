@@ -24,7 +24,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
-											<a role=button class="btn btn-danger"><i class='fa fa-minus'> JVA entfernen</i></a>								
+											<a role=button class="btn btn-danger" data-toggle="modal" data-target="#deactivateModal"><i class='fa fa-minus' > JVA entfernen</i></a>								
 											<a role=button class="btn btn-success"><i class='fa fa-plus' id="buttonAddJva"> JVA hinzuf&uuml;gen</i></a>
 										</div>
 									</div>
@@ -43,7 +43,7 @@
 										   <?php $this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=>$jvaEditFormModel,'colNames'=>$colNames)); ?>
 										</div>	
 									<div id="jvaDetailsAddContent">
-										   <?php $this->renderPartial('_jvaAddForm', array('jvaEditFormModel'=>$jvaEditFormModel,'colNames'=>$colNames)); ?>
+										   <?php $this->renderPartial('_jvaAddForm', array('jvaAddFormModel'=>$jvaAddFormModel,'colNames'=>$colNames)); ?>
 										</div>	
 
 <?php										
@@ -78,7 +78,27 @@
 			</div>
 		</div>
 </div>
+<!-- Modal -->
+<div id="deactivateModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Deaktivieren einer Jva </h4>
+      </div>
+      <div class="modal-body">
+        <p>Möchten Sie die selektierte JVA wirklich deaktivieren? </p>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-default" id="deactivateJVA" data-dismiss="modal" >Ja</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Nein</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <!-- FOOT -->
 <div class=row>
 </div>
@@ -86,17 +106,29 @@
 <script>
 //TODO: put in extra file
 	$(document).ready(function () {
+			$("#jvaDetailsAddContent").hide();	
 			changeJvaNameHeader();
-			$("#jvaDetailsAddContent").hide();
+			
 			$(".jvaListItem").on('click', function () {
+				changeJvaNameHeader();
 				console.log("clicked " + $(this).val());
+				$("#jvaDetailsAddContent").hide();
+				$("#jvaDetailsEditContent").show();
+				changeJvaNameHeader();
 				submitJVAId($(this).val());
 			});
 			
 			$("#buttonAddJva").on('click', function(){
+				
 				console.log("add");
 				$("#jvaDetailsEditContent").hide();
+				
 				$("#jvaDetailsAddContent").show();
+				changeJvaNameHeader();
+			});
+			
+			$('#deactivateJVA').on('click',function(){
+				var jvaId = $(".jvaListItem:checked").val();
 				
 			});
 			
@@ -104,6 +136,21 @@
 					saveJvaData();
 			});	
 	});
+	
+	function deactivateJVA(jvaId){
+		$.ajax({
+		  method: "POST",
+		  url: "index.php?r=jva/deactivateJVAById",
+		  data: { jvaID: jvaID}
+		})
+		  .done(function( data ) {
+			console.log( "Jva deactivated : " + data );
+			
+			changeJvaNameHeader();
+		  });
+		
+		
+	}
 	
 	function submitJVAId (jvaID) {
 		$.ajax({
@@ -120,7 +167,11 @@
  
 	function saveJvaData(){
 		var  jvaDataArray =[];
-		jvaDataArray.push($('#jvaName').val());
+		
+		
+				
+		if($("#jvaDetailsEditContent").is(":visible")){	
+			jvaDataArray.push($('#jvaName').val());
 		jvaDataArray.push($('#jvaNameExt').val());
 		jvaDataArray.push($('#jvaCustNum').val());
 		jvaDataArray.push($('#jvaCustNumDesc').val());
@@ -138,29 +189,57 @@
 		jvaDataArray.push($('#colName10 option:selected').text());
 		jvaDataArray.push($('#colName11 option:selected').text());
 		jvaDataArray.push($('#colName12 option:selected').text());
-				//alert(jvaDataArray);
-		$.ajax({
-			method: "POST",
-			url: "index.php?r=jva/saveJVAEditForm",
-			data: {data: jvaDataArray}
-		})
-		.done(function( data ) {
-			alert("data saved");			
-		  });
+			$.ajax({
+				method: "POST",
+				url: "index.php?r=jva/saveJVAEditForm",
+				data: {data: jvaDataArray}
+			})
+			.done(function( data ) {
+				alert("data saved");			
+			  });
+		}else{
+			jvaDataArray.push($('#JvaAddModel_jvaName').val());
+			jvaDataArray.push($('#JvaAddModel_jvaNameExt').val());
+			jvaDataArray.push($('#JvaAddModel_jvaCustNum').val());
+			jvaDataArray.push($('#JvaAddModel_jvaCustNumDesc').val());
+			jvaDataArray.push($('#JvaAddModel_jvaFooter').val());
+			jvaDataArray.push($('#JvaAddModel_cvaAddress').val());
+			jvaDataArray.push($('#JvaAddModel_colName1 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName2 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName3 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName4 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName5 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName6 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName7 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName8 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName9 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName10 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName11 option:selected').text());
+			jvaDataArray.push($('#JvaAddModel_colName12 option:selected').text());
+			
+			$.ajax({
+				method: "POST",
+				url: "index.php?r=jva/saveJVAAddForm",
+				data: {data: jvaDataArray}
+			})
+			.done(function( data ) {
+				alert("data saved");			
+			  });
+			
+		}
 		
 	}
 	
 	function changeJvaNameHeader(){
-		if($("#jvaName").val() != ""){
-				$("#jvaNameHeading").text($('#jvaName').val());
-				
+			if($("#jvaName").val() != ""){
+				if($("#jvaDetailsEditContent").is(":visible")){
+					$("#jvaNameHeading").text($('#jvaName').val());
+				}else{
+					$("#jvaNameHeading").text("JVA ...");
+				}
 			}else{
-				
 				$("#jvaNameHeading").text("JVA ...");
 			}
 		
-		
-		
 	}
- 
 </script>
