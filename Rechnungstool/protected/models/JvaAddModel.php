@@ -20,8 +20,7 @@ class JvaAddModel extends CFormModel
 	public $colName9;
 	public $colName10;
 	public $colName11;
-	public $colName12;
-	 
+	public $colName12; 
 	
 	
 	
