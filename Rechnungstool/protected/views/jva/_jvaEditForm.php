@@ -1,5 +1,4 @@
 <?php 
-
 if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !== ""){
 	$form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 	'id'=>'jvaEditForm',
@@ -27,7 +26,6 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				)
 			)
 		);
-
 		echo $form->textFieldGroup($jvaEditFormModel,'jvaNameExt',
 			array(
 				'class'=>'col-md-4',
@@ -102,7 +100,6 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				),
 			)
 		);
-
 		echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef2,
 			'colName',
 			array(

@@ -60,13 +60,13 @@ class Booster extends CApplicationComponent {
 	 * @var boolean Whether to register the Bootstrap core CSS (bootstrap.min.css).
 	 * Defaults to true.
 	 */
-	public $bootstrapCss = true;
+	public $bootstrapCss = false;
 
 	/**
 	 * @var boolean whether to register the Bootstrap responsive CSS (bootstrap-responsive.min.css).
 	 * Defaults to false.
 	 */
-	public $responsiveCss = true;
+	public $responsiveCss = false;
 	
 	/**
 	 * @var boolean whether to disable zooming capabilities on mobile devices
@@ -105,7 +105,7 @@ class Booster extends CApplicationComponent {
 	 * @var boolean Whether to register jQuery and the Bootstrap JavaScript.
 	 * @since 0.9.10
 	 */
-	public $enableJS = true;
+	public $enableJS = false;
 
 	/**
 	 * @var bool Whether to enable bootbox messages or not. Default value is true.
