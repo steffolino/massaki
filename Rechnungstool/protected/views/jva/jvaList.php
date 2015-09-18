@@ -4,8 +4,9 @@
 </div-->
 <?php
 	echo '
-	<div class="row">
-		<div id="successAlert" class="col-md-10 col-md-offset-1 alert alert-success" style="display:none;">
+	<div class="row" style="position:static; bottom:30px;">
+		<div id="successAlert" class="col-md-10 col-md-offset-1 alert alert-success" style="display:none; text-align:center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h3 id="alertContent"></h3>
 		</div>
 	</div>';
@@ -202,8 +203,11 @@
 				data: {data: jvaDataArray}
 			})
 			.done(function( data ) {
-				console.log("success");
-				//alert("data saved");	
+				$("#alertContent").html('JVA erfolgreich bearbeitet.')
+				$("#successAlert").fadeIn('fast');
+				var body = $("html, body");
+				body.stop().animate({scrollTop:0}, '1000', 'swing', function() { 
+				});
 			  });
 		}else{
 			jvaDataArray.push($('#JvaAddModel_jvaName').val());
@@ -237,7 +241,9 @@
 				$("#jvaListContent").empty();
 				$("#jvaDetailsAddContent").empty();
 				$("#jvaListContent").html(data);
-				$(document).scrollTop(0);
+				var body = $("html, body");
+				body.stop().animate({scrollTop:0}, '1000', 'swing', function() { 
+				});
 			});
 		}
 		
