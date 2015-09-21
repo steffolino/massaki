@@ -134,14 +134,15 @@ class JvaController extends Controller
 	public function actionDeactivateJVAById(){
 		$jvaModel = new JvaModel;
 		$jvaModel->getAllColNames();
-		$colNames = $jvaModel->allColNames;
+		// $colNames = $jvaModel->allColNames;
 		if(isset($_POST['jvaID'])) {
 			$jvaID = htmlspecialchars($_POST['jvaID']);
 			$jvaModel->deactivateJvaById($jvaID);
 		}
+		$jvaModel->getAllJvas();
 		$jvaList = $jvaModel->allJvas;
-		$jvaAddFormModel= new JvaAddModel;
-		$jvaEditFormModel="";
-		$this->render('jvaList', array('jvaListAR' => $jvaList, 'jvaAddFormModel' => $jvaAddFormModel,'jvaEditFormModel' => $jvaEditFormModel, 'colNames'=>$colNames));
+		// $jvaAddFormModel= new JvaAddModel;
+		// $jvaEditFormModel="";
+		 $this->renderPartial('_jvaList', array('jvaListModel' => $jvaList), false, true);
 	}
 }

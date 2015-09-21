@@ -1,5 +1,4 @@
 <?php
-
 class JvaModel extends CFormModel
 {
 	public $allJvas;
@@ -18,7 +17,11 @@ class JvaModel extends CFormModel
    
 	
 	public function getAllJvas(){
-		$this->allJvas = JvaData::model()->with(	
+
+	$criteria = new CDbCriteria();
+	$criteria->condition = 'jvaDeactivated NOT LIKE "y"';
+
+	$this->allJvas = JvaData::model()->with(	
 			'defaultColConfig',
 			'defaultColConfig.colDef1',
 			'defaultColConfig.colDef2',
@@ -32,7 +35,7 @@ class JvaModel extends CFormModel
 			'defaultColConfig.colDef10',
 			'defaultColConfig.colDef11',
 			'defaultColConfig.colDef12')
-		->findAll();
+		->findAll($criteria);
 			
 	}
 	
@@ -106,25 +109,30 @@ class JvaModel extends CFormModel
 	
 	public function activateJvaByName($name,$ext){
 		$jva = $this->getJvaByName($name,$ext);
-		$jva->deactivated = "n";
+		$jva->jvaDeactivated = "n";
 		$jva->save();
 	}
 	
 	public function activateJvaByCustNum($custNum){
 		$jva = $this->getJvaByCustNum($custNum);
-		$jva->deactivated = "n";
+		$jva->jvaDeactivated = "n";
 		$jva->save();
 	}
 	public function deactivateJvaByName($name,$ext){
 		$jva = $this->getJvaByName($name,$ext);
-		$jva->deactivated = "y";
+		$jva->jvaDeactivated = "y";
 		$jva->save();
 		
+	}
+	public function deactivateJvaById($id){
+		$jva = $this->getJvaById($id);
+		$jva->jvaDeactivated = "y";
+		$jva->save();
 	}
 	
 	public function deactivateJvaByCustNum($custNum){
 		$jva = $this->getJvaByCustNum($custNum);
-		$jva->deactivated = "y";
+		$jva->jvaDeactivated = "y";
 		$jva->save();
 	}
 	
@@ -134,7 +142,6 @@ class JvaModel extends CFormModel
 		JvaData::model()->deleteByPK($id);
 		DefaultColConfig::model()->deleteByPK($colConfigId);
 	}
-
 	
 	public function deleteJvaByName($name, $ext){
 		$jva = $this->getJvaByName($name,$ext);

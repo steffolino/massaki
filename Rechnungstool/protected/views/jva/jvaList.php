@@ -4,13 +4,24 @@
 </div-->
 <?php
 	echo '
-	<div class="row" style="position:static; bottom:30px;">
-		<div id="successAlert" class="col-md-10 col-md-offset-1 alert alert-success" style="display:none; text-align:center;">
+	<div class="row col-md-10 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
+		<div id="successAlert" class="col-md-12 col-md-offset-0 alert alert-success" style="display:none; text-align:center;">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h3 id="alertContent"></h3>
+			<h4 id="successAlertContent"></h4>
+		</div>
+	</div>
+	<div class="row col-md-10 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
+		<div id="errorAlert" class="col-md-12 col-md-offset-0 alert alert-danger" style="display:none; text-align:center;">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 id="errorAlertContent"></h4>
 		</div>
 	</div>';
 ?>
+<div class="row col-md-1 col-md-offset-11" style="position:fixed; z-index:6; bottom: 40px;">
+	<div class="pull-right">
+		<a id="scrollUpa" style="cursor:pointer; "><i alt="Scroll Top" class="fa fa-2x fa-angle-double-up"></i></a>
+	</div>
+</div>
 <!-- MAIN -->
 <div class=row>
 		<div class="col-md-10 col-md-offset-1">
@@ -21,6 +32,16 @@
 							<div class="panel-heading">
 								<h3 class="panel-heading">Liste aller JVAs</h3>
 							</div>
+							<div class="panel-footer">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+											<a role=button class="btn btn-danger buttonDeactivateJva"><i class="fa fa-minus"> JVA deaktivieren</i></a>
+											<a role=button class="btn btn-success buttonAddJva"><i class="fa fa-plus"> JVA hinzuf&uuml;gen</i></a>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div id="jvaListContent" class="panel-content">
 								<?php $this->renderPartial('_jvaList', array('jvaListModel'=>$jvaListModel)); ?>
 							</div>
@@ -28,8 +49,8 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
-											<a role=button class="btn btn-danger" data-toggle="modal" data-target="#deactivateModal"><i class="fa fa-minus"> JVA entfernen</i></a>								
-											<a role=button class="btn btn-success"><i class="fa fa-plus" id="buttonAddJva"> JVA hinzuf&uuml;gen</i></a>
+											<a role=button class="btn btn-danger buttonDeactivateJva"><i class="fa fa-minus"> JVA deaktivieren</i></a>
+											<a role=button class="btn btn-success buttonAddJva"><i class="fa fa-plus"> JVA hinzuf&uuml;gen</i></a>
 										</div>
 									</div>
 								</div>
@@ -40,6 +61,16 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">
 								<h3 class="panel-heading">Details zu <span id ="jvaNameHeading"></span></h3>
+							</div>
+							<div class="panel-footer">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+											<a role=button class="btn btn-warning resetButt" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
+											<a role=button class="btn btn-info changeJva"><i class='fa fa-check'> Änderungen übernehmen</i></a>
+											</div>
+									</div>
+								</div>
 							</div>
 							<div class="panel-content">
 								<!--dl class="dl-horizontal"-->								
@@ -54,8 +85,8 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
-											<a role=button id="resetButt" class="btn btn-warning" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
-											<a role=button class="btn btn-info" id ='changeJva'><i class='fa fa-check'> Änderungen übernehmen</i></a>
+											<a role=button class="btn btn-warning resetButt" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
+											<a role=button class="btn btn-info changeJva"><i class='fa fa-check'> Änderungen übernehmen</i></a>
 											</div>
 									</div>
 								</div>
@@ -78,7 +109,6 @@
 <!-- Modal -->
 <div id="deactivateModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -86,10 +116,10 @@
         <h4 class="modal-title">Deaktivieren einer Jva </h4>
       </div>
       <div class="modal-body">
-        <p>Möchten Sie die selektierte JVA wirklich deaktivieren? </p>
+        <p>Möchten Sie die JVA <em><span class="warning" id="deactivateModalJvaName"></span></em> wirklich deaktivieren? </p>
       </div>
       <div class="modal-footer">
-		<button type="button" class="btn btn-default" id="deactivateJVA" data-dismiss="modal" >Ja</button>
+		<button type="button" class="btn btn-primary" id="confirmDeactivateJVA" data-dismiss="modal" >Ja</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Nein</button>
       </div>
     </div>
@@ -111,10 +141,18 @@
 				submitJVAId($(this).val());		
 	});
 
+	$(document).on("click", "#scrollUpa", function () {
+			var body = $("html, body");
+			body.stop().animate({scrollTop:0}, '1000', 'swing', function() { 
+		});
+	});
+
 //TODO: put in extra file
 	$(document).ready(function () {
 
-		$("#resetButt").on('click', function (e) {
+		var selectedJva;
+	
+		$(".resetButt").on('click', function (e) {
 			e.preventDefault();
 			$("#jvaAddForm")[0].reset();
 			$("#jvaEditForm")[0].reset();
@@ -122,31 +160,49 @@
 		
 			$("#jvaDetailsAddContent").hide();	
 			changeJvaNameHeader();
-/*			
-			$(".jvaListItem").bind('click', function () {
 
-			});
-	*/		
-			$("#buttonAddJva").on('click', function(){
-				
+			$(".buttonAddJva").on('click', function(){				
 				console.log("add");
 				$("#jvaDetailsEditContent").hide();
-				
 				$("#jvaDetailsAddContent").show();
 				changeJvaNameHeader();
 			});
 			
-			$('#deactivateJVA').on('click',function(){
-				var jvaId = $(".jvaListItem:checked").val();
+			$("#confirmDeactivateJVA").on('click',function(e){
+				console.log("confirmed deact");
+				deactivateJva(selectedJva.val());
+			});
+
+			$(".buttonDeactivateJva").on('click',function(e){
+				e.preventDefault();
+				selectedJva = $(".jvaListItem:checked");
+				if(selectedJva.val() !== undefined) {
+					//get values from list
+					var jvaId = selectedJva.val();
+					var jvaName = selectedJva.parent().text();
+					console.log(jvaId);
+					console.log(jvaName);
+					//hide alert anyway
+					$("#errorAlert").slideUp('fast');
+					//Set name and show modal
+					$("#deactivateModalJvaName").html(jvaName);
+					$("#deactivateModal").modal('show');
+				} else {
+					//show: please select a jva
+					$("#errorAlertContent").html('Bitte w&auml;hlen Sie zuerst eine JVA.');
+					$("#errorAlert").slideDown('fast');
+				}
 				
 			});
 			
-			$("#changeJva").on('click', function(){
+			$(".changeJva").on('click', function(){
 					saveJvaData();
 			});	
 	});
 	
-	function deactivateJVA(jvaId){
+	function deactivateJva(jvaID){
+		console.log("calling controller");
+		console.log("jvaID "+jvaID);
 		$.ajax({
 		  method: "POST",
 		  url: "index.php?r=jva/deactivateJVAById",
@@ -154,8 +210,13 @@
 		})
 		  .done(function( data ) {
 			console.log( "Jva deactivated : " + data );
-			
-			changeJvaNameHeader();
+			$("#jvaListContent").empty();
+			$("#jvaListContent").html(data);
+			$("#successAlertContent").html('JVA erfolgreich deaktiviert.')
+			$("#successAlert").slideDown('fast');
+			$("#jvaDetailsAddContent").hide();
+			$("#jvaDetailsEditContent").hide();
+			$("#jvaNameHeading").html('...');
 		  });
 		
 		
@@ -203,11 +264,8 @@
 				data: {data: jvaDataArray}
 			})
 			.done(function( data ) {
-				$("#alertContent").html('JVA erfolgreich bearbeitet.')
-				$("#successAlert").fadeIn('fast');
-				var body = $("html, body");
-				body.stop().animate({scrollTop:0}, '1000', 'swing', function() { 
-				});
+				$("#successAlertContent").html('JVA erfolgreich bearbeitet.')
+				$("#successAlert").slideDown('fast');
 			  });
 		}else{
 			jvaDataArray.push($('#JvaAddModel_jvaName').val());
@@ -236,21 +294,19 @@
 			})
 			.done(function( data ) {
 				console.log("success");
-				$("#alertContent").html('Neue JVA erfolgreich hinzugefügt')
+				$("#successAlertContent").html('Neue JVA erfolgreich hinzugefügt')
 				$("#successAlert").fadeIn('fast');
 				$("#jvaListContent").empty();
 				$("#jvaDetailsAddContent").empty();
 				$("#jvaListContent").html(data);
-				var body = $("html, body");
-				body.stop().animate({scrollTop:0}, '1000', 'swing', function() { 
-				});
+				$("#jvaNameHeading").html('...');
 			});
 		}
 		
 	}
 	
 	function changeJvaNameHeader(){
-			if($("#jvaName").val() != ""){
+			if($("#jvaName").val() !== ""){
 				if($("#jvaDetailsEditContent").is(":visible")){
 					$("#jvaNameHeading").text($('#jvaName').val());
 				}else{

@@ -28,7 +28,7 @@
 
 	<?php
 		$this->widget('bootstrap.widgets.TbNavbar', array(
-		'color' => TbHtml::NAVBAR_COLOR_INVERSE,
+//		'color' => TbHtml::NAVBAR_COLOR_INVERSE,
         'items' => array(
 				array(
 					'class' => 'bootstrap.widgets.TbNav',
@@ -59,7 +59,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by Stefan Stretz - Medientechnik - Hu ha ha.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> by Stefan Stretz - Medientechnik<br/>
 	</div><!-- footer -->
 
 </div><!-- page -->

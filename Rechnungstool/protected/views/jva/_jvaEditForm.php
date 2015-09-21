@@ -264,7 +264,4 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 	<div class="hero-unit"><b>Bitte wählen Sie eine Aktion aus!</b></div>
 	<?php
 }
-	// echo "<pre>";
-		// var_dump($colNames);
-	// echo "</pre>";
 ?>

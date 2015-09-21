@@ -6,7 +6,9 @@ if(isset($jvaAddFormModel)){
 		array(
 			'type' => 'horizontal',
 			'id'=>'jvaAddForm',
-			'htmlOptions' => array('class' => 'well'),
+			'htmlOptions' => array(
+				'class' => 'well'
+			),
 		)
 	); ?>
 		
