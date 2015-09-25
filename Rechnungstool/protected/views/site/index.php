@@ -58,6 +58,7 @@
 						<?php
 							echo TbHtml::button('Aktion starten', array(
 							'color' => TbHtml::BUTTON_COLOR_PRIMARY,
+							'submit' => Yii::app()->createUrl('document/enterNewDoc')
 						));
 						echo "</p></div>
 						</div>

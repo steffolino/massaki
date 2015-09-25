@@ -36,7 +36,7 @@
 //						array('label'=>'<span class="glyphicon glyphicon-shopping-cart">', 'url'=>array('/site/index')),
 //						array('label' => Html::tag('span','','class' => 'glyphicon glyphicon-lock')),
 						array('label'=>'JVA', 'url'=>array('/jva/listJVAs'), 'icon' => 'glyphicon glyphicon-shopping-cart'),
-						array('label'=>'Rechnungen', 'url'=>array('/invoice/invoicesth'), 'icon' => 'glyphicon glyphicon-file'),
+						array('label'=>'Rechnungen', 'url'=>array('/document/enterNewDoc'), 'icon' => 'glyphicon glyphicon-file'),
 						array('label'=>'Suchen', 'url'=>array('/search/search'), 'icon' => 'glyphicon glyphicon-search'),
 //						array('label'=>'Contact', 'url'=>array('/site/contact')),
 //						array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),

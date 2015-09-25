@@ -134,7 +134,7 @@
 
 	$(document).on("click", ".jvaListItem", function () {
 				changeJvaNameHeader();
-				console.log("clicked " + $(this).val());
+				//console.log("clicked " + $(this).val());
 				$("#jvaDetailsAddContent").hide();
 				$("#jvaDetailsEditContent").show();
 				changeJvaNameHeader();
@@ -149,7 +149,9 @@
 
 //TODO: put in extra file
 	$(document).ready(function () {
-
+		
+		
+		
 		var selectedJva;
 	
 		$(".resetButt").on('click', function (e) {
@@ -162,14 +164,14 @@
 			changeJvaNameHeader();
 
 			$(".buttonAddJva").on('click', function(){				
-				console.log("add");
+				//console.log("add");
 				$("#jvaDetailsEditContent").hide();
 				$("#jvaDetailsAddContent").show();
 				changeJvaNameHeader();
 			});
 			
 			$("#confirmDeactivateJVA").on('click',function(e){
-				console.log("confirmed deact");
+				//console.log("confirmed deact");
 				deactivateJva(selectedJva.val());
 			});
 
@@ -180,8 +182,8 @@
 					//get values from list
 					var jvaId = selectedJva.val();
 					var jvaName = selectedJva.parent().text();
-					console.log(jvaId);
-					console.log(jvaName);
+					//console.log(jvaId);
+					//console.log(jvaName);
 					//hide alert anyway
 					$("#errorAlert").slideUp('fast');
 					//Set name and show modal
@@ -198,18 +200,26 @@
 			$(".changeJva").on('click', function(){
 					saveJvaData();
 			});	
+			
+			$("#JvaAddModel_jvaName").on('input',function(){
+				if($('#JvaAddModel_jvaName').val()!== ""){
+					$("#jvaNameHeading").text($('#JvaAddModel_jvaName').val());
+				}else{
+					$("#jvaNameHeading").text("JVA ...");
+				}
+			});
 	});
 	
 	function deactivateJva(jvaID){
-		console.log("calling controller");
-		console.log("jvaID "+jvaID);
+		// console.log("calling controller");
+		// console.log("jvaID "+jvaID);
 		$.ajax({
 		  method: "POST",
 		  url: "index.php?r=jva/deactivateJVAById",
 		  data: { jvaID: jvaID}
 		})
 		  .done(function( data ) {
-			console.log( "Jva deactivated : " + data );
+			// console.log( "Jva deactivated : " + data );
 			$("#jvaListContent").empty();
 			$("#jvaListContent").html(data);
 			$("#successAlertContent").html('JVA erfolgreich deaktiviert.')
@@ -293,7 +303,7 @@
 				data: {data: jvaDataArray}
 			})
 			.done(function( data ) {
-				console.log("success");
+				// console.log("success");
 				$("#successAlertContent").html('Neue JVA erfolgreich hinzugefügt')
 				$("#successAlert").fadeIn('fast');
 				$("#jvaListContent").empty();
