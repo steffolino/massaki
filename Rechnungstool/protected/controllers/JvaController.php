@@ -87,9 +87,11 @@ class JvaController extends Controller
 			$jvaCol11 = $_POST['data'][16];
 			$jvaCol12 = $_POST['data'][17];
 			$jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
-			$selectedJVA = $jvaModel->getJvaByName($jvaName,$jvaNameExt);
 			
+			$selectedJVA = $jvaModel->getJvaByName($jvaName,$jvaNameExt);
 			$this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=> $selectedJVA ,'colNames'=>$colNames), false, true);
+		} else {
+			echo "data not set";
 		}
 		
 	}

@@ -1086,7 +1086,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Arial", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.42857143;
   color: #2c3e50;
@@ -1188,7 +1188,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Arial", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   line-height: 1.1;
   color: inherit;
@@ -5099,7 +5099,9 @@ a.thumbnail.active {
   padding-right: 35px;
 }
 .alert-dismissable .close,
-.alert-dismissible .close {
+.alert-dismissible .close, 
+.alert-dismissable .customClose,
+.alert-dismissible .customClose {
   position: relative;
   top: -2px;
   right: -21px;
@@ -5888,7 +5890,7 @@ button.list-group-item-danger.active:focus {
   padding: 9px;
   border-radius: 3px;
 }
-.close {
+.close, .customClose {
   float: right;
   font-size: 22.5px;
   font-weight: bold;
@@ -5906,7 +5908,8 @@ button.list-group-item-danger.active:focus {
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
-button.close {
+button.close,
+button.customClose {
   padding: 0;
   cursor: pointer;
   background: transparent;
@@ -6042,7 +6045,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Arial", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -6160,7 +6163,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Arial", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -7009,6 +7012,17 @@ input:focus {
 }
 .close:hover,
 .close:focus {
+  color: #fff;
+  opacity: 1;
+}
+/** ADDED FOR JVA ALERTS **/
+.customClose {
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.4;
+}
+.customClose:hover,
+.customClose:focus {
   color: #fff;
   opacity: 1;
 }

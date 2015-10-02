@@ -77,7 +77,7 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				'class'=>'col-sm-5',
 				'widgetOptions' => array(
 					'htmlOptions' => array(
-						'id' => 'jvaCustNumDesc',
+						'id' => 'jvaAddress',
 					)
 				)
 			)

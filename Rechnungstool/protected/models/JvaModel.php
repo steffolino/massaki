@@ -204,6 +204,7 @@ class JvaModel extends CFormModel
 	
 	public function updateJva($name,$nameExt,$address,$footer,$custNum,$custNumDesc,$col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$col9,$col10,$col11,$col12){
 		$result = "false";
+
 		$jvaCol1 = $this->getColIdByName($col1);
 		$jvaCol2 = $this->getColIdByName($col2);
 		$jvaCol3 = $this->getColIdByName($col3);
@@ -239,8 +240,7 @@ class JvaModel extends CFormModel
 		$updateJva->defaultColConfig->col11 = $jvaCol11;
 		$updateJva->defaultColConfig->col12 = $jvaCol12;
 		$updateJva->defaultColConfig->save();
-		
-		
+				
 		//$updateJva->jvaColConfig = $updateJva->defaultColConfig->colConfigId;
 		$result = $updateJva->save();
 		

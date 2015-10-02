@@ -6,13 +6,13 @@
 	echo '
 	<div class="row col-md-10 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
 		<div id="successAlert" class="col-md-12 col-md-offset-0 alert alert-success" style="display:none; text-align:center;">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<button type="button" class="customClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 style="margin-top: 10px; margin-bottom:10px;" id="successAlertContent"></h4>
 		</div>
 	</div>
 	<div class="row col-md-10 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
 		<div id="errorAlert" class="col-md-12 col-md-offset-0 alert alert-danger" style="display:none; text-align:center;">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<button type="button" class="customClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 style="margin-top:10px; margin-bottom:10px;" id="errorAlertContent"></h4>
 		</div>
 	</div>';
@@ -150,6 +150,13 @@
 //TODO: put in extra file
 	$(document).ready(function () {
 		
+		$(".customClose").on('click', function (e) {
+			console.log("closing");
+			e.preventDefault();
+			parent = $(this).closest('.alert');
+			parent.slideUp('fast');
+		})
+		
 		
 		
 		var selectedJva;
@@ -249,6 +256,7 @@
 		var  jvaDataArray =[];		
 				
 		if($("#jvaDetailsEditContent").is(":visible")){	
+		console.log("is visibe");
 		jvaDataArray.push($('#jvaName').val());
 		jvaDataArray.push($('#jvaNameExt').val());
 		jvaDataArray.push($('#jvaCustNum').val());
@@ -267,6 +275,7 @@
 		jvaDataArray.push($('#colName10 option:selected').text());
 		jvaDataArray.push($('#colName11 option:selected').text());
 		jvaDataArray.push($('#colName12 option:selected').text());
+		console.log(jvaDataArray);
 			$.ajax({
 				method: "POST",
 				url: "index.php?r=jva/saveJVAEditForm",
@@ -274,6 +283,7 @@
 				data: {data: jvaDataArray}
 			})
 			.done(function( data ) {
+				console.log("success");
 				$("#successAlertContent").html('JVA erfolgreich bearbeitet.')
 				$("#successAlert").slideDown('fast');
 			  });
