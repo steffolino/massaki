@@ -5,8 +5,26 @@
 <!--div class=row>
 <p> test head </p>
 </div-->
-
+<style>
+.thumbnail {
+	transition: box-shadow 0.75s;
+	-webkit-transition: box-shadow 0.75s;
+}
+.thumbnail:hover,.thumbnail:focus {
+	box-shadow: 0 24px 17px 0 rgba(0, 0, 0, 0.4), 0 18px 20px 0 rgba(0, 0, 0, 0.38);
+}
+</style>
 <!-- MAIN -->
+<div class="row">
+	<div class="jumbotron col-md-2 col-md-offset-5">
+		<?php
+				echo TbHtml::button('Aktion starten', array(
+				'color' => TbHtml::BUTTON_COLOR_PRIMARY,
+				'submit' => Yii::app()->createUrl('pdf/createPDF')
+			));
+		?>
+	</div>
+</div>
 <div class=row>
 	<div class="jumbotron col-md-10 col-md-offset-1">
 		<div class=row>

@@ -49,17 +49,12 @@
   
 	</div><!-- mainmenu -->
 	
-			),
-		)); 
-		?>
-	</div><!-- mainmenu -->
-
 	<?php echo $content; ?>
 
 	<div class="clear"></div>
 
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by Stefan Stretz - Medientechnik<br/>
+	<!--div id="footer hidden-print" media="screen">
+		Copyright &copy; <?php //echo date('Y'); ?> by Stefan Stretz - Medientechnik<br/>
 	</div><!-- footer -->
 
 </div><!-- page -->
