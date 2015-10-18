@@ -75,8 +75,9 @@ class DocumentImplementierung extends Document
 	}
 	
 	public function getColumnValuesPerSelectedJva($jvaId){
-		
-		
+		$jva = new JvaModel;
+		$jva = $jva->getJvaById($jvaId);
+		return $jva;
 	}
 	
 	

@@ -25,8 +25,8 @@ class DocumentController extends Controller
 		$jvaId = 0;
 		$docType = "Gutschrift";
 		$newDoc = new DocumentImplementierung;
-		$result = $newDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows);
-		
+		//$result = $newDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows);
+		$result = $newDoc->getColumnValuesPerSelectedJva($jvaId);
 		$this->render('enterNewDoc',array('allRows'=>$allRows, 'result'=>$result));
 	}
 	// Uncomment the following methods and override them if needed
