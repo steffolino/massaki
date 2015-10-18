@@ -1,24 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "lastusedcounter".
+ * This is the model class for table "yearcounter".
  *
- * The followings are the available columns in table 'lastusedcounter':
- * @property integer $lastUsedCounterId
- * @property integer $lastUsedCounterStatus
- * @property string $lastUsedCounterName
+ * The followings are the available columns in table 'yearcounter':
+ * @property integer $yearCounterId
+ * @property string $yearCounter
  *
  * The followings are the available model relations:
- * @property Counterconfig[] $counterconfigs
+ * @property Document[] $documents
  */
-class Lastusedcounter extends CActiveRecord
+class Yearcounter extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'lastusedcounter';
+		return 'yearcounter';
 	}
 
 	/**
@@ -29,12 +28,11 @@ class Lastusedcounter extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('lastUsedCounterStatus', 'required'),
-			array('lastUsedCounterStatus', 'numerical', 'integerOnly'=>true),
-			array('lastUsedCounterName', 'length', 'max'=>45),
+			array('yearCounter', 'required'),
+			array('yearCounter', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('lastUsedCounterId, lastUsedCounterStatus, lastUsedCounterName', 'safe', 'on'=>'search'),
+			array('yearCounterId, yearCounter', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +44,7 @@ class Lastusedcounter extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'counterconfigs' => array(self::HAS_MANY, 'Counterconfig', 'counterTypeId'),
+			'documents' => array(self::HAS_MANY, 'Document', 'yearCounter'),
 		);
 	}
 
@@ -56,9 +54,8 @@ class Lastusedcounter extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'lastUsedCounterId' => 'Last Used Counter',
-			'lastUsedCounterStatus' => 'Last Used Counter Status',
-			'lastUsedCounterName' => 'Last Used Counter Name',
+			'yearCounterId' => 'Year Counter',
+			'yearCounter' => 'Year Counter',
 		);
 	}
 
@@ -80,9 +77,8 @@ class Lastusedcounter extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('lastUsedCounterId',$this->lastUsedCounterId);
-		$criteria->compare('lastUsedCounterStatus',$this->lastUsedCounterStatus);
-		$criteria->compare('lastUsedCounterName',$this->lastUsedCounterName,true);
+		$criteria->compare('yearCounterId',$this->yearCounterId);
+		$criteria->compare('yearCounter',$this->yearCounter,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -93,7 +89,7 @@ class Lastusedcounter extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Lastusedcounter the static model class
+	 * @return Yearcounter the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

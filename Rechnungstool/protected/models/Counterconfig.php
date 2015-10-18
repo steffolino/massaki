@@ -1,33 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "document".
+ * This is the model class for table "counterconfig".
  *
- * The followings are the available columns in table 'document':
- * @property integer $documentId
- * @property string $counter
- * @property integer $yearCounter
- * @property integer $jvaId
+ * The followings are the available columns in table 'counterconfig':
+ * @property integer $idCounterConfig
  * @property integer $docTypeId
- * @property string $pdf_location
- * @property string $contact_person
- * @property string $printed
+ * @property integer $counterTypeId
  *
  * The followings are the available model relations:
- * @property Collectiveinvoice[] $collectiveinvoices
+ * @property Lastusedcounter $counterType
  * @property Doctype $docType
- * @property Jvadata $jva
- * @property Yearcounter $yearCounter0
- * @property Documentvalues[] $documentvalues
  */
-class Document extends CActiveRecord
+class Counterconfig extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'document';
+		return 'counterconfig';
 	}
 
 	/**
@@ -38,14 +30,11 @@ class Document extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('counter, yearCounter, jvaId, docTypeId', 'required'),
-			array('yearCounter, jvaId, docTypeId', 'numerical', 'integerOnly'=>true),
-			array('counter', 'length', 'max'=>45),
-			array('pdf_location, contact_person', 'length', 'max'=>255),
-			array('printed', 'length', 'max'=>1),
+			array('docTypeId, counterTypeId', 'required'),
+			array('docTypeId, counterTypeId', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('documentId, counter, yearCounter, jvaId, docTypeId, pdf_location, contact_person, printed', 'safe', 'on'=>'search'),
+			array('idCounterConfig, docTypeId, counterTypeId', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,11 +46,8 @@ class Document extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'collectiveinvoices' => array(self::HAS_MANY, 'Collectiveinvoice', 'deliveryNoteId'),
+			'counterType' => array(self::BELONGS_TO, 'Lastusedcounter', 'counterTypeId'),
 			'docType' => array(self::BELONGS_TO, 'Doctype', 'docTypeId'),
-			'jva' => array(self::BELONGS_TO, 'Jvadata', 'jvaId'),
-			'yearCounter0' => array(self::BELONGS_TO, 'Yearcounter', 'yearCounter'),
-			'documentvalues' => array(self::HAS_MANY, 'Documentvalues', 'documentId'),
 		);
 	}
 
@@ -71,14 +57,9 @@ class Document extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'documentId' => 'Document',
-			'counter' => 'Counter',
-			'yearCounter' => 'Year Counter',
-			'jvaId' => 'Jva',
+			'idCounterConfig' => 'Id Counter Config',
 			'docTypeId' => 'Doc Type',
-			'pdf_location' => 'Pdf Location',
-			'contact_person' => 'Contact Person',
-			'printed' => 'Printed',
+			'counterTypeId' => 'Counter Type',
 		);
 	}
 
@@ -100,14 +81,9 @@ class Document extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('documentId',$this->documentId);
-		$criteria->compare('counter',$this->counter,true);
-		$criteria->compare('yearCounter',$this->yearCounter);
-		$criteria->compare('jvaId',$this->jvaId);
+		$criteria->compare('idCounterConfig',$this->idCounterConfig);
 		$criteria->compare('docTypeId',$this->docTypeId);
-		$criteria->compare('pdf_location',$this->pdf_location,true);
-		$criteria->compare('contact_person',$this->contact_person,true);
-		$criteria->compare('printed',$this->printed,true);
+		$criteria->compare('counterTypeId',$this->counterTypeId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -118,7 +94,7 @@ class Document extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Document the static model class
+	 * @return Counterconfig the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

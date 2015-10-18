@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "countertype".
+ * This is the model class for table "doctype".
  *
- * The followings are the available columns in table 'countertype':
- * @property integer $counterTypeId
- * @property string $counterType
+ * The followings are the available columns in table 'doctype':
+ * @property integer $docTypeId
+ * @property string $docTypeName
  *
  * The followings are the available model relations:
+ * @property Counterconfig[] $counterconfigs
  * @property Document[] $documents
- * @property Lastusedcounter[] $lastusedcounters
  */
-class Countertype extends CActiveRecord
+class Doctype extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'countertype';
+		return 'doctype';
 	}
 
 	/**
@@ -29,11 +29,10 @@ class Countertype extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('counterType', 'required'),
-			array('counterType', 'length', 'max'=>45),
+			array('docTypeName', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('counterTypeId, counterType', 'safe', 'on'=>'search'),
+			array('docTypeId, docTypeName', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +44,8 @@ class Countertype extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'documents' => array(self::HAS_MANY, 'Document', 'counterTypeId'),
-			'lastusedcounters' => array(self::HAS_MANY, 'Lastusedcounter', 'lastUsedCounterTypeId'),
+			'counterconfigs' => array(self::HAS_MANY, 'Counterconfig', 'docTypeId'),
+			'documents' => array(self::HAS_MANY, 'Document', 'docTypeId'),
 		);
 	}
 
@@ -56,8 +55,8 @@ class Countertype extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'counterTypeId' => 'Counter Type',
-			'counterType' => 'Counter Type',
+			'docTypeId' => 'Doc Type',
+			'docTypeName' => 'Doc Type Name',
 		);
 	}
 
@@ -79,8 +78,8 @@ class Countertype extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('counterTypeId',$this->counterTypeId);
-		$criteria->compare('counterType',$this->counterType,true);
+		$criteria->compare('docTypeId',$this->docTypeId);
+		$criteria->compare('docTypeName',$this->docTypeName,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,7 +90,7 @@ class Countertype extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Countertype the static model class
+	 * @return Doctype the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

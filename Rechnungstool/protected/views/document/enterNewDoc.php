@@ -35,6 +35,16 @@
 									</div>
 									</form>
 							</div>
+							<!-- TODO: Delete this div....only for testing purpose -->
+							<div id ="testDiv">
+							<?php
+							echo "<pre>";
+								var_dump($result);
+							echo "</pre>";
+							
+							
+							?>
+							</div>
 							<br>
 							<div id="docContentEmpty" class="panel-content">
 								<div class="panel panel-danger">
