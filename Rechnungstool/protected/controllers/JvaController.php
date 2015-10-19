@@ -147,4 +147,16 @@ class JvaController extends Controller
 		// $jvaEditFormModel="";
 		 $this->renderPartial('_jvaList', array('jvaListModel' => $jvaList), false, true);
 	}
+	
+	public function actionGetJvaAsJson () {
+		if(isset($_GET['jvaSearchTerm'])) {
+			$searchTerm = htmlspecialchars($_GET['jvaSearchTerm']);
+			$jvaModel = new JVAModel();
+			$jvaNamesArray = $jvaModel->getAllJvaNames($searchTerm);
+			// $jvaNamesArray = $jvaModel->allJvas;
+			echo CJSON::encode($jvaNamesArray);
+			return;
+		}
+		echo "Error in Controller";
+	}
 }

@@ -98,6 +98,10 @@ class JvaModel extends CFormModel
 	public function getJvaByName($name, $ext){
 		return JvaData::model()->find('jvaName=:jvaName AND jvaNameExt=:jvaNameExt',array(':jvaName'=>$name, 'jvaNameExt'=>$ext));
 	}
+
+	public function getAllJvaNames($name){
+		return JvaData::model()->findAll('jvaName LIKE :jvaName',array(':jvaName'=> '%'.$name.'%'));
+	}
 	
 	public function getJvaByCustNum($custNum){
 		return JvaData::model()->find('jvaCustNum=:jvaCustNum',array(':jvaCustNum'=>$custNum));

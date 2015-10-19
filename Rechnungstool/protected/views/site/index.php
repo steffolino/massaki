@@ -26,7 +26,7 @@
 	</div>
 </div>
 <div class=row>
-	<div class="jumbotron col-md-10 col-md-offset-1">
+	<div class="jumbotron col-md-12">
 		<div class=row>
 			<div class="col-md-8 col-md-offset-2" style="text-align:center">
 				<!--h2>Willkommen</h2-->
