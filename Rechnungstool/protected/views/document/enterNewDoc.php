@@ -63,7 +63,8 @@
 						<div class="col-md-2 ">
 								 <div class="input-group input-group-sm">
 								  <label for="Nummernkreis">Nummernkreis</label>
-								  <select class="form-control" id="Nummernkreis">
+								  <select class="form-control" placeholder="--Nummernkreis--" id="Nummernkreis">
+									<option disabled selected value=''>-- Nummernkreis --</option>
 									<option value='ik'>IK</option>
 									<option value='ek'>EK</option>
 									<option value='reg'>Normal</option>
@@ -119,16 +120,19 @@
 			
 	});
 	
-	$(document).on("click", "#docSelection form .btn-group .btn", function () {
+	$(document).on("click", "#docSelection .btn-group .btn", function () {
+			console.log("gotit");
 			$(this).addClass('active');
 			$(this).siblings('.btn').removeClass('active');
 	});
 
-	$(document).on("mouseenter", "#docSelection form .btn-group .btn", function () {
+	$(document).on("mouseenter", "#docSelection .btn-group .btn", function () {
+			console.log("gotit");
 			$(this).addClass('btn-primary');
 	});
 
-	$(document).on("mouseleave", "#docSelection form .btn-group .btn", function () {
+	$(document).on("mouseleave", "#docSelection .btn-group .btn", function () {
+			console.log("gotit");
 			$(this).removeClass('btn-primary');
 	});
 		
