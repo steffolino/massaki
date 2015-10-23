@@ -7,7 +7,7 @@
 <div class=row>
 		<div class="col-md-12 panel panel-primary">
 				<div class="row panel-heading">
-					<form id="invoiceMeta">
+					<form id="docMeta">
 						<div class="col-md-3">
 							<label>JVA Name:<br/>
 							<?php
@@ -16,6 +16,7 @@
 									array(
 										'asDropDownList' => false,
 										'name' => 'jvaName',
+										'id' => 'jvaName',
 										'options' => array(
 											'width' => '260px',
 											'minimumInputLength'=>'4',
@@ -63,7 +64,7 @@
 						<div class="col-md-2 ">
 								 <div class="input-group input-group-sm">
 								  <label for="Nummernkreis">Nummernkreis</label>
-								  <select class="form-control" placeholder="--Nummernkreis--" id="Nummernkreis">
+								  <select class="form-control" placeholder="--Nummernkreis--" id="nummernkreisSelect">
 									<option disabled selected value=''>-- Nummernkreis --</option>
 									<option value='ik'>IK</option>
 									<option value='ek'>EK</option>
@@ -74,19 +75,19 @@
 						</div>
 					</div>
 				</form>
-					<div id="docContentEmpty" class="row panel-body">
-						Bitte waehlen Sie einen Dokument-Typ
+					<div id="docContentEmpty" class="row panel-body panel-body-exclusive">
+							<h4 style="text-align: center">Bitte waehlen Sie einen <b>JVA-Namen</b>, einen <b>Dokumenten-Typ</b> und einen <b>Nummernkreis</b>.</h4>
 					</div>
-					<div id="docContentInvoice" class="row panel-body">
+					<div id="docContentInvoice" class="row panel-body panel-body-exclusive">
 						<?php $this->renderPartial('_invoice'); ?>
 					</div>
-					<div id="docContentCollectiveInvoice" class="row panel-body">
+					<div id="docContentCollectiveInvoice" class="row panel-body panel-body-exclusive">
 						<?php $this->renderPartial('_collectiveInvoice'); ?>
 					</div>
-					<div id="docContentDeliveryNotice" class="row panel-body">
+					<div id="docContentDeliveryNotice" class="row panel-body panel-body-exclusive">
 						<?php $this->renderPartial('_deliveryNotice'); ?>
 					</div>
-					<div id="docContentCreditNote" class="row panel-body">
+					<div id="docContentCreditNote" class="row panel-body panel-body-exclusive">
 						<?php $this->renderPartial('_creditNote'); ?>
 					</div>
 					<div class="row panel-footer">
@@ -103,82 +104,84 @@
 </div>	
 	
 <script>
+
 	$(document).ready(function () {
-		showCorrectDocContent("empty");
-		$("#newInvoiceRadio").on('click',function(){
-			showCorrectDocContent("invoice");
-		});
-		$("#newCollectiveInvoiceRadio").on('click',function(){
-				showCorrectDocContent("colInvoice");
-		});
-		$("#newDeliveryNoticeRadio").on('click',function(){
-			showCorrectDocContent("delNot");
-		});
-		$("#newCreditNoteRadio").on('click',function(){
-			showCorrectDocContent("credNot");
-		});
-			
+		$(".panel-body-exclusive").hide();
+		$("#docContentEmpty").show();
+	})
+	
+	$(document).on("change", "#jvaName, #nummernkreisSelect", function () {
+			if(readyWhenYouAre()) {	
+				showCorrectDocContent();
+		}
 	});
 	
 	$(document).on("click", "#docSelection .btn-group .btn", function () {
-			console.log("gotit");
 			$(this).addClass('active');
 			$(this).siblings('.btn').removeClass('active');
+			if(readyWhenYouAre()) {
+				showCorrectDocContent();
+			}
 	});
 
 	$(document).on("mouseenter", "#docSelection .btn-group .btn", function () {
-			console.log("gotit");
 			$(this).addClass('btn-primary');
 	});
 
 	$(document).on("mouseleave", "#docSelection .btn-group .btn", function () {
-			console.log("gotit");
 			$(this).removeClass('btn-primary');
 	});
+	
+	function readyWhenYouAre() {
+		var nameSet = $("#select2-chosen-1").text();
+		var nrKreisSet = $("#nummernkreisSelect").val();
+		var docTypeSet = false;
+		$("#docSelection .btn").each(function() {
+			if($(this).hasClass('active')) {
+				docTypeSet = true;
+			}
+		});
+		if((nameSet !== "JVA Name" && nameSet !== "" && nameSet.length > 3) && nrKreisSet !== null && docTypeSet === true) {
+			console.log("readyTogo: "+nameSet + " " + nrKreisSet + " " + docTypeSet);
+			return true;
+		} else {
+			console.log("nono: "+nameSet + " " + nrKreisSet + " " + docTypeSet);
+			return false;
+		}
+	}
 		
-	function showCorrectDocContent(radio){
+	function showCorrectDocContent(){
+		var radio = "empty";
+		$("#docSelection .btn").each(function() {
+			if($(this).hasClass('active')) {
+				radio = "#"+$(this).attr('id');
+			}
+		});
+		console.log(radio);
 		switch(radio){
 			case "empty":
+				$("#docContentEmpty").siblings('.panel-body-exclusive').hide();
 				$("#docContentEmpty").show();
-				$("#docContentInvoice").hide();
-				$("#docContentCollectiveInvoice").hide();
-				$("#docContentDeliveryNotice").hide();
-				$("#docContentCreditNote").hide();
 				break;
-			case "invoice":
-				$("#docContentEmpty").hide();
+			case "#newInvoiceRadio":
+				$("#docContentInvoice").siblings('.panel-body-exclusive').hide();
 				$("#docContentInvoice").show();
-				$("#docContentCollectiveInvoice").hide();
-				$("#docContentDeliveryNotice").hide();
-				$("#docContentCreditNote").hide();
 				break;
-			case "colInvoice":
-				$("#docContentEmpty").hide();
-				$("#docContentInvoice").hide();
+			case "#newCollectiveInvoiceRadio":
+				$("#docContentCollectiveInvoice").siblings('.panel-body-exclusive').hide();
 				$("#docContentCollectiveInvoice").show();
-				$("#docContentDeliveryNotice").hide();
-				$("#docContentCreditNote").hide();
 				break;
-			case "delNot":
-				$("#docContentEmpty").hide();
-				$("#docContentInvoice").hide();
-				$("#docContentCollectiveInvoice").hide();
+			case "#newDeliveryNoticeRadio":
+				$("#docContentDeliveryNotice").siblings('.panel-body-exclusive').hide();
 				$("#docContentDeliveryNotice").show();
-				$("#docContentCreditNote").hide();
 				break;
-			case "credNot":
-				$("#docContentEmpty").hide();
-				$("#docContentInvoice").hide();
-				$("#docContentCollectiveInvoice").hide();
-				$("#docContentDeliveryNotice").hide();
+			case "#newCreditNoteRadio":
+				$("#docContentCreditNote").siblings('.panel-body-exclusive').hide();
 				$("#docContentCreditNote").show();
 				break;
 			default:
+				$("#docContentEmpty").siblings('.panel-body-exclusive').hide();
 				$("#docContentEmpty").show();
-				$("#docContentInvoice").hide();
-				$("#docContentCollectiveInvoice").hide();
-				$("#docContentDeliveryNotice").hide();
-				$("#docContentCreditNote").hide();
 				break;
 		}
 		

@@ -13,6 +13,7 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 ?>
 <script>
 $(document).ready(function () {
+	console.log("document ready");
 	var data = [
 	  ['123-456-7', 'Duschgel', '', '', 3.50],
 	  ['123-456-7', 'Tabak', '', '', 6.50],
@@ -32,14 +33,14 @@ $(document).ready(function () {
 
 	var container = document.getElementById('example');
 	var hot = new Handsontable(container, {
-	  data: data,
-	  // language: de,
-	  minSpareRows: 0,
-	  formulas: true,
-	  rowHeaders: true,
-	  colHeaders: ['Kunde ID', 'Artikel', 'MwSt 0%', 'MwSt 7%', 'MwSt 19%'],
-	  colWidths: [350, 350, 100, 100, 100],
-	  contextMenu: true,
+		  data: data,
+		  // language: de,
+		  minSpareRows: 0,
+		  formulas: true,
+		  rowHeaders: true,
+		  colHeaders: ['Kunde ID', 'Artikel', 'MwSt 0%', 'MwSt 7%', 'MwSt 19%'],
+		  colWidths: [350, 350, 100, 100, 100],
+		  contextMenu: true,
 	});
 	
 	hot.updateSettings({
@@ -63,18 +64,17 @@ $(document).ready(function () {
 <?php 
 echo '
 <div class="panel panel-info">
-							<div class="panel-heading">
-								<h3 class="panel-heading">Rechnung</h3>
-							</div>
-							<div class="panel-footer">
-								<div class="row">
-									<div class="col-md-12">
-										<form id="items">
-										<div id="example">
-										</form>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>';						
+	<div class="panel-heading">
+		<h3 class="panel-heading">Rechnung</h3>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12">
+				<form id="items">
+				<div id="example"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>';						
 ?>
