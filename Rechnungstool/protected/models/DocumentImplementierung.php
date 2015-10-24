@@ -4,7 +4,7 @@
 class DocumentImplementierung extends Document
 {
 	
-	public function insertNewDocument($docType,$jvaId,$contactPerson,$arrayOfValuesAndHeaders){
+	public function insertNewDocument($docType,$jvaId,$contactPerson,$arrayOfValuesAndHeaders,$counterType){
 		$newDoc = new Document;
 		$newDoc->contact_person = $contactPerson;
 		$newDoc->jva = $jvaId;
@@ -13,10 +13,9 @@ class DocumentImplementierung extends Document
 		$docTypeId = $docTypeImpl->getDocIdByName($docType);	
 		$newDoc->docType = $docTypeId;
 		$newDoc->docTypeId = $docTypeId;
-		$counterType = new CounterconfigImplementierung;
-		$counterTypeId = $counterType->getCounterIdWithDocType($docTypeId);
 		$lastUsedCounterImpl = new LastusedcounterImplementierung;
-		$lastUsedCounter = $lastUsedCounterImpl->getLastUsedCounterById($counterTypeId);
+		$lastUsedCounter = $lastUsedCounterImpl->getLastUsedCounterByName(strtoupper($counterType));
+		$counterTypeId = $lastUsedCounter->lastUsedCounterId;
 		$counterName = $lastUsedCounter->lastUsedCounterName;
 		$counterStatus = $lastUsedCounter->lastUsedCounterStatus;
 		$lastUsedCounterImpl->incrementCounter($counterTypeId);

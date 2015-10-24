@@ -30,7 +30,7 @@
 															return {
 																results: $.map(data, function (item) {
 																	return {
-																		text: item.jvaName + " " + item.jvaNameExt,
+																		text: item.jvaName + " | " + item.jvaNameExt,
 																		value: item.jvaDataId,
 																		id: item.jvaDataId
 																	}
@@ -74,6 +74,7 @@
 								</div>
 						</div>
 					</div>
+				
 				</form>
 					<div id="docContentEmpty" class="row panel-body panel-body-exclusive">
 							<h4 style="text-align: center">Bitte waehlen Sie einen <b>JVA-Namen</b>, einen <b>Dokumenten-Typ</b> und einen <b>Nummernkreis</b>.</h4>
@@ -94,8 +95,8 @@
 							<div class="row">
 								<div class="col-md-4 col-md-offset-8">
 									<div class="btn-group btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
-										<a role=button class="btn btn-danger"><i class="fa fa-close"> Abbrechen</i></a>
-										<a role=button class="btn btn-success"><i class="fa fa-check"> Schreiben</i></a>
+										<a role=button class="btn btn-danger"><i class="fa fa-close"id="cancelDoc"> Abbrechen</i></a>
+										<a role=button class="btn btn-success"><i class="fa fa-check" id="writingDoc"> Schreiben</i></a>
 									</div>
 								</div>
 							</div>
@@ -104,7 +105,9 @@
 </div>	
 	
 <script>
-
+		
+	
+	
 	$(document).ready(function () {
 		$(".panel-body-exclusive").hide();
 		$("#docContentEmpty").show();

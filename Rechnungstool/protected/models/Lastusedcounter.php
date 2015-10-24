@@ -7,9 +7,6 @@
  * @property integer $lastUsedCounterId
  * @property integer $lastUsedCounterStatus
  * @property string $lastUsedCounterName
- *
- * The followings are the available model relations:
- * @property Counterconfig[] $counterconfigs
  */
 class Lastusedcounter extends CActiveRecord
 {
@@ -29,7 +26,7 @@ class Lastusedcounter extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('lastUsedCounterStatus', 'required'),
+			array('lastUsedCounterStatus, lastUsedCounterName', 'required'),
 			array('lastUsedCounterStatus', 'numerical', 'integerOnly'=>true),
 			array('lastUsedCounterName', 'length', 'max'=>45),
 			// The following rule is used by search().
@@ -46,7 +43,6 @@ class Lastusedcounter extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'counterconfigs' => array(self::HAS_MANY, 'Counterconfig', 'counterTypeId'),
 		);
 	}
 

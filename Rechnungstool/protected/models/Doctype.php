@@ -8,7 +8,6 @@
  * @property string $docTypeName
  *
  * The followings are the available model relations:
- * @property Counterconfig[] $counterconfigs
  * @property Document[] $documents
  */
 class Doctype extends CActiveRecord
@@ -44,7 +43,6 @@ class Doctype extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'counterconfigs' => array(self::HAS_MANY, 'Counterconfig', 'docTypeId'),
 			'documents' => array(self::HAS_MANY, 'Document', 'docTypeId'),
 		);
 	}

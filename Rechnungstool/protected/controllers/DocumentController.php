@@ -24,10 +24,55 @@ class DocumentController extends Controller
 		$contactPerson = "Alfred E. Neumann";
 		$jvaId = 0;
 		$docType = "Gutschrift";
+		$counterType = "IK";
 		$newDoc = new DocumentImplementierung;
-		//$result = $newDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows);
+		//$result = $newDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType);
 		$result = $newDoc->getColumnValuesPerSelectedJva($jvaId);
 		$this->render('enterNewDoc',array('allRows'=>$allRows, 'result'=>$result));
+	}
+	
+	
+	public function actionGetTableData()
+	{	
+		$jvaModel = new JvaModel;
+		$counterType = $_POST["counterType"];
+		$docType = $_POST["docType"];
+		$jvaNamePlusExt = $_POST["jva"];
+		$jvaNamePlusExtArray = array();
+		$jvaNamePlusExtArray = explode("|",$jvaNamePlusExt);
+		$jvaName = $jvaNamePlusExtArray[0];
+		$jvaExt = $jvaNamePlusExtArray[1];
+		$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
+		
+		$jvaId = $jva->jvaDataId;
+		$header = $_POST["headers"];
+		$content = $_POST["content"];
+		
+		$allRows = array();
+		$row  = array();
+		$counter = 0;
+		foreach($content as $zeile){
+			foreach($zeile as $cell){
+				array_push($row,$cell);
+				$counter++;
+			}
+			for($counter;$counter <= 11;$counter++){
+				array_push($row,NULL);
+			}
+			$counter++;
+			foreach($header as $colHeader){
+				array_push($row,$colHeader);
+				$counter++;
+			}
+			for($counter;$counter <= 23;$counter++){
+				array_push($row,NULL);
+			}
+			$allRows = array_merge($allRows,$row);
+			
+			$counter = 0;
+		}
+		$neuDoc = new DocumentImplementierung;
+		//$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType);
 	}
 	// Uncomment the following methods and override them if needed
 	/*
