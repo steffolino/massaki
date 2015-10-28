@@ -3,6 +3,7 @@
 		<a id="scrollUpa" style="cursor:pointer; "><i alt="Scroll Top" class="fa fa-2x fa-angle-double-up"></i></a>
 	</div>
 </div>
+
 <!-- MAIN -->
 <div class=row>
 		<div class="col-md-12 panel panel-primary">

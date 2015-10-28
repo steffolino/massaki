@@ -15,16 +15,16 @@
 }
 </style>
 <!-- MAIN -->
-<div class="row">
+<!--div class="row">
 	<div class="jumbotron col-md-2 col-md-offset-5">
 		<?php
-				echo TbHtml::button('Aktion starten', array(
-				'color' => TbHtml::BUTTON_COLOR_PRIMARY,
-				'submit' => Yii::app()->createUrl('pdf/createPDF')
-			));
+				// echo TbHtml::button('Aktion starten', array(
+				// 'color' => TbHtml::BUTTON_COLOR_PRIMARY,
+				// 'submit' => Yii::app()->createUrl('pdf/createPDF')
+			// ));
 		?>
 	</div>
-</div>
+</div-->
 <div class=row>
 	<div class="jumbotron col-md-12">
 		<div class=row>
