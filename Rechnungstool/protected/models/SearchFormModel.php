@@ -5,7 +5,20 @@ class SearchFormModel extends CFormModel
 
    public $jvaName;
    public $docType;
-   public $startDate;
+   public $dateRange;
    public $endDate;
+   
+   	/**
+	 * Declares attribute labels.
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'freeSearchTerm'	=>	'Freitext-Suche',
+			'docType'	=>	'Dokument-Typ',
+			'dateRange'	=>	'Zeitraum',
+		);
+	}
+
 	
 }
