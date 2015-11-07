@@ -143,10 +143,41 @@
 		$("#docSelection .btn").each(function() {
 			if($(this).hasClass('active')) {
 				docTypeSet = true;
+				buttonPressed = $(this).text();
 			}
 		});
 		if((nameSet !== "JVA Name" && nameSet !== "" && nameSet.length > 3) && nrKreisSet !== null && docTypeSet === true) {
 			console.log("readyTogo: "+nameSet + " " + nrKreisSet + " " + docTypeSet);
+			$.ajax({
+				method: "POST",
+				type: "json",
+				url: "index.php?r=document/loadTableData",
+				data: { 	
+					jva: nameSet,
+									}
+			})
+			.done(function(data) {
+				alert(data);
+				switch(buttonPressed){
+					case "Rechnung":
+						loadInvoiceData(JSON.parse(data));
+						//alert("data Loaded");
+						break;
+					case "Sammelrechnung":
+					
+						break;
+					case "Lieferschein":
+						
+						break;
+					case "Gutschrift":
+					
+						break;
+					default:
+						break;
+					
+				}
+		
+		  });
 			return true;
 		} else {
 			console.log("nono: "+nameSet + " " + nrKreisSet + " " + docTypeSet);
@@ -190,6 +221,47 @@
 		}
 		
 	}
+	function loadInvoiceData(data){
+		
+		// console.log("document ready");
+		
+		
+		var boldAndAlignRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+			Handsontable.renderers.TextRenderer.apply(this, arguments);
+			td.style.fontWeight = 'bold';
+			td.style.verticalAlign = 'middle';
+			td.style.textAlign = 'center';
+		};
 
+		var container = document.getElementById('example');
+		var hot = new Handsontable(container, {
+			  data: data,
+			  // language: de,
+			  minSpareRows: 0,
+			  formulas: true,
+			  rowHeaders: true,
+			  colHeaders: header,
+			  colWidths: [350, 350, 100, 100, 100],
+			  contextMenu: true,
+		});
+		
+		hot.updateSettings({
+			cells: function (row, col, prop) {
+			  var cellProperties = {};
+			  if (hot.getDataAtCell(row, 1) === 'Gesamt') {
+				 cellProperties.readOnly = true;
+				 cellProperties.fontWeight = 'bold';
+				// cellProperties.renderer = boldAndAlignRenderer;
+			  }
+			  if ([0, 1, 2, 3, 4, 5].indexOf(row) !== -1 && col >= 2) {
+				cellProperties.type = 'numeric';
+				cellProperties.format = '000.00';
+			  }
+			  return cellProperties;
+			}
+	  })
+		
+		
+	}
 
 </script>

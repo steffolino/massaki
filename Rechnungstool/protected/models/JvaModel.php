@@ -265,5 +265,17 @@ class JvaModel extends CFormModel
 		
 	}
 	
+	public function getColNameById($id){
+			$col = ColDef::model()->find(
+				'colDefId=:colId',
+				array(':colId'=>$id)
+			);
+			if($col !== NULL){
+				return $col->colName;
+			}else{
+				return NULL;
+			}
+		
+	}
 	
 }

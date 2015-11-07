@@ -21,6 +21,7 @@ class DocumentImplementierung extends Document
 		$lastUsedCounterImpl->incrementCounter($counterTypeId);
 		$newDoc->counter = $counterName . " " . $counterStatus;
 		$newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
+		$newDoc->timeStamp = date('Y-m-d H:i:s');
 		$newDoc->save();
 		 
 		$docId = $newDoc->documentId;
@@ -80,7 +81,22 @@ class DocumentImplementierung extends Document
 	}
 	
 	
-	public function getLastUsedDocumentValues($jvaName,$jvaNameExt){
+	public function getLastUsedDocumentId($jvaName,$jvaNameExt){
+		$jva = new JvaModel;
+		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
+		$jvaId = $jvaObject->jvaDataId;
+		$docId = Document::model()->find(
+				'jvaId=:jvaId ORDER BY timeStamp DESC',
+				array(':jvaId'=>$jvaId)
+			);
+			if($docId !== NULL){
+				return $docId->documentId;
+			}else{
+				return NULL;
+			}
+			
+			
+			
 		
 		
 	}
