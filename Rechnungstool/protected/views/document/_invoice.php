@@ -7,7 +7,6 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full
 $cs->registerCssFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.css');
 $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/ruleJS.all.full.js');
 $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
-
 // C:\inetpub\wwwroot\massaki\Rechnungstool\js\handsontable-0.19.0\dist
 
 ?>
@@ -15,8 +14,6 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 
 $(document).ready(function () {
 	
-  
-  
   $(document).on("click","#writingDoc",function(){
 			//var $container = $('#example');
 			//var handsontable = $container.data('handsontable');
@@ -27,30 +24,32 @@ $(document).ready(function () {
 					buttonPressed = $(this).text();
 				}
 			});
+			
 			var content = hot.getData();
 			var header = hot.getSettings().colHeaders;
 			var counterType = $('#nummernkreisSelect option:selected').text();
 			var jva = $("#select2-chosen-1").text();
-			//alert(header);
-		$.ajax({
-		  method: "POST",
-		  type: "json",
-		  url: "index.php?r=document/getTableData",
-		  data: { 	content: content,
-					headers: header,
-					counterType : counterType,
-					docType: buttonPressed,
-					jva: jva,
-									}
-		})
-		  .done(function( data ) {
-				alert("data transferred to PHP");
 			
-		  });
-			
-			
-		
+		if($("#InvoiceExample").is(':visible')){
+			$.ajax({
+			  method: "POST",
+			  type: "json",
+			  url: "index.php?r=document/getTableData",
+			  data: { 	content: content,
+						headers: header,
+						counterType : counterType,
+						docType: buttonPressed,
+						jva: jva,
+										}
+			})
+			  .done(function( data ) {
+					alert("data transferred to PHP");
+				
+			  });	
+		}	
 	});
+  
+
 
 });
 </script>
@@ -64,7 +63,7 @@ echo '
 		<div class="row">
 			<div class="col-md-12">
 				<form id="items">
-				<div id="example" class="handsontable"></div>
+				<div id="InvoiceExample" class="handsontable"></div>
 				</form>
 			</div>
 		</div>

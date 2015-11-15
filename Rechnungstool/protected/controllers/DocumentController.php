@@ -34,6 +34,9 @@ class DocumentController extends Controller
 	public function actionLoadTableData(){
 		$jvaModel = new JvaModel;
 		$jvaNamePlusExt = $_POST["jva"];
+		$docTypeName = $_POST["docType"];
+		$docTypeImpl = new DoctypeImplementierung;
+		$docTypeId = $docTypeImpl->getDocIdByName($docTypeName);
 		$jvaNamePlusExtArray = array();
 		$jvaNamePlusExtArray = explode("|",$jvaNamePlusExt);
 		$jvaName = $jvaNamePlusExtArray[0];
@@ -110,7 +113,7 @@ class DocumentController extends Controller
 		}
 		$docValues = new DocumentvaluesImplementierung;
 		$doc = new DocumentImplementierung;
-		$lastUsedDocId = $doc->getLastUsedDocumentId(trim($jvaName),trim($jvaExt));
+		$lastUsedDocId = $doc->getLastUsedDocumentId(trim($jvaName),trim($jvaExt),$docTypeId);
 		$documentValues = $docValues->getDocumentValuesByDocumentId($lastUsedDocId);
 		
 		foreach($documentValues as $rows){
@@ -219,32 +222,8 @@ class DocumentController extends Controller
 			$counter = 0;
 		}
 		$neuDoc = new DocumentImplementierung;
+		//TODO: Remove the comment to test Inserting
 		//$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType);
 	}
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+	
 }

@@ -1,3 +1,7 @@
+<script>
+var hot;
+</script>
+
 <div class="row col-md-1 col-md-offset-11" style="position:fixed; z-index:6; bottom: 40px;">
 	<div class="pull-right">
 		<a id="scrollUpa" style="cursor:pointer; "><i alt="Scroll Top" class="fa fa-2x fa-angle-double-up"></i></a>
@@ -152,25 +156,27 @@
 				method: "POST",
 				type: "json",
 				url: "index.php?r=document/loadTableData",
-				data: { 	
+				data: { 
+					docType: buttonPressed,				
 					jva: nameSet,
+					
 									}
 			})
 			.done(function(data) {
-				alert(data);
+				//alert(data);
 				switch(buttonPressed){
 					case "Rechnung":
-						loadInvoiceData(JSON.parse(data));
+						loadInvoiceData(JSON.parse(data,buttonPressed));
 						//alert("data Loaded");
 						break;
 					case "Sammelrechnung":
-					
+						loadInvoiceData(JSON.parse(data,buttonPressed));
 						break;
 					case "Lieferschein":
-						
+						loadInvoiceData(JSON.parse(data,buttonPressed));
 						break;
 					case "Gutschrift":
-					
+						loadInvoiceData(JSON.parse(data,buttonPressed));
 						break;
 					default:
 						break;
@@ -221,9 +227,59 @@
 		}
 		
 	}
-	function loadInvoiceData(data){
+	function loadInvoiceData(data,docType){
 		
 		// console.log("document ready");
+		var header = data[0];
+		var headerLength = header.length;
+		var displayData = data[1];
+		if(jQuery.isEmptyObject(displayData)){
+			switch(headerLength){
+					case 0:
+						displayData = [];
+						break;
+					case 1:
+						displayData = [[""]];
+						break;
+					case 2:
+						displayData = [["",""]];
+						break;
+					case 3:
+						displayData = [["","",""]] 	;
+						break;
+					case 4:
+						displayData = [["","","",""]];
+						break;
+					case 5:
+						displayData = [["","","","",""]];
+						break;
+					case 6:
+						displayData = [["","","","","",""]];
+						break;
+					case 7:
+						displayData = [["","","","","","",""]];
+						break;
+					case 8:
+						displayData = [["","","","","","","",""]];
+						break;
+					case 9:
+						displayData = [["","","","","","","","",""]];
+						break;
+					case 10:
+						displayData = [["","","","","","","","","",""]];
+						break;
+					case 11:
+						displayData = [["","","","","","","","","","",""]];
+						break;
+					case 12:
+						displayData = [["","","","","","","","","","","",""]];
+						break;
+					default:
+						
+						break;
+			}
+			
+		}
 		
 		
 		var boldAndAlignRenderer = function (instance, td, row, col, prop, value, cellProperties) {
@@ -233,9 +289,27 @@
 			td.style.textAlign = 'center';
 		};
 
-		var container = document.getElementById('example');
-		var hot = new Handsontable(container, {
-			  data: data,
+		var container;
+		switch(buttonPressed){
+					case "Rechnung":
+						 container = document.getElementById('InvoiceExample');
+						break;
+					case "Sammelrechnung":
+						 container = document.getElementById('CollectiveInvoiceExample');
+						break;
+					case "Lieferschein":
+						 container = document.getElementById('DeliveryExample');
+						break;
+					case "Gutschrift":
+						container = document.getElementById('CreditExample');
+						break;
+					default:
+						break;
+					
+				}
+		if(!($(container).children().hasClass('ht_master handsontable'))){
+			hot = new Handsontable(container, {
+			  data: displayData,
 			  // language: de,
 			  minSpareRows: 0,
 			  formulas: true,
@@ -243,25 +317,33 @@
 			  colHeaders: header,
 			  colWidths: [350, 350, 100, 100, 100],
 			  contextMenu: true,
-		});
-		
-		hot.updateSettings({
-			cells: function (row, col, prop) {
-			  var cellProperties = {};
-			  if (hot.getDataAtCell(row, 1) === 'Gesamt') {
-				 cellProperties.readOnly = true;
-				 cellProperties.fontWeight = 'bold';
-				// cellProperties.renderer = boldAndAlignRenderer;
-			  }
-			  if ([0, 1, 2, 3, 4, 5].indexOf(row) !== -1 && col >= 2) {
-				cellProperties.type = 'numeric';
-				cellProperties.format = '000.00';
-			  }
-			  return cellProperties;
-			}
+			});   
+			hot.updateSettings({
+				cells: function (row, col, prop) {
+				  var cellProperties = {};
+				  if (hot.getDataAtCell(row, 1) === 'Gesamt') {
+					 cellProperties.readOnly = true;
+					 cellProperties.fontWeight = 'bold';
+					// cellProperties.renderer = boldAndAlignRenderer;
+				  }
+				  if ([0, 1, 2, 3, 4, 5].indexOf(row) !== -1 && col >= 2) {
+					cellProperties.type = 'numeric';
+					cellProperties.format = '000.00';
+				  }
+				  return cellProperties;
+				}
 	  })
+			
+		}
+		
+		
+		
 		
 		
 	}
+	
+	  
+	
+	
 
 </script>

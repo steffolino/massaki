@@ -81,13 +81,13 @@ class DocumentImplementierung extends Document
 	}
 	
 	
-	public function getLastUsedDocumentId($jvaName,$jvaNameExt){
+	public function getLastUsedDocumentId($jvaName,$jvaNameExt,$docType){
 		$jva = new JvaModel;
 		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
 		$jvaId = $jvaObject->jvaDataId;
 		$docId = Document::model()->find(
-				'jvaId=:jvaId ORDER BY timeStamp DESC',
-				array(':jvaId'=>$jvaId)
+				'jvaId=:jvaId AND docTypeId=:docType ORDER BY timeStamp DESC',
+				array(':jvaId'=>$jvaId,':docType'=>$docType)
 			);
 			if($docId !== NULL){
 				return $docId->documentId;
