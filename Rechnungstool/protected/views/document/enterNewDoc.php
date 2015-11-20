@@ -27,10 +27,10 @@ var hot;
 											'minimumInputLength'=>'4',
 											'placeholder' => 'JVA Name',
 											'ajax'       => array(
-													   'url'       => Yii::app()->controller->createUrl('jva/getJvaAsJson'),
+														'url'       => Yii::app()->controller->createUrl('jva/getJvaAsJson'),
 														'delay' => 300,
-													   'dataType'  => 'json',
-													   'data'      => 	'js:function(term, page) { return {jvaSearchTerm: term, page: page}; }',
+														'dataType'  => 'json',
+														'data'      => 	'js:function(term, page) { return {jvaSearchTerm: term, page: page}; }',
 														'results'	=>  'js:function (data) {
 															return {
 																results: $.map(data, function (item) {
@@ -159,8 +159,7 @@ var hot;
 				data: { 
 					docType: buttonPressed,				
 					jva: nameSet,
-					
-									}
+				}
 			})
 			.done(function(data) {
 				//alert(data);
@@ -198,7 +197,7 @@ var hot;
 				radio = "#"+$(this).attr('id');
 			}
 		});
-		console.log(radio);
+		// console.log(radio);
 		switch(radio){
 			case "empty":
 				$("#docContentEmpty").siblings('.panel-body-exclusive').hide();
@@ -232,6 +231,7 @@ var hot;
 		// console.log("document ready");
 		var header = data[0];
 		var headerLength = header.length;
+		console.log(headerLength);
 		var displayData = data[1];
 		if(jQuery.isEmptyObject(displayData)){
 			switch(headerLength){
@@ -248,7 +248,9 @@ var hot;
 						displayData = [["","",""]] 	;
 						break;
 					case 4:
-						displayData = [["","","",""]];
+						displayData = [
+													["","","",""]
+												];
 						break;
 					case 5:
 						displayData = [["","","","",""]];
@@ -275,7 +277,7 @@ var hot;
 						displayData = [["","","","","","","","","","","",""]];
 						break;
 					default:
-						
+						displayData = [[""]];						
 						break;
 			}
 			
@@ -306,44 +308,98 @@ var hot;
 					default:
 						break;
 					
-				}
+		}
+		
+				
 		if(!($(container).children().hasClass('ht_master handsontable'))){
+						
 			hot = new Handsontable(container, {
 			  data: displayData,
 			  // language: de,
-			  minSpareRows: 0,
+			  // minSpareRows: 1,
 			  formulas: true,
 			  rowHeaders: true,
 			  colHeaders: header,
-			  colWidths: [350, 350, 100, 100, 100],
+			  manualColumnResize: true,
+			  manualRowMove: true,
+			  colWidths: [160, 160, 160, 160, 100, 100, 100],
 			  contextMenu: true,
-			});   
-			hot.updateSettings({
-				cells: function (row, col, prop) {
-				  var cellProperties = {};
-				  if (hot.getDataAtCell(row, 1) === 'Gesamt') {
-					 cellProperties.readOnly = true;
-					 cellProperties.fontWeight = 'bold';
-					// cellProperties.renderer = boldAndAlignRenderer;
-				  }
-				  if ([0, 1, 2, 3, 4, 5].indexOf(row) !== -1 && col >= 2) {
-					cellProperties.type = 'numeric';
-					cellProperties.format = '000.00';
-				  }
-				  return cellProperties;
-				}
-	  })
+			}); 
 			
-		}
-		
-		
-		
-		
-		
+			var diffRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+				Handsontable.cellTypes['formula'].renderer.apply(this, arguments);
+				td.style.backgroundColor = '#c3f89c';
+				td.style.fontWeight = 'bold';
+			};
+			 var totalRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+				Handsontable.renderers.TextRenderer.apply(this, arguments);
+				// td.cellType = 'formula';
+				td.style.fontWeight = 'bold';
+				td.style.textAlign = 'right';
+		  };
+			
+			var plugin = hot.getPlugin('autoRowSize');
+			var plugin2 = hot.getPlugin('autoColumnSize');
+			var lastVisRow = plugin.getLastVisibleRow();
+			var lastVisCol = plugin2.getLastVisibleColumn();
+			
+			fakeValid = function (value, callback) {
+				setTimeout(function(){
+					callback(true);
+				}, 1000);
+			  };
+			
+			hot.updateSettings({
+				cells: 
+					function (row, col, prop) {						
+						var cellProperties = {};
+						//NOT LAST ROW, LAST 3 COLS
+						if (row !== parseInt(lastVisRow+1) && col > (lastVisCol - 3)) {
+							cellProperties.type = 'numeric';
+							cellProperties.format = '000.00';
+						}
+						//LAST ROW, NOT LAST 3 COLS
+						if(row == parseInt(lastVisRow+1) && col < (lastVisCol - 3)){
+							this.renderer = totalRenderer;
+						}
+						//LAST ROW, LAST 3 COLS
+						if(row == parseInt(lastVisRow+1) && col > (lastVisCol - 3)){
+							cellProperties.validator = fakeValid;
+							// cellProperties.renderer = totalRenderer;
+							cellProperties.format = '000.00';
+							cellProperties.type = 'numeric';
+						}
+						return cellProperties;
+					},
+			});
+			
+			Handsontable.hooks.add('afterCreateRow', createRowCallback, hot);
+		}		
+			
+		function createRowCallback () {
+				var plugin = hot.getPlugin('autoRowSize');
+				var plugin2 = hot.getPlugin('autoColumnSize');
+				var lastVisRow = plugin.getLastVisibleRow();
+				var lastVisCol = plugin2.getLastVisibleColumn();
+				console.log("lastRow: "+lastVisRow);
+
+			var a = 97;
+			var charArray = {};
+			for (var i = 0; i<26; i++) {
+				charArray[i] = String.fromCharCode(a + i);
+			}
+			// var tpl = ['Gesamt'];
+			for (var j = 0; j < headerLength; j++) {
+				if((headerLength - j) < 4) {
+					hot.setDataAtCell(parseInt(lastVisRow+1), j, '=SUM('+charArray[j]+'1:'+charArray[j]+parseInt(lastVisRow+1)+')');
+					hot.setDataAtCell(parseInt(lastVisRow+1), j, '=SUM('+charArray[j]+'1:'+charArray[j]+parseInt(lastVisRow+1)+')');
+					hot.setDataAtCell(parseInt(lastVisRow+1), j, '=SUM('+charArray[j]+'1:'+charArray[j]+parseInt(lastVisRow+1)+')');
+					console.log("pushing: " + (headerLength - j) +" at " + j);
+					console.log("Value at "+ parseInt(lastVisRow+1)+" "+j+" : "+hot.getValue(parseInt(lastVisRow+1), j));
+				}
+			}
+			hot.setDataAtCell(parseInt(lastVisRow+1), 0, 'Gesamt:');
+		}	
 	}
-	
-	  
-	
-	
 
 </script>

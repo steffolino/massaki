@@ -23,7 +23,8 @@ if(isset($jvaAddFormModel)){
 			echo $form->textFieldGroup($jvaAddFormModel,'jvaCustNum');
 			echo $form->textFieldGroup($jvaAddFormModel,'jvaCustNumDesc');
 			//TODO: doesnt work like this --> cf. jvaEditForm - labelEx
-			for($i=1;$i<13;$i++){
+			array_splice($colNames, -3);
+			for($i=1;$i<10;$i++){
 				echo $form->dropDownListGroup($jvaAddFormModel,'colName'.$i,array('widgetOptions'=>array('data'=>$colNames),'class'=>'col-sm-5','id'=>'addColName'.$i));
 			}
 			

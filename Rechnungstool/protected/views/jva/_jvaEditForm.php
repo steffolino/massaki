@@ -1,5 +1,8 @@
 <?php 
 if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !== ""){
+	
+	array_splice($colNames, -3);
+	
 	$form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 	'id'=>'jvaEditForm',
 	'type' => 'horizontal',
@@ -212,49 +215,49 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				),
 			)
 		);
-		echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef10,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 10',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->defaultColConfig->colDef10->colDefId => array('selected' => true)),
-						'id' => 'colName10',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef11,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 11',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'label' => 'DeiMudda',
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->defaultColConfig->colDef11->colDefId => array('selected' => true)),
-						'id' => 'colName11',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef12,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 12',
-				'widgetOptions' => array(
-					'data'=> CHtml::listData(ColDef::model()->findAll(), 'colDefId', 'colName'),//$colNames, 
-					'htmlOptions' => array(
-						'id' => 'colName12',
-						'options' => array($jvaEditFormModel->defaultColConfig->colDef12->colDefId => array('selected' => true)),
-					)
-				),
-			)
-		);
+		// echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef10,
+			// 'colName',
+			// array(
+				// 'class'=>'col-sm-5',
+				// 'label' => 'Spalte 10',
+				// 'widgetOptions' => array(
+					// 'data'=>$colNames, 
+					// 'htmlOptions' => array(
+						// 'options' => array($jvaEditFormModel->defaultColConfig->colDef10->colDefId => array('selected' => true)),
+						// 'id' => 'colName10',
+					// )
+				// ),
+			// )
+		// );
+		// echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef11,
+			// 'colName',
+			// array(
+				// 'class'=>'col-sm-5',
+				// 'label' => 'Spalte 11',
+				// 'widgetOptions' => array(
+					// 'data'=>$colNames, 
+					// 'label' => 'DeiMudda',
+					// 'htmlOptions' => array(
+						// 'options' => array($jvaEditFormModel->defaultColConfig->colDef11->colDefId => array('selected' => true)),
+						// 'id' => 'colName11',
+					// )
+				// ),
+			// )
+		// );
+		// echo $form->dropDownListGroup($jvaEditFormModel->defaultColConfig->colDef12,
+			// 'colName',
+			// array(
+				// 'class'=>'col-sm-5',
+				// 'label' => 'Spalte 12',
+				// 'widgetOptions' => array(
+					// 'data'=> CHtml::listData(ColDef::model()->findAll(), 'colDefId', 'colName'),//$colNames, 
+					// 'htmlOptions' => array(
+						// 'id' => 'colName12',
+						// 'options' => array($jvaEditFormModel->defaultColConfig->colDef12->colDefId => array('selected' => true)),
+					// )
+				// ),
+			// )
+		// );
 	?>
 	</fieldset>
 	<?php

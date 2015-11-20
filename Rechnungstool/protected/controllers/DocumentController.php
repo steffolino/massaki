@@ -197,6 +197,8 @@ class DocumentController extends Controller
 		$jvaId = $jva->jvaDataId;
 		$header = $_POST["headers"];
 		$content = $_POST["content"];
+		$contentNumeric = $_POST["contentNumeric"];
+		$contactPerson = "Frau Duenn"; 
 		
 		$allRows = array();
 		$row  = array();
@@ -222,8 +224,41 @@ class DocumentController extends Controller
 			$counter = 0;
 		}
 		$neuDoc = new DocumentImplementierung;
+
+
+		// $pdfModel = new PdfModel;
+		// $documentPdf = $pdfModel->createPdf();
+
+		# mPDF
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+
+        # You can easily override default constructor's params
+        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
+
+        # render (full page)
+		date_default_timezone_set('Europe/Berlin');
+		$curDate = date("Ymd_His");
+
+        # Load a stylesheet
+		$stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
+		//echo $stylesheet;
+        $mPDF1->WriteHTML($stylesheet, 1);
+        $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate), true));
+		
+		/*** INTERESTING FOR RENDERING DOCUMENTS / INVOICES */
+        # renderPartial (only 'view' of current controller)
+//        $mPDF1->WriteHTML($this->renderPartial('index', array(), true));
+
+        # Renders image
+//        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
+
+        # Outputs ready PDF
+		$filePath = Yii::getPathOfAlias('webroot')."/pdf/".$docType."/";
+		$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
+		$mPDF1->Output($filePath.$fileName, "F");		
+		
 		//TODO: Remove the comment to test Inserting
-		//$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType);
+		// $result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType);
 	}
 	
 }

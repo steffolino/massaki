@@ -272,9 +272,9 @@
 		jvaDataArray.push($('#colName7 option:selected').text());
 		jvaDataArray.push($('#colName8 option:selected').text());
 		jvaDataArray.push($('#colName9 option:selected').text());
-		jvaDataArray.push($('#colName10 option:selected').text());
-		jvaDataArray.push($('#colName11 option:selected').text());
-		jvaDataArray.push($('#colName12 option:selected').text());
+		// jvaDataArray.push($('#colName10 option:selected').text());
+		// jvaDataArray.push($('#colName11 option:selected').text());
+		// jvaDataArray.push($('#colName12 option:selected').text());
 		console.log(jvaDataArray);
 			$.ajax({
 				method: "POST",
@@ -303,9 +303,9 @@
 			jvaDataArray.push($('#JvaAddModel_colName7 option:selected').text());
 			jvaDataArray.push($('#JvaAddModel_colName8 option:selected').text());
 			jvaDataArray.push($('#JvaAddModel_colName9 option:selected').text());
-			jvaDataArray.push($('#JvaAddModel_colName10 option:selected').text());
-			jvaDataArray.push($('#JvaAddModel_colName11 option:selected').text());
-			jvaDataArray.push($('#JvaAddModel_colName12 option:selected').text());
+			// jvaDataArray.push($('#JvaAddModel_colName10 option:selected').text());
+			// jvaDataArray.push($('#JvaAddModel_colName11 option:selected').text());
+			// jvaDataArray.push($('#JvaAddModel_colName12 option:selected').text());
 			
 			$.ajax({
 				method: "POST",

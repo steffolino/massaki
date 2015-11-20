@@ -83,10 +83,14 @@ class JvaController extends Controller
 			$jvaCol7 = $_POST['data'][12];
 			$jvaCol8 = $_POST['data'][13];
 			$jvaCol9 = $_POST['data'][14];
-			$jvaCol10 = $_POST['data'][15];
-			$jvaCol11 = $_POST['data'][16];
-			$jvaCol12 = $_POST['data'][17];
-			$jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
+			echo $jvaCol9;
+			// $jvaCol10 = $_POST['data'][15];
+			// $jvaCol11 = $_POST['data'][16];
+			// $jvaCol12 = $_POST['data'][17];
+			// $jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
+
+			//97,98,99 hardcoded for MwSt
+			$jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,'0% MwSt','7% MwSt','19% MwSt');
 			
 			$selectedJVA = $jvaModel->getJvaByName($jvaName,$jvaNameExt);
 			$this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=> $selectedJVA ,'colNames'=>$colNames), false, true);
@@ -117,11 +121,13 @@ class JvaController extends Controller
 			$jvaCol7 = $_POST['data'][12];
 			$jvaCol8 = $_POST['data'][13];
 			$jvaCol9 = $_POST['data'][14];
-			$jvaCol10 = $_POST['data'][15];
-			$jvaCol11 = $_POST['data'][16];
-			$jvaCol12 = $_POST['data'][17];
-			$jvaModel->insertJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
-			$selectedJVA = $jvaModel->getJvaByName($jvaName,$jvaNameExt);
+			// $jvaCol10 = $_POST['data'][15];
+			// $jvaCol11 = $_POST['data'][16];
+			// $jvaCol12 = $_POST['data'][17];
+			// $jvaModel->insertJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
+
+			//97,98,99 hardcoded for MwSt
+			$jvaModel->insertJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9, '0% MwSt','7% MwSt','19% MwSt');
 			
 			//$this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=> $selectedJVA ,'colNames'=>$colNames), false, true);
 
