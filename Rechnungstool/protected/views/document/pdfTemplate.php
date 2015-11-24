@@ -8,10 +8,10 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/r
 $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
 
 //TODO: rewrite php.ini
-// require_once(__DIR___.'/pdf/pdf_constants.php');
+require_once('C:/inetpub/wwwroot/'.$baseUrl.'/pdf/pdf_constants.php');
 // echo ($baseUrl.'/pdf/pdf_constants.php');
 
-$adresse_klein = 'Massak Logistik GmbH  Hollfelder Str. 23  96123 Litzendorf';
+// $adresse_klein = 'Massak Logistik GmbH  Hollfelder Str. 23  96123 Litzendorf';
 
 ?>
 <!-- MAIN -->
@@ -25,202 +25,280 @@ $adresse_klein = 'Massak Logistik GmbH  Hollfelder Str. 23  96123 Litzendorf';
 </script>
 <style>
 @media print {
+	html, body {
+		height: 100%;
+	}
+	.wrapper {
+		height: 100%;
+	}
 	p {
 		font-size: 10pt;
 		color: #000;
 	}
+	.blue {
+		color: #123456;
+	}
+	.head {
+		font-size: 8pt;
+	}
+	.title {
+		padding-bottom: 5px;
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-top: 0px;
+		margin-top: 0px;
+		border-top: 2px solid red;
+		border-bottom: 10px solid #2266aa;
+		font-family: arial, sans-serif;
+		font-size: 42pt;
+		color: #2266aa;
+		text-shadow: 2px 2px 2px #dd0000;
+		font-weight: bold;
+		text-align: center;
+	}
+	.foot {
+		font-size: 7pt;
+		text-align: center;
+	}
+	.footer {
+	   position:absolute;
+	   bottom:0;
+	   height: 20px;
+   }
 	.table-bordered td{
 		border: 1px solid #444444;
 	}
-	.table-bordered thead tr td{
+	#invoiceTable thead tr td{
 		font-weight: bold;
 		font-size: 10pt;
 		text-align: center;
 		color: #222222;
 		padding: 2pt 7pt;
 	}
-	.table-bordered tbody tr td{
+	#invoiceTable tbody tr td{
 		font-weight: 500;
 		font-size: 9pt;
-		color: #111111;
-		padding: 1pt 5pt;
-	}
-	.table-bordered tbody tr td:nth-last-child(3) {
-		font-weight: 500;
-		font-size: 12pt;
-		color: #123987;
-		text-align: right;
-		padding: 1pt 5pt;
-	}
-	.table-bordered>tbody>tr:nth-last-child(1) {
-		font-weight: 800;
-		font-size: 10pt;
-		background: #dddddd;
-	}
-	.footer {
-		bottom: 10pt;
+		padding: 3pt 2pt 3pt 3pt;
 	}
 	.small {
 		font-size: 6pt;
 	}
-	.table > thead > tr > td.active,
-	.table > tbody > tr > td.active,
-	.table > tfoot > tr > td.active,
-	.table > thead > tr > th.active,
-	.table > tbody > tr > th.active,
-	.table > tfoot > tr > th.active,
-	.table > thead > tr.active > td,
-	.table > tbody > tr.active > td,
-	.table > tfoot > tr.active > td,
-	.table > thead > tr.active > th,
-	.table > tbody > tr.active > th,
-	.table > tfoot > tr.active > th {
-	  background-color: #ecf0f1;
+	.smallExtra {
+		font-size: 8pt;
+		text-align: right;
 	}
-
+	.ulined {
+		border-bottom: 1px solid #123456;		
+		text-align: center;
+	}
+	.totalRow td{
+		font-size: 18pt;
+		font-weight: 800;
+		border-top: 2px solid #111111;
+		border-bottom: 2px solid #111111;
+		background: #eeeeee;
+	}
+	.invoiceExtra {
+		height: 12px;
+		padding-top: 2px
+		padding-bottom: 2px;
+	}
+	.invoiceExtra p{
+		font-weight: bold;
+	}
+	.invoiceExtraContainer div p{
+		line-height: 1pt;
+	}
 }
 
 </style>
-<div class="row">
-	<div class=" col-xs-10 col-xs-offset-1" media="screen">
-		<h1>Rechnung Massak Logistik GmbH + Logo</h1>
+<div class="wrapper">
+	<div class="row">
+		<div class=" col-xs-12" media="screen">
+			<h1 class="title"><i>Massak Logistik GmbH</i></h1>
+		</div>
 	</div>
-</div>
-<p id="info">Info: </p>
-<hr/>
-<div class=row>
-		<div class=" col-xs-5 col-xs-offset-1">
-			<p class="small"> <?php echo $adresse_klein; ?></p>
-			<p> <?php echo $jva->jvaName; ?></p>
+	<br/>
+	<div class=row>
+			<div class=" col-xs-4 col-xs-offset-1">
+				<p class="small blue ulined"> <?php echo MASSAK_ADDRESSE_KLEIN ?></p>
+				<p> <?php echo $jva->jvaName; ?></p>
+				<?php
+				if(!empty($jva->jvaNameExt)) {
+					echo "<p>".$jva->jvaNameExt."</p>";
+				}
+				?>
+				<p><?php echo $jva->jvaAddress; ?></p>
+			</div>
+			<div class="col-xs-5 col-xs-offset-1">
+				<div class=row>
+					<div class="col-xs-4">
+						<p class="blue head"><?php echo MASSAK_LOGISTIK_BAMBERG; ?></p>
+					</div>
+					<div class="col-xs-5">
+						<p class="blue head"><?php echo MASSAK_LOGISTIK_LOEHNE; ?></p>
+					</div>
+					<div class="col-xs-7">	
+						<p class="blue head"><?php echo MASSAK_BANKVERBINDUNG; ?></p>
+					</div>
+				</div>
+			</div>
+	</div>
+	<br/>
+	<!-- Invoice Meta -->
+	<div class=row>
+		<div class="col-xs-2 col-xs-offset-1">
 			<?php
-			if(!empty($jva->jvaNameExt)) {
-				echo "<p>".$jva->jvaNameExt."</p>";
-			}
+			echo "<p>".$docType."</p>";
 			?>
-			<p><?php echo $jva->jvaAddress; ?></p>
 		</div>
-		<div class=" col-xs-4 col-xs-offset-1">
-			<p>Briefanschrift Logistik</p>
-			<p>Briefanschrift Logistik Zentrum Loehne</p>
-			<p>Bankverbindung</p>
+		<div class="col-xs-2 col-xs-offset-1">
+			<?php
+			echo "<p>Nummernkreis</p>";
+			?>
 		</div>
+		<div class="col-xs-2 col-xs-offset-2">
+			<?php $date = date('d.m.Y'); 
+			echo "<p>".$date."</p>";
+			?>
+		</div>
+	</div>
+	<div class=row style="height:40%;">
+		<div class=row>
+			<div class=" col-xs-10 col-xs-offset-1">
+				<table id="invoiceTable" class="table table-bordered">
+					<thead class="thead">
+						<tr class="thead"> <?php foreach($header as $headerItem) {echo "<td>".$headerItem."</td>";} ?></tr>
+					</thead>
+					<tbody>
+						<?php 
+						// $lastKey = end(array_keys($displayData));
+						foreach($displayData as $row) {
+								if(strstr(strtolower($row[0]), 'gesamt')) {
+									echo "<tr class='totalRow'>";
+									$i = 0;
+									foreach ($row as $data) {
+										if($i >= (sizeOf($row) - 3)) {
+											echo "<td style='text-align:right'><b>".$data."€</b></td>";
+										} else {
+											echo "<td><b>".$data."</b></td>";
+										}
+										$i++;
+									}
+									echo "</tr>";
+								} else {
+									echo "<tr>";
+									$i = 0;
+									foreach ($row as $data) {
+										if($i >= (sizeOf($row) - 3)) {
+											echo "<td style='text-align:right'>".$data."€</td>";
+										} else {
+											echo "<td>".$data."</td>";
+										}
+										$i++;
+									}
+									echo "</tr>";
+								}
+						} ?>
+					</tbody>
+					<!--tfoot>
+						<tr><td>Zu bezahlen:</td><td></td><td>15</td><td>20</td><td>35</td></tr>
+					</tfoot-->
+				</table>		
+			</div>
+		</div>
+		<br/>
+		<!-- FIX FOR PRINTING PDF -->
+		<div class="row">
+			<div class="col-xs-11 col-xs-offset-1 invoiceExtraContainer">
+				<?php //echo str_replace('-md-', '-xs-', $invoiceExtra); ?>
+				<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">Warenwert netto</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo number_format($invoiceExtra[0], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">MwSt 0%</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[1])) echo number_format($invoiceExtra[1], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">MwSt 7%</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[2])) echo number_format($invoiceExtra[2], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+						<p class="smallExtra">MwSt 19%</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[3])) echo number_format($invoiceExtra[3], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">Warenwert brutto</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[4])) echo number_format($invoiceExtra[4], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">Bezahlt von Extern:</p>
+						</div>
+						<br/>
+						<div class="col-xs-2 col-xs-offset-7 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[5])) echo $invoiceExtra[5]; ?></p>
+						</div>
+						<div class="col-xs-1 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[6])) echo number_format($invoiceExtra[6], 2,","," ")." €"; ?></p>
+						</div>
+						<br/>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">Bereits berechnet</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[7])) echo number_format($invoiceExtra[7], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
+							<p class="smallExtra">Restbetrag</p>
+						</div>
+						<div class="col-xs-2 invoiceExtra ">
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[8])) echo number_format($invoiceExtra[8], 2,","," ")." €"; ?></p>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<div class=row>
+		<div class="col-xs-4 col-xs-offset-1">
+			<p><?php echo $jva->jvaFooter; ?></p>
+		</div>
+		<div class="col-xs-4 col-xs-offset-2">
+			<p>Ware erhalten, Unterschrift</p>
+			<p>____________________________</p>
+		</div>
+	</div>
+	<hr/>
+	<!-- FOOT -->
+	<div class="row footer">
+		<div class="col-xs-6 col-xs-offset-3">
+				<p class="blue foot"><?php echo MASSAK_FOOTER; ?></p>
+		</div>
+	</div>
 </div>
-<br/>
-<!-- Invoice Meta -->
-<div class=row>
-	<div class="col-xs-2 col-xs-offset-1">
-		<?php
-		echo "<p>*Dokumenttyp*</p>";
-		?>
-	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<?php
-		echo "<p>Nummernkreis</p>";
-		?>
-	</div>
-	<div class="col-xs-2 col-xs-offset-2">
-		<?php $date = date('d.m.Y'); 
-		echo "<p>".$date."</p>";
-		?>
-	</div>
-</div>
-<div class=row>
-	<div class=" col-xs-10 col-xs-offset-1">
-		<table id="invoiceTable" class="table table-bordered">
-			<thead class="thead">
-				<tr class="thead"> <?php foreach($header as $headerItem) {echo "<td>".$headerItem."</td>";} ?></tr>
-			</thead>
-			<tbody>
-				<?php 
-				$lastKey = end(array_keys($displayData));
-				foreach($displayData as $row) {
-						if($row == $lastKey) {
-							echo "<tr class='active'>";
-						} else {
-							echo "<tr class='info'>";
-						}
-						foreach ($row as $data) {
-							echo "<td>".$data."</td>";
-						}
-						echo "</tr>";
-					} ?>
-			</tbody>
-			<!--tfoot>
-				<tr><td>Zu bezahlen:</td><td></td><td>15</td><td>20</td><td>35</td></tr>
-			</tfoot-->
-		</table>		
-	</div>
-</div>
-<div class=row>
-	<div class="col-xs-4 col-xs-offset-1">
-		<p><?php echo $jva->jvaFooter; ?></p>
-	</div>
-	<div class="col-xs-4 col-xs-offset-2">
-		<p>Ware erhalten, Unterschrift</p>
-		<p>____________________________</p>
-	</div>
-</div>
-<hr/>
-<!-- FOOT -->
-<div class="row footer" style="margin-bottom:10px;">
-	<div class="col-xs-6 col-xs-offset-3" style="font-size:150px;">
-		<p> Massak Logistik GmbH Footer </p>
-		<p> Ust-Id Nr, Steuernummer, Geschäftsführer </p>
-	</div>
-</div>
-<script>
-	$(document).ready(function () {
-		var data = [
-  ["", "Ford", "Volvo", "Toyota", "Honda"],
-  ["2014", 10, 11, 12, 13],
-  ["2015", 20, 11, 14, 13],
-  ["2016", 30, 15, 12, 13]
-];
-
-	var html = '<table><tr>';
-      for (var i = 0; i < 6; i++) { // For each entry
-            if (i == 3) { // Start of next row
-                  html += '</tr><tr>'; // Add row separator
-            }
-            // Add image in cell
-            html += '<td><img src="http://graph.facebook.com/' + data[i] + '/picture"></td>';
-      }
-      html += '</tr></table>'; // Finish up
-
-      $('#tableContainer').append(html); // And add to container
-	  
-			 container = document.getElementById('tableContainer');
-			hot = new Handsontable(container, {
-			  data: data,
-			  // language: de,
-			  // minSpareRows: 1,
-			  formulas: true,
-			  rowHeaders: true,
-			  // colHeaders: js_header,
-			  manualColumnResize: true,
-			  manualRowMove: true,
-			  colWidths: [160, 160, 160, 160, 100, 100, 100],
-			  contextMenu: true,
-			 // columns: 
-					// function (instance, td, row, col, prop, value) {
-						// if(row == instance.countRows() - 1 && typeof(col.data != 'undefined')){
-							// console.log("found last row " + row);
-							// td.style.fontWeight = 'bold';
-							// td.style.textAlign = 'right';
-							// td.innerText = 'Gesamt: ';
-							// return;
-						// }
-						// if(row == instance.countRows() - 1){
-
-						// }
-						// Handsontable.NumericRenderer.apply(this, arguments);
-					// }
-			}); 
-			
-			var diffRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-				Handsontable.cellTypes['formula'].renderer.apply(this, arguments);
-				td.style.backgroundColor = '#c3f89c';
-				td.style.fontWeight = 'bold';
-				};
-	});
-</script>

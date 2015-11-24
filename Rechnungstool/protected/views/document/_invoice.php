@@ -10,7 +10,12 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 // C:\inetpub\wwwroot\massaki\Rechnungstool\js\handsontable-0.19.0\dist
 
 ?>
-
+<style>
+.invoiceExtra {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+</style>
 
 <script>
 
@@ -35,6 +40,8 @@ $(document).ready(function () {
 			
 			var contentNumeric = Array();
 			contentNumeric = getTableDataNumeric(contentNumeric);
+			
+			var invoiceExtraHTML = getInvoiceExtraHTML(invoiceExtraHTML);
 		
 			
 		if($("#InvoiceExample").is(':visible')){
@@ -44,6 +51,7 @@ $(document).ready(function () {
 			  type: "json",
 			  url: "index.php?r=document/getTableData",
 			  data: { 	
+						invoiceExtra: invoiceExtraHTML,
 						content: content,
 						contentNumeric: contentNumeric,
 						headers: header,
@@ -59,8 +67,7 @@ $(document).ready(function () {
 	});
   
 	function getTableDataNumeric (tableData) {
-			// var tableData = Array();// = JSON.stringify(hot.getData());
-			
+			// var tableData = Array();// = JSON.stringify(hot.getData());			
 			// var header = Array();
 			// $(".htCore thead tr th").each(function(i, v){
 					// header[i] = $(this).text();
@@ -76,10 +83,48 @@ $(document).ready(function () {
 			});
 			tableData = tableData.slice(0, hot.countRows());
 			// tableData = JSON.stringify(tableData);
-			console.log("tData: "+tableData);
+			// console.log("tData: "+tableData);
 			// console.log(hot.countRows());
 
 		 return (tableData);
+	}
+	
+	function getInvoiceExtraHTML(invoiceExtra) {
+
+	var invoiceExtraKids = $("#invoiceExtraContainer .invoiceExtra .form-group .control-label");
+	var invoiceExtraVals = $("#invoiceExtraContainer .invoiceExtra .form-group .form-control");
+
+		// alert(invoiceExtraKids);
+		// alert(invoiceExtraVals);
+		
+		invoiceExtra = Array();
+		
+		// for(var i = 0; i < invoiceExtraKids.length; i++) {
+			// invoiceExtra[i] = invoiceExtraVals[i].val();
+		// }
+		
+		// invoiceExtraKids.each(function(i, v){
+			// invoiceExtra[i] = Array();
+			// invoiceExtra[i] = $(this).text();
+			// invoiceExtra[i][0] = invoiceExtraVals[i];
+			// console.log();
+			var j=0;
+		
+			invoiceExtraVals.each(function(i, v){
+				if(j == 5) {
+					//DATE  
+					invoiceExtra[i] = $(this).val();					
+				} else {
+					invoiceExtra[i] = parseFloat($(this).val());
+				}
+				j++;
+				console.log($(this).val());
+			});
+			
+		// });
+
+		return invoiceExtra;
+
 	}
 
 });
@@ -96,68 +141,73 @@ echo '
 				<form id="items">
 				<div id="InvoiceExample" class="handsontable"></div>
 				<br/>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						Warenwert netto
+				<div id="invoiceExtraContainer">
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="warenwertNetto">Warenwert netto</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="warenwertNetto" class="form-control" placeholder="Warenwert netto">
+							</div>
+						</div>
 					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
+					<div class="row invoiceExtra">
+					<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="mwst0">MwSt (0%)</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="mwst0" class="form-control" placeholder="MwSt (0%)">
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-					MwSt 19%
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="mwst7">MwSt (7%)</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="mwst7" class="form-control" placeholder="MwSt (7%)">
+							</div>
+						</div>
 					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="mwst19">MwSt (19%)</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="mwst19" class="form-control" placeholder="MwSt (19%)">
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						MwSt 7%
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="warenwertBrutto">Warenwert brutto</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="warenwertBrutto" class="form-control" placeholder="Warenwert brutto">
+							</div>
+						</div>
 					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="bezahltExternDate">Bezahlt von Externen</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="bezahltExternDate" class="form-control" placeholder="Datum">
+							</div>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="bezahltExternVal" class="form-control" placeholder="Betrag">
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						MwSt 0%
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="bereitsBerechnet">Bereits berechnet</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="text" id="bereitsBerechnet" class="form-control" placeholder="Bereits berechnet">
+							</div>
+						</div>
 					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						Warenwert brutto
-					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						Bezahlt von Extern:
-					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						Bereits berechnet
-					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-7">
-						Restbetrag
-					</div>
-					<div class="col-md-2 col-md-offset-1">
-					Wert
+					<div class="row invoiceExtra">
+						<div class="form-group form-group-sm">
+							<label class="col-md-2 col-md-offset-6 control-label" for="restbetrag">Restbetrag</label>
+							<div class="col-md-2 form-group-sm">
+								<input type="numeric" step="0.01" min="0.00" id="restbetrag" class="form-control" placeholder="Restbetrag">
+							</div>
+						</div>
 					</div>
 				</div>
 				</form>

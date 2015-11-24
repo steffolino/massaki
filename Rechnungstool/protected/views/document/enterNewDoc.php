@@ -347,23 +347,23 @@ var hot;
 				setTimeout(function(){
 					callback(true);
 				}, 1000);
-			  };
+			};
 			
 			hot.updateSettings({
 				cells: 
 					function (row, col, prop) {						
 						var cellProperties = {};
 						//NOT LAST ROW, LAST 3 COLS
-						if (row !== parseInt(lastVisRow+1) && col > (lastVisCol - 3)) {
+						if (row !== hot.countRows() && col > (lastVisCol - 3)) {
 							cellProperties.type = 'numeric';
 							cellProperties.format = '000.00';
 						}
 						//LAST ROW, NOT LAST 3 COLS
-						if(row == parseInt(lastVisRow+1) && col < (lastVisCol - 3)){
+						if(row == hot.countRows() && col < (lastVisCol - 3)){
 							this.renderer = totalRenderer;
 						}
 						//LAST ROW, LAST 3 COLS
-						if(row == parseInt(lastVisRow+1) && col > (lastVisCol - 3)){
+						if(row == hot.countRows() && col > (lastVisCol - 3)){
 							cellProperties.validator = fakeValid;
 							// cellProperties.renderer = totalRenderer;
 							cellProperties.format = '000.00';

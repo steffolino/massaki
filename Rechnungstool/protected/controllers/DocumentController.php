@@ -197,6 +197,7 @@ class DocumentController extends Controller
 		$jvaId = $jva->jvaDataId;
 		$header = $_POST["headers"];
 		$content = $_POST["content"];
+		$invoiceExtra = $_POST["invoiceExtra"];
 		$contentNumeric = $_POST["contentNumeric"];
 		$contactPerson = "Frau Duenn"; 
 		
@@ -243,7 +244,7 @@ class DocumentController extends Controller
 		$stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
 		//echo $stylesheet;
         $mPDF1->WriteHTML($stylesheet, 1);
-        $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate), true));
+        $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType), true));
 		
 		/*** INTERESTING FOR RENDERING DOCUMENTS / INVOICES */
         # renderPartial (only 'view' of current controller)
