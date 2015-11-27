@@ -18,7 +18,108 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 </style>
 
 <script>
+	function getTableDataNumeric (tableData) {
+			// var tableData = Array();// = JSON.stringify(hot.getData());			
+			// var header = Array();
+			// $(".htCore thead tr th").each(function(i, v){
+					// header[i] = $(this).text();
+			// })
+			// header = header.slice(0,2);
+			
+			var htCoreData = $(".htCore tbody tr");
+			htCoreData.each(function(i, v){
+				console.log(i);
+				tableData[i] = Array();
+				$(this).children('td').each(function(ii, vv){
+					tableData[i][ii] = $(this).text();
+				}); 
+			});
+			tableData = tableData.slice(0, hot.countRows());
+			// tableData = JSON.stringify(tableData);
+			// console.log("tData: "+tableData);
+			// console.log(hot.countRows());
 
+		 return (tableData);
+	};
+
+	function parseAndCalcAndTranfer () {
+		
+		var tableData = Array();
+		
+		var zeroTotal = 0;
+		var sevenTotal = 0;
+		var nineTeenTotal = 0;
+		
+		tableData = getTableDataNumeric(tableData);
+		console.log(tableData);
+		var tableLength = tableData.length;
+		for(var i = 0; i < tableLength; i++) {
+			console.log(tableData[i]);
+			var rowLength = tableData[i].length;
+			if(tableData[i][0].indexOf("Gesamt") !== -1) {
+				console.log("0: "+tableData[i][parseInt(rowLength-3)]);
+				if( tableData[i][parseInt(rowLength-3)] !== '') {
+					zeroTotal = tableData[i][parseInt(rowLength-3)];
+				} 
+				if( tableData[i][parseInt(rowLength-2)] !== '') {
+					sevenTotal = tableData[i][parseInt(rowLength-2)];
+				}
+				if( tableData[i][parseInt(rowLength-1)] !== '') {
+					nineTeenTotal = tableData[i][parseInt(rowLength-1)];
+				}
+				// console.log("7: "+tableData[i][parseInt(rowLength-2)]);
+				// console.log("19:"+tableData[i][parseInt(rowLength-1)]);
+			}
+		}
+		var warenwertNetto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal * 0.93) + parseFloat(nineTeenTotal * 0.81)).toFixed(2);
+		var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
+		var MwSt19 = parseFloat(nineTeenTotal * 0.19).toFixed(2);
+		var MwSt7 = parseFloat(sevenTotal * 0.07).toFixed(2);
+		var MwSt0 = parseFloat(zeroTotal).toFixed(2);
+		doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
+		// var restbetrag = parseFloat();
+		console.log(warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
+	} ;
+	
+	function doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {
+		if(typeof(warenwertNetto) !== 'undefined') {
+			$("#warenwertNetto").val(warenwertNetto);
+		} else {
+			$("#warenwertNetto").val('0.00');			
+		}
+		if(typeof(warenwertBrutto) !== 'undefined') {
+			$("#warenwertBrutto").val(warenwertBrutto);
+		} else {
+			$("#warenwertBrutto").val('0.00');			
+		}
+		if(typeof(MwSt0) !== 'undefined') {
+			$("#mwst0").val(MwSt0);
+		} else {
+			$("#mwst0").val('0.00');			
+		}
+		if(typeof(MwSt7) !== 'undefined') {
+			$("#mwst7").val(MwSt7);
+		} else {
+			$("#mwst7").val('0.00');			
+		}
+		if(typeof(MwSt19) !== 'undefined') {
+			$("#mwst19").val(MwSt19);
+		} else {
+			$("#mwst19").val('0.00');			
+		}
+		if ($("#bezahltExternVal").val() !== '' && $("#bereitsBerechnet").val() !== '') {
+			var rest = parseFloat(parseFloat(warenwertBrutto) - parseFloat($("#bezahltExternVal").val()) - parseFloat($("#bereitsBerechnet").val())).toFixed(2);
+			console.log(parseFloat($("#bezahltExternVal").val()));
+			console.log(parseFloat($("#bereitsBerechnet").val()));
+			console.log(rest);
+			$("#restbetrag").val(rest);
+		}
+	}
+
+	$(document).on("click", "#nueber", function () {
+		parseAndCalcAndTranfer();
+	});
+	
 $(document).ready(function () {
 	
   $(document).on("click","#writingDoc",function(){
@@ -65,34 +166,11 @@ $(document).ready(function () {
 			  });	
 		}	
 	});
-  
-	function getTableDataNumeric (tableData) {
-			// var tableData = Array();// = JSON.stringify(hot.getData());			
-			// var header = Array();
-			// $(".htCore thead tr th").each(function(i, v){
-					// header[i] = $(this).text();
-			// })
-			// header = header.slice(0,2);
-			
-			var htCoreData = $(".htCore tbody tr");
-			htCoreData.each(function(i, v){
-				tableData[i] = Array();
-				$(this).children('td').each(function(ii, vv){
-					tableData[i][ii] = $(this).text();
-				}); 
-			});
-			tableData = tableData.slice(0, hot.countRows());
-			// tableData = JSON.stringify(tableData);
-			// console.log("tData: "+tableData);
-			// console.log(hot.countRows());
-
-		 return (tableData);
-	}
-	
+  	
 	function getInvoiceExtraHTML(invoiceExtra) {
 
-	var invoiceExtraKids = $("#invoiceExtraContainer .invoiceExtra .form-group .control-label");
-	var invoiceExtraVals = $("#invoiceExtraContainer .invoiceExtra .form-group .form-control");
+		var invoiceExtraKids = $("#invoiceExtraContainer .invoiceExtra .form-group .control-label");
+		var invoiceExtraVals = $("#invoiceExtraContainer .invoiceExtra .form-group .form-control");
 
 		// alert(invoiceExtraKids);
 		// alert(invoiceExtraVals);
@@ -142,9 +220,14 @@ echo '
 				<div id="InvoiceExample" class="handsontable"></div>
 				<br/>
 				<div id="invoiceExtraContainer">
+					<div class="row">
+					</div>
 					<div class="row invoiceExtra">
 						<div class="form-group form-group-sm">
-							<label class="col-md-2 col-md-offset-6 control-label" for="warenwertNetto">Warenwert netto</label>
+							<div class="col-md-2 col-md-offset-4">
+								<button type=button id="nueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
+							</div>
+							<label class="col-md-2 control-label" for="warenwertNetto">Warenwert netto</label>
 							<div class="col-md-2 form-group-sm">
 								<input type="text" id="warenwertNetto" class="form-control" placeholder="Warenwert netto">
 							</div>
