@@ -287,6 +287,7 @@
 				$("#successAlertContent").html('JVA erfolgreich bearbeitet.')
 				$("#successAlert").slideDown('fast');
 			  });
+		//ADD JVA
 		}else{
 			jvaDataArray.push($('#JvaAddModel_jvaName').val());
 			jvaDataArray.push($('#JvaAddModel_jvaNameExt').val());

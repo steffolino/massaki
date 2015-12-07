@@ -23,11 +23,31 @@ if(isset($jvaAddFormModel)){
 			echo $form->textFieldGroup($jvaAddFormModel,'jvaCustNum');
 			echo $form->textFieldGroup($jvaAddFormModel,'jvaCustNumDesc');
 			//TODO: doesnt work like this --> cf. jvaEditForm - labelEx
-			array_splice($colNames, -3);
-			for($i=1;$i<10;$i++){
-				echo $form->dropDownListGroup($jvaAddFormModel,'colName'.$i,array('widgetOptions'=>array('data'=>$colNames),'class'=>'col-sm-5','id'=>'addColName'.$i));
-			}
+			$tabs = array(
+				array('label' => 'IK', 'content' => '<br/>'),
+				array('label' => 'Logistik Memmelsdorf', 'content' => '<br/>'),
+				array('label' => 'Logistik Löhne', 'content' => '<br/>'),
+				// array('label' => 'Sammelrechnung', 'content' => '<br/>'),
+			);
 			
+			array_splice($colNames, -3);
+			
+			//Awesome C like fix
+			foreach($tabs as &$tab) {
+				for($i=1;$i<10;$i++){
+					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames),'class'=>'col-sm-5','id'=>'addColName'.$i));
+				}
+			}
+		    echo "<br/>";
+			$this->widget(
+				'booster.widgets.TbTabs',
+				array(
+					'type' => 'tabs',
+					'justified' => true,
+					'tabs' => $tabs
+				)
+			); 
+		
 		?>
 		</fieldset>
 		

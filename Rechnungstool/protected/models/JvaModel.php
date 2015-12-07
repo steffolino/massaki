@@ -14,7 +14,10 @@ class JvaModel extends CFormModel
 	public $jvaCustNum;
 	public $jvaCustNumDesc;
 	
-   
+	public  $jvaColIK;
+	public  $jvaColMemm;
+	public  $jvaColLoeh;
+	public  $jvaColWitt;
 	
 	public function getAllJvas(){
 
@@ -92,7 +95,7 @@ class JvaModel extends CFormModel
 	}
 	
 	public function getAllCols(){
-		$this->allCols = ColDef::model()->findAll();	
+		$this->allCols = ColDef::model()->findAll();
 	}
 	
 	public function getJvaByName($name, $ext){
@@ -109,6 +112,10 @@ class JvaModel extends CFormModel
 	
 	public function getDefColByJva($jva){
 		return DefaultColConfig::model()->findByPK($jva->jvaColConfig);
+	}
+
+	public function getDefColByJvaIKMemmLoehWitt ($jva){
+		return DefaultColConfig::model()->findByPK($jva->jvaColIK, $jva->jvaColMemm,$jva->jvaColLoeh, $jva->jvaColWitt);
 	}
 	
 	public function activateJvaByName($name,$ext){
