@@ -8,7 +8,7 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/r
 $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
 
 //TODO: rewrite php.ini
-require_once('C:/inetpub/wwwroot/'.$baseUrl.'/pdf/pdf_constants.php');
+require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_constants.php');
 // echo ($baseUrl.'/pdf/pdf_constants.php');
 
 // $adresse_klein = 'Massak Logistik GmbH  Hollfelder Str. 23  96123 Litzendorf';

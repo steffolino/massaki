@@ -39,12 +39,12 @@ class Document extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('counter, yearCounter, jvaId, docTypeId', 'required'),
-			array('yearCounter, jvaId, docTypeId', 'numerical', 'integerOnly'=>true),
-			array('counter', 'length', 'max'=>45),
-			array('pdf_location, contact_person', 'length', 'max'=>255),
-			array('printed', 'length', 'max'=>1),
-			array('timeStamp', 'length', 'max'=>6),
+			// array('counter, yearCounter, jvaId, docTypeId', 'required'),
+			// array('yearCounter, jvaId, docTypeId', 'numerical', 'integerOnly'=>true),
+			// array('counter', 'length', 'max'=>45),
+			// array('pdf_location, contact_person', 'length', 'max'=>255),
+			// array('printed', 'length', 'max'=>1),
+			// array('timeStamp', 'length', 'max'=>12),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('documentId, counter, yearCounter, jvaId, docTypeId, pdf_location, contact_person, printed, timeStamp', 'safe', 'on'=>'search'),
@@ -59,11 +59,11 @@ class Document extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'collectiveinvoices' => array(self::HAS_MANY, 'Collectiveinvoice', 'deliveryNoteId'),
+			//'collectiveinvoices' => array(self::HAS_MANY, 'Collectiveinvoice', 'deliveryNoteId'),
 			'docType' => array(self::BELONGS_TO, 'Doctype', 'docTypeId'),
 			'jva' => array(self::BELONGS_TO, 'Jvadata', 'jvaId'),
 			'yearCounter0' => array(self::BELONGS_TO, 'Yearcounter', 'yearCounter'),
-			'documentvalues' => array(self::HAS_MANY, 'Documentvalues', 'documentId'),
+			//'documentvalues' => array(self::HAS_MANY, 'Documentvalues', 'documentId'),
 		);
 	}
 

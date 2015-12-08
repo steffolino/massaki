@@ -27,6 +27,12 @@ $(document).ready(function () {
 					buttonPressed = $(this).text();
 				}
 			});
+			var defaultDocument;
+			if($("#chkDefaultDocDelivery").is(':checked')){
+				defaultDocument = "yes";
+			}else{
+				defaultDocument ="no";
+			}
 			var content = hot.getData();
 			var header = hot.getSettings().colHeaders;
 			var counterType = $('#nummernkreisSelect option:selected').text();
@@ -41,6 +47,7 @@ $(document).ready(function () {
 						counterType : counterType,
 						docType: buttonPressed,
 						jva: jva,
+						defaultDocument: defaultDocument,
 										}
 			})
 			  .done(function( data ) {
@@ -67,6 +74,12 @@ echo '
 				<div id="DeliveryExample" class="handsontable"></div>
 				</form>
 			</div>
+			<br>
+				<div>
+					<div class="checkbox">
+					<label><input type="checkbox" value="" name="defaultDocDelivery" id="chkDefaultDocDelivery">Standard Dokument?</label>
+					</div>
+				</div>
 		</div>
 	</div>
 </div>';						

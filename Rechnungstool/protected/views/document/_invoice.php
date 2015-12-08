@@ -132,7 +132,12 @@ $(document).ready(function () {
 					buttonPressed = $(this).text();
 				}
 			});
-			
+			var defaultDocument;
+			if($("#chkDefaultDocInvoice").is(':checked')){
+				defaultDocument = "yes";
+			}else{
+				defaultDocument ="no";
+			}
 			var content = hot.getData();
 			var header = hot.getSettings().colHeaders;
 			console.log(header);
@@ -159,6 +164,7 @@ $(document).ready(function () {
 						counterType : counterType,
 						docType: buttonPressed,
 						jva: jva,
+						defaultDocument: defaultDocument,
 				}
 			})
 			  .done(function( data ) {
@@ -219,6 +225,11 @@ echo '
 				<form id="items">
 				<div id="InvoiceExample" class="handsontable"></div>
 				<br/>
+				<div>
+					<div class="checkbox">
+					<label><input type="checkbox" value="" name="defaultDocInvoice" id="chkDefaultDocInvoice">Standard Dokument?</label>
+					</div>
+				</div>
 				<div id="invoiceExtraContainer">
 					<div class="row">
 					</div>

@@ -35,6 +35,7 @@ class DocumentController extends Controller
 		$jvaModel = new JvaModel;
 		$jvaNamePlusExt = $_POST["jva"];
 		$docTypeName = $_POST["docType"];
+		$numberCircle = $_POST["colConfig"];
 		$docTypeImpl = new DoctypeImplementierung;
 		$docTypeId = $docTypeImpl->getDocIdByName($docTypeName);
 		$jvaNamePlusExtArray = array();
@@ -42,8 +43,16 @@ class DocumentController extends Controller
 		$jvaName = $jvaNamePlusExtArray[0];
 		$jvaExt = $jvaNamePlusExtArray[1];
 		$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
-		//TO DO: Filter by type, here Ik is hardcoded
-		$defaultColConfig = $jvaModel->getDefColByJva($jva,"Ik");
+		
+		if($numberCircle === "ik"){
+			$defaultColConfig = $jvaModel->getDefColByJva($jva,"Ik");
+		}else if($numberCircle === "memmel"){
+			$defaultColConfig = $jvaModel->getDefColByJva($jva,"Memmel");
+		}else if($numberCircle === "loehne"){
+			$defaultColConfig = $jvaModel->getDefColByJva($jva,"Loehne");
+		}else{
+			$defaultColConfig = $jvaModel->getDefColByJva($jva,"Witte");	
+		}
 		$headerAndData = array();
 		$header = array();
 		$data = array();
@@ -193,18 +202,28 @@ class DocumentController extends Controller
 		$jvaName = $jvaNamePlusExtArray[0];
 		$jvaExt = $jvaNamePlusExtArray[1];
 		$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
-		
+		$defaultDocument = $_POST["defaultDocument"];
 		$jvaId = $jva->jvaDataId;
 		$header = $_POST["headers"];
 		$content = $_POST["content"];
-		$invoiceExtra = $_POST["invoiceExtra"];
-		$contentNumeric = $_POST["contentNumeric"];
+		if(isset($_POST["invoiceExtra"])){
+			$invoiceExtra = $_POST["invoiceExtra"];
+		}else{
+			$invoiceExtra = "";
+		}
+		if(isset($_POST["contentNumeric"])){
+			$contentNumeric = $_POST["contentNumeric"];
+		}else{
+			$contentNumeric = "";
+		}
+		
 		$contactPerson = "Frau Duenn"; 
 		
 		$allRows = array();
 		$row  = array();
 		$counter = 0;
 		foreach($content as $zeile){
+			
 			foreach($zeile as $cell){
 				array_push($row,$cell);
 				$counter++;
@@ -220,9 +239,10 @@ class DocumentController extends Controller
 			for($counter;$counter <= 23;$counter++){
 				array_push($row,NULL);
 			}
-			$allRows = array_merge($allRows,$row);
+			array_push($allRows,$row);
 			
 			$counter = 0;
+			$row  = array();
 		}
 		$neuDoc = new DocumentImplementierung;
 
@@ -230,36 +250,35 @@ class DocumentController extends Controller
 		// $pdfModel = new PdfModel;
 		// $documentPdf = $pdfModel->createPdf();
 
-		# mPDF
-        $mPDF1 = Yii::app()->ePdf->mpdf();
+		// # mPDF
+        // $mPDF1 = Yii::app()->ePdf->mpdf();
 
-        # You can easily override default constructor's params
-        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
+        // # You can easily override default constructor's params
+        // $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
 
-        # render (full page)
-		date_default_timezone_set('Europe/Berlin');
-		$curDate = date("Ymd_His");
+        // # render (full page)
+		// date_default_timezone_set('Europe/Berlin');
+		// $curDate = date("Ymd_His");
 
-        # Load a stylesheet
-		$stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
-		//echo $stylesheet;
-        $mPDF1->WriteHTML($stylesheet, 1);
-        $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType), true));
+        // # Load a stylesheet
+		// $stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
+		// //echo $stylesheet;
+        // $mPDF1->WriteHTML($stylesheet, 1);
+        // $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType), true));
 		
-		/*** INTERESTING FOR RENDERING DOCUMENTS / INVOICES */
-        # renderPartial (only 'view' of current controller)
-//        $mPDF1->WriteHTML($this->renderPartial('index', array(), true));
+		// /*** INTERESTING FOR RENDERING DOCUMENTS / INVOICES */
+        // # renderPartial (only 'view' of current controller)
+// //        $mPDF1->WriteHTML($this->renderPartial('index', array(), true));
 
-        # Renders image
-//        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
+        // # Renders image
+// //        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
 
-        # Outputs ready PDF
-		$filePath = Yii::getPathOfAlias('webroot')."/pdf/".$docType."/";
-		$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
-		$mPDF1->Output($filePath.$fileName, "F");		
+        // # Outputs ready PDF
+		// $filePath = Yii::getPathOfAlias('webroot')."/pdf/".$docType."/";
+		// $fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
+		// $mPDF1->Output($filePath.$fileName, "F");		
 		
-		//TODO: Remove the comment to test Inserting
-		// $result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType);
+		$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument);
 	}
 	
 }

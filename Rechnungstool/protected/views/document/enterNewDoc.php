@@ -72,9 +72,9 @@ var hot;
 								  <select class="form-control" placeholder="--Nummernkreis--" id="nummernkreisSelect">
 									<option disabled selected value=''>-- Nummernkreis --</option>
 									<option value='ik'>IK</option>
-									<option value='ek'>EK</option>
-									<option value='reg'>Normal</option>
-									<option value='v'>V</option>
+									<option value='memmel'>Logistik Memmelsdorf</option>
+									<option value='loehne'>Logistik Loehne</option>
+									<option value='witte'>Wittekindshof</option>
 								  </select>
 								</div>
 						</div>
@@ -121,6 +121,11 @@ var hot;
 	$(document).on("change", "#jvaName, #nummernkreisSelect", function () {
 			if(readyWhenYouAre()) {	
 				showCorrectDocContent();
+				//MAGIIIIIIC!!!!!!
+				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
+				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
+				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
+				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
 		}
 	});
 	
@@ -159,6 +164,7 @@ var hot;
 				data: { 
 					docType: buttonPressed,				
 					jva: nameSet,
+					colConfig : nrKreisSet,
 				}
 			})
 			.done(function(data) {
