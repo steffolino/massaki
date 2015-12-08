@@ -42,8 +42,8 @@ class DocumentController extends Controller
 		$jvaName = $jvaNamePlusExtArray[0];
 		$jvaExt = $jvaNamePlusExtArray[1];
 		$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
-		
-		$defaultColConfig = $jvaModel->getDefColByJva($jva);
+		//TO DO: Filter by type, here Ik is hardcoded
+		$defaultColConfig = $jvaModel->getDefColByJva($jva,"Ik");
 		$headerAndData = array();
 		$header = array();
 		$data = array();

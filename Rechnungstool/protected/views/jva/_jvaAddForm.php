@@ -27,15 +27,26 @@ if(isset($jvaAddFormModel)){
 				array('label' => 'IK', 'content' => '<br/>'),
 				array('label' => 'Logistik Memmelsdorf', 'content' => '<br/>'),
 				array('label' => 'Logistik Löhne', 'content' => '<br/>'),
+				array('label' => 'Wittekindshof', 'content' => '<br/>'),
 				// array('label' => 'Sammelrechnung', 'content' => '<br/>'),
 			);
 			
 			array_splice($colNames, -3);
 			
+			
 			//Awesome C like fix
 			foreach($tabs as &$tab) {
 				for($i=1;$i<10;$i++){
-					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames),'class'=>'col-sm-5','id'=>'addColName'.$i));
+					if($tab['label'] == 'IK'){
+						$idTab = "-Ik";
+					}else if($tab['label'] == 'Logistik Memmelsdorf'){
+						$idTab = "-Memmel";
+					}else if($tab['label'] == 'Logistik Löhne'){
+						$idTab = "-Loehne";
+					}else{
+						$idTab = "-Witte";
+					}
+					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames,'htmlOptions' => array('id'=>   'addColName'.$i .$idTab)),'class'=>'col-sm-5',));
 				}
 			}
 		    echo "<br/>";
