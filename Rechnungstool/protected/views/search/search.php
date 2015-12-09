@@ -19,7 +19,7 @@
 						<div class="row">
 							<div class="col-md-8 col-md-offset-2">
 								<div class="input-group">
-								  <input type="text" class="form-control" placeholder="Freitextsuche, Rechnungsdetails, einzelne Posten" aria-describedby="basic-addon2">
+								  <input type="text" id="SearchFormModel_freeSearchTerm" class="form-control" placeholder="Freitextsuche, Rechnungsdetails, einzelne Posten" aria-describedby="basic-addon2">
 									<div class="input-group-btn">
 										<button id="headerResetBtn" class="btn btn-default" type=reset>Zur&uuml;cksetzen</button>
 										<button id="headerSubmitBtn" class="btn btn-success" type=submit>Suchen</button>
@@ -77,10 +77,10 @@
 									<label>Dokument Typ:<br/>
 											<div id="docSelection">
 												<div class="btn-group btn-group-sm" role=group>
-													<button type="button" class="btn btn-default" id="newInvoiceRadio">Rechnung</button>
-													<button type="button" class="btn btn-default" id="newCollectiveInvoiceRadio">Sammelrechnung</button>
-													<button type="button" class="btn btn-default" id="newDeliveryNoticeRadio">Lieferschein</button>
-													<button type="button" class="btn btn-default" id="newCreditNoteRadio">Gutschrift</button>
+													<button type="button" class="btn btn-default" id="Rechnung">Rechnung</button>
+													<button type="button" class="btn btn-default" id="Sammelrechnung">Sammelrechnung</button>
+													<button type="button" class="btn btn-default" id="Lieferschein">Lieferschein</button>
+													<button type="button" class="btn btn-default" id="Gutschrift">Gutschrift</button>
 												</div>
 											</div>
 									</label>
@@ -138,8 +138,12 @@
 					?>
 			</div>
 			<!-- BODY -->
-			<div class="row panel-body">
-					<?php $this->renderPartial('_searchResultsGrid'); ?>
+			<div class="row panel-body" id="searchResults">
+					<?php 
+					
+					$this->renderPartial('_searchResultsGrid'); 
+					
+					?>
 			</div>
 			<div class="row panel-footer">
 					<!--div class="row">
@@ -193,9 +197,34 @@
 		var filtersEnabled = $("#filterRow").is(':visible');
 		console.log(filtersEnabled);
 		if(filtersEnabled) {
-			//TODO: also submit filter values
+			$.ajax({
+				method: "POST",
+				type: "json",
+				url: "index.php?r=search/search",
+				data: { 
+					searchTerm: searchTerm,	
+					startDate: startDate,
+					endDate : endDate,
+					nameSet: nameSet,
+					selectedDocType: selectedDocType,
+					filtersEnabled: filtersEnabled
+				}
+			})
+			.done(function(data) {
+				$('#searchResults').html(data);
+		  });
 		} else {
-			//Only submit free text search value
+			$.ajax({
+				method: "POST",
+				type: "json",
+				url: "index.php?r=search/search",
+				data: { 
+					searchTerm: searchTerm,				
+				}
+			})
+			.done(function(data) {
+				$('#searchResults').html(data);
+		  });
 		}
 		//DO AJAX SUBMIT FORM
 		

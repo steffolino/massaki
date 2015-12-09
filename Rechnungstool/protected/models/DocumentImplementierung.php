@@ -25,7 +25,7 @@ class DocumentImplementierung extends Document
 		$newDoc->counter = $counterName . " " . $counterStatus;
 		$newDoc->yearCounter0 =yearcounter::model()->findByPK(1)->yearCounterId;
 		$newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
-		$newDoc->timeStamp = date('Y-m-d H:i:s');
+		$newDoc->timeStamp = date('Y-m-d');
 		$pdfLocation = "Auf der Platte";
 		$newDoc->pdf_location = $pdfLocation;
 		$newDoc->save();

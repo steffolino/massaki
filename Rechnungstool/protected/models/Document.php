@@ -63,7 +63,7 @@ class Document extends CActiveRecord
 			'docType' => array(self::BELONGS_TO, 'Doctype', 'docTypeId'),
 			'jva' => array(self::BELONGS_TO, 'Jvadata', 'jvaId'),
 			'yearCounter0' => array(self::BELONGS_TO, 'Yearcounter', 'yearCounter'),
-			//'documentvalues' => array(self::HAS_MANY, 'Documentvalues', 'documentId'),
+			'documentvalues' => array(self::HAS_MANY, 'Documentvalues', 'documentId'),
 		);
 	}
 
