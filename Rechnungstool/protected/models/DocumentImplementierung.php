@@ -215,6 +215,22 @@ class DocumentImplementierung extends Document
 	}
 	
 	
+	public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt){
+		$jva = new JvaModel;
+		$jvaObject = $jva->getJvaByName(trim($jvaName), trim($jvaNameExt));
+		$jvaId = $jvaObject->jvaDataId;
+		//Document::model()->with('docType')->findAll('jvaId=:jvaId AND documentId NOT IN collectiveinvoices.deliveryNoteId AND (docTypeName = "Rechnung" OR docTypeName = "Lieferschein")',array('jvaId'=>$jvaId));
+		return $document = Yii::app()->db->createCommand()
+					->select()
+					->from('document, docType, jvaData')
+					->where('document.docTypeId = docType.docTypeId AND document.jvaId=:jvaId ', array(':jvaId'=>$jvaId))
+					->andWhere('docTypeName = "Rechnung" OR docTypeName = "Lieferschein"')
+					->andWhere('document.documentId NOT IN (Select deliveryNoteId from collectiveinvoice)')
+					->andWhere('document.jvaId = jvaData.jvaDataId')
+					->queryAll();
+	}
+	
+	
 	
 	
 	

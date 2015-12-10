@@ -121,57 +121,60 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 	});
 	
 $(document).ready(function () {
-	
+
   $(document).on("click","#writingDoc",function(){
 			//var $container = $('#example');
 			//var handsontable = $container.data('handsontable');
 			//alert(container);
-			var buttonPressed;
-			$("#docSelection .btn").each(function() {
-				if($(this).hasClass('active')) {
-					buttonPressed = $(this).text();
+			if($("#InvoiceExample").is(':visible')){
+				var buttonPressed;
+				$("#docSelection .btn").each(function() {
+					if($(this).hasClass('active')) {
+						buttonPressed = $(this).text();
+					}
+				});
+				var defaultDocument;
+				if($("#chkDefaultDocInvoice").is(':checked')){
+					defaultDocument = "yes";
+				}else{
+					defaultDocument ="no";
 				}
-			});
-			var defaultDocument;
-			if($("#chkDefaultDocInvoice").is(':checked')){
-				defaultDocument = "yes";
-			}else{
-				defaultDocument ="no";
-			}
-			var content = hot.getData();
-			var header = hot.getSettings().colHeaders;
-			console.log(header);
-			var counterType = $('#nummernkreisSelect option:selected').text();
-			var jva = $("#select2-chosen-1").text();
+				var content = hot.getData();
+				var header = hot.getSettings().colHeaders;
+				console.log(header);
+				var counterType = $('#nummernkreisSelect option:selected').text();
+				var jva = $("#select2-chosen-1").text();
+				
+				var contentNumeric = Array();
+				contentNumeric = getTableDataNumeric(contentNumeric);
+				
+				var invoiceExtraHTML = getInvoiceExtraHTML(invoiceExtraHTML);
 			
-			var contentNumeric = Array();
-			contentNumeric = getTableDataNumeric(contentNumeric);
+				
 			
-			var invoiceExtraHTML = getInvoiceExtraHTML(invoiceExtraHTML);
-		
-			
-		if($("#InvoiceExample").is(':visible')){
-						
-			$.ajax({
-			  method: "POST",
-			  type: "json",
-			  url: "index.php?r=document/getTableData",
-			  data: { 	
-						invoiceExtra: invoiceExtraHTML,
-						content: content,
-						contentNumeric: contentNumeric,
-						headers: header,
-						counterType : counterType,
-						docType: buttonPressed,
-						jva: jva,
-						defaultDocument: defaultDocument,
-				}
-			})
-			  .done(function( data ) {
-					alert("data transferred to PHP");				
-			  });	
-		}	
+							
+				$.ajax({
+				  method: "POST",
+				  type: "json",
+				  url: "index.php?r=document/getTableData",
+				  data: { 	
+							invoiceExtra: invoiceExtraHTML,
+							content: content,
+							contentNumeric: contentNumeric,
+							headers: header,
+							counterType : counterType,
+							docType: buttonPressed,
+							jva: jva,
+							defaultDocument: defaultDocument,
+					}
+				})
+				  .done(function( data ) {
+						alert("data transferred to PHP");				
+				  });	
+		}
+  		
 	});
+
   	
 	function getInvoiceExtraHTML(invoiceExtra) {
 

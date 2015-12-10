@@ -1,4 +1,4 @@
-<script>
+ <script>
 var hot;
 </script>
 
@@ -132,6 +132,7 @@ var hot;
 	$(document).on("click", "#docSelection .btn-group .btn", function () {
 			$(this).addClass('active');
 			$(this).siblings('.btn').removeClass('active');
+			
 			if(readyWhenYouAre()) {
 				showCorrectDocContent();
 			}
@@ -175,7 +176,8 @@ var hot;
 						//alert("data Loaded");
 						break;
 					case "Sammelrechnung":
-						loadInvoiceData(JSON.parse(data,buttonPressed));
+						//loadInvoiceData(JSON.parse(data,buttonPressed));
+						loadCollectiveData(data);
 						break;
 					case "Lieferschein":
 						loadInvoiceData(JSON.parse(data,buttonPressed));
@@ -232,6 +234,14 @@ var hot;
 		}
 		
 	}
+	
+	
+	function loadCollectiveData(data){
+		//alert(data);
+		$('#docContentCollectiveInvoice').html(data);
+	}
+	
+	
 	function loadInvoiceData(data,docType){
 		
 		// console.log("document ready");

@@ -1,12 +1,12 @@
 
 <?php
 
-$baseUrl = Yii::app()->baseUrl; 
-$cs = Yii::app()->getClientScript();
-$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.js');
-$cs->registerCssFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.css');
-$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/ruleJS.all.full.js');
-$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
+// $baseUrl = Yii::app()->baseUrl; 
+// $cs = Yii::app()->getClientScript();
+// $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.js');
+// $cs->registerCssFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.css');
+// $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/ruleJS.all.full.js');
+// $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
 
 // C:\inetpub\wwwroot\massaki\Rechnungstool\js\handsontable-0.19.0\dist
 
@@ -14,52 +14,36 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 <script>
 
 $(document).ready(function () {
-	
-  
-  
-  $(document).on("click","#writingDoc",function(){
-			//var $container = $('#example');
-			//var handsontable = $container.data('handsontable');
-			//alert(container);
-			var buttonPressed;
-			$("#docSelection .btn").each(function() {
-				if($(this).hasClass('active')) {
-					buttonPressed = $(this).text();
-				}
-			});
-			var defaultDocument;
-			if($("#chkDefaultDocCollective").is(':checked')){
-				defaultDocument = "yes";
-			}else{
-				defaultDocument ="no";
+	function getAllSelectedRows(){
+		var nameSetT = $("#select2-chosen-1").text();
+		var resultT = [];														
+		var tbodyrowT = $('#CollectiveGrid table tbody tr');
+		tbodyrowT.each(function(){
+			if($(this).hasClass("selected")){
+				var valueT = $(this).find("td:eq(1)").text();
+				resultT.push(valueT);
 			}
-			var content = hot.getData();
-			var header = hot.getSettings().colHeaders;
-			var counterType = $('#nummernkreisSelect option:selected').text();
-			var jva = $("#select2-chosen-1").text();
-	if($("#CollectiveInvoiceExample").is(':visible')){
+		});
 		$.ajax({
-		  method: "POST", 
-		  type: "json",
-		  url: "index.php?r=document/getTableData",
-		  data: { 	content: content,
-					headers: header,
-					counterType : counterType,
-					docType: buttonPressed,
-					jva: jva,
-					defaultDocument: defaultDocument,
-									}
-		})
-		  .done(function( data ) {
-				alert("data transferred to PHP");
-			
-		  });
-			
-	}	
-		
+				method: "POST",
+				type: "json",
+				url: "index.php?r=document/addToCollectiveInvoice",
+				data: { 
+					data: resultT,
+					jva: nameSetT,
+				}
+		}).done(function(data) {
+			$('#docContentCollectiveInvoice').html(data);
+		});
+	}
+	$('#writingDoc').on("click",function(){
+		getAllSelectedRows();
 	});
+  
+			
 
 });
+
 </script>
 <?php 
 echo '
@@ -71,15 +55,64 @@ echo '
 		<div class="row">
 			<div class="col-md-12">
 				<form id="items">
-				<div id="CollectiveInvoiceExample" class="handsontable"></div>
+				<div id="CollectiveInvoiceExample">';
+				 if(isset($gridDataProvider) && !empty($gridDataProvider)){
+										//var_dump($gridDataProvider);
+											
+											//cf. http://yiibooster.clevertech.biz/extendedGridView
+												$this->widget('booster.widgets.TbExtendedGridView', array(
+													'id'=>'CollectiveGrid',
+													'type' => 'striped bordered',
+													'dataProvider' => $gridDataProvider,
+													'template' => "{items}",
+													'selectableRows' => 2,
+													'bulkActions' => array(
+													'actionButtons' => array(
+														array(
+															'buttonType' => 'button',
+															'context' => 'primary',
+															'size' => 'small',
+															'label' => 'Ausgewählte Dokumente zu einer Sammelrechnung zusammenfassen',
+															'click' => 'js:function getAllSelectedRows(){
+																var nameSet = $("#select2-chosen-1").text();
+																var result = [];
+																var tbodyrow = $(\'#CollectiveGrid table tbody tr\');
+																tbodyrow.each(function(){
+																	if($(this).hasClass("selected")){
+																		var value = $(this).find("td:eq(1)").text();
+																		result.push(value);
+																	}
+																});
+																$.ajax({
+																		method: "POST",
+																		type: "json",
+																		url: "index.php?r=document/addToCollectiveInvoice",
+																		data: { 
+																			data: result,
+																			jva:nameSet,
+																		}
+																}).done(function(data) {
+																	$("#docContentCollectiveInvoice").html(data);
+																});
+															}',
+															'id'=>'documentId'
+															)
+														),
+														// if grid doesn't have a checkbox column type, it will attach
+														// one and this configuration will be part of it
+														'checkBoxColumnConfig' => array(
+															'name' => 'id'
+														),
+													),
+													'columns' => $gridColumns,
+												));
+											}
+											echo '
+				
+				
+				</div>
 				</form>
 			</div>
-			<br>
-				<div>
-					<div class="checkbox">
-					<label><input type="checkbox" value="" name="defaultDocCollective" id="chkDefaultDocCollective">Standard Dokument?</label>
-					</div>
-				</div>
 		</div>
 	</div>
 </div>';						

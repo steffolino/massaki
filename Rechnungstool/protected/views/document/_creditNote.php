@@ -15,13 +15,14 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 
 $(document).ready(function () {
 	
-  
+ 
   
   $(document).on("click","#writingDoc",function(){
 			//var $container = $('#example');
 			//var handsontable = $container.data('handsontable');
-			//alert(container);
-			var buttonPressed;
+				//alert(container);
+	if($("#CreditExample").is(':visible')){		
+		var buttonPressed;
 			$("#docSelection .btn").each(function() {
 				if($(this).hasClass('active')) {
 					buttonPressed = $(this).text();
@@ -38,7 +39,7 @@ $(document).ready(function () {
 			var header = hot.getSettings().colHeaders;
 			var counterType = $('#nummernkreisSelect option:selected').text();
 			var jva = $("#select2-chosen-1").text();
-		if($("#CreditExample").is(':visible')){
+		
 			$.ajax({ 
 			  method: "POST",
 			  type: "json",
@@ -59,6 +60,7 @@ $(document).ready(function () {
 		}	
 		
 	});
+  
 
 });
 </script>

@@ -59,7 +59,7 @@ class Document extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			//'collectiveinvoices' => array(self::HAS_MANY, 'Collectiveinvoice', 'deliveryNoteId'),
+			'collectiveinvoices' => array(self::HAS_MANY, 'Collectiveinvoice', 'deliveryNoteId'),
 			'docType' => array(self::BELONGS_TO, 'Doctype', 'docTypeId'),
 			'jva' => array(self::BELONGS_TO, 'Jvadata', 'jvaId'),
 			'yearCounter0' => array(self::BELONGS_TO, 'Yearcounter', 'yearCounter'),
