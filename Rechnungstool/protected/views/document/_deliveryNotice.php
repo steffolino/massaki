@@ -76,7 +76,7 @@ echo '
 				<div id="DeliveryExample" class="handsontable"></div>
 				</form>
 			</div>
-			<br>
+			<br><br>
 				<div>
 					<div class="checkbox">
 					<label><input type="checkbox" value="" name="defaultDocDelivery" id="chkDefaultDocDelivery">Standard Dokument?</label>

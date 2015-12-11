@@ -77,7 +77,7 @@ echo '
 				<div id="CreditExample" class="handsontable"></div>
 				</form>
 			</div>
-			<br>
+			<br><br>
 				<div>
 					<div class="checkbox">
 					<label><input type="checkbox" value="" name="defaultDocCredit" id="chkDefaultDocCredit">Standard Dokument?</label>

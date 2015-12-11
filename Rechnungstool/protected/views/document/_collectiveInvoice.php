@@ -36,8 +36,11 @@ $(document).ready(function () {
 			$('#docContentCollectiveInvoice').html(data);
 		});
 	}
+	
 	$('#writingDoc').on("click",function(){
-		getAllSelectedRows();
+		if($("#CollectiveInvoiceExample").is(':visible')){
+			getAllSelectedRows();
+		}
 	});
   
 			

@@ -30,7 +30,7 @@ class SearchController extends Controller
 						'id'=>'documentId'
 						,));
 				//TO DO: Amend!!!!
-				$gridColumns = array('jva.jvaName::Jva Name','timeStamp','counter::Zähler');
+				$gridColumns = array('jvaName::Jva Name','timeStamp::Zeit','counter::Zähler');
 				
 				if(!empty($gridDataProvider)){
 					$this->renderPartial('_searchResultsGrid', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
@@ -73,7 +73,7 @@ class SearchController extends Controller
 						,));
 				
 				//TODO: To be amended!!!
-				$gridColumns = array('jva.jvaName::Jva Name','timeStamp','counter::Zähler');
+				$gridColumns = array('jvaName::Jva Name','timeStamp:.Zeit','counter::Zähler');
 				if(!empty($gridDataProvider)){
 					$this->renderPartial('_searchResultsGrid', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
 				}else{
