@@ -8,7 +8,7 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/r
 $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
 
 //TODO: rewrite php.ini
-require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_constants.php');
+require_once('../Rechnungstool/pdf/pdf_constants.php');
 // echo ($baseUrl.'/pdf/pdf_constants.php');
 
 // $adresse_klein = 'Massak Logistik GmbH  Hollfelder Str. 23  96123 Litzendorf';
@@ -154,7 +154,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<?php
-			echo "<p>Nummernkreis</p>";
+			echo "<p>".$counter."</p>";
 			?>
 		</div>
 		<div class="col-xs-2 col-xs-offset-2">
@@ -217,7 +217,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra">Warenwert netto</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo number_format($invoiceExtra[0], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo number_format(floatval($invoiceExtra[0]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -225,7 +225,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra">MwSt 0%</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[1])) echo number_format($invoiceExtra[1], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[1])) echo number_format(floatval($invoiceExtra[1]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -233,7 +233,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra">MwSt 7%</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[2])) echo number_format($invoiceExtra[2], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[2])) echo number_format(floatval($invoiceExtra[2]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -241,7 +241,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 						<p class="smallExtra">MwSt 19%</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[3])) echo number_format($invoiceExtra[3], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[3])) echo number_format(floatval($invoiceExtra[3]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -249,7 +249,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra">Warenwert brutto</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[4])) echo number_format($invoiceExtra[4], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[4])) echo number_format(floatval($invoiceExtra[4]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -261,7 +261,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra"><?php if(!empty($invoiceExtra[5])) echo $invoiceExtra[5]; ?></p>
 						</div>
 						<div class="col-xs-1 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[6])) echo number_format($invoiceExtra[6], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[6])) echo number_format(floatval($invoiceExtra[6]), 2,","," ")." €"; ?></p>
 						</div>
 						<br/>
 					</div>
@@ -270,7 +270,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra">Bereits berechnet</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[7])) echo number_format($invoiceExtra[7], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[7])) echo number_format(floatval($invoiceExtra[7]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -278,7 +278,7 @@ require_once('C:/Users/Benni/Documents/GitHub/massaki/Rechnungstool/pdf/pdf_cons
 							<p class="smallExtra">Restbetrag</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[8])) echo number_format($invoiceExtra[8], 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[8])) echo number_format(floatval($invoiceExtra[8]), 2,","," ")." €"; ?></p>
 						</div>
 					</div>
 			</div>

@@ -31,9 +31,9 @@ class DocumentImplementierung extends Document
 		$newDoc->save();
 		 
 		$docId = $newDoc->documentId;
-		echo "<pre>";
-		var_dump($arrayOfValuesAndHeaders);
-		echo "</pre>";
+		// echo "<pre>";
+		// var_dump($arrayOfValuesAndHeaders);
+		// echo "</pre>";
 		
 		foreach($arrayOfValuesAndHeaders as $row){
 			$newDocumentRow = new Documentvalues;

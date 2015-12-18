@@ -10,23 +10,12 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 // C:\inetpub\wwwroot\massaki\Rechnungstool\js\handsontable-0.19.0\dist
 
 ?>
-<style>
-.invoiceExtra {
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-</style>
 
 <script>
-	function getTableDataNumeric (tableData) {
-			// var tableData = Array();// = JSON.stringify(hot.getData());			
-			// var header = Array();
-			// $(".htCore thead tr th").each(function(i, v){
-					// header[i] = $(this).text();
-			// })
-			// header = header.slice(0,2);
+	function getTableDataNumeric (tableData, tableID) {
+			console.log("getting table data");
 			
-			var htCoreData = $(".htCore tbody tr");
+			var htCoreData = $(tableID+" .htCore tbody tr");
 			htCoreData.each(function(i, v){
 				console.log(i);
 				tableData[i] = Array();
@@ -42,7 +31,8 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 		 return (tableData);
 	};
 
-	function parseAndCalcAndTranfer () {
+
+	function parseAndCalcAndTranferInvoice () {
 		
 		var tableData = Array();
 		
@@ -50,7 +40,7 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 		var sevenTotal = 0;
 		var nineTeenTotal = 0;
 		
-		tableData = getTableDataNumeric(tableData);
+		tableData = getTableDataNumeric(tableData, "#InvoiceExample");
 		console.log(tableData);
 		var tableLength = tableData.length;
 		for(var i = 0; i < tableLength; i++) {
@@ -107,17 +97,21 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 		} else {
 			$("#mwst19").val('0.00');			
 		}
-		if ($("#bezahltExternVal").val() !== '' && $("#bereitsBerechnet").val() !== '') {
-			var rest = parseFloat(parseFloat(warenwertBrutto) - parseFloat($("#bezahltExternVal").val()) - parseFloat($("#bereitsBerechnet").val())).toFixed(2);
+		var rest = parseFloat(parseFloat(warenwertBrutto));
+		if ($("#bezahltExternVal").val() !== '') {
+			rest = rest - parseFloat($("#bezahltExternVal").val());
 			console.log(parseFloat($("#bezahltExternVal").val()));
 			console.log(parseFloat($("#bereitsBerechnet").val()));
 			console.log(rest);
-			$("#restbetrag").val(rest);
 		}
+		if($("#bereitsBerechnet").val() !== '') {
+			rest = rest - parseFloat($("#bereitsBerechnet").val()).toFixed(2);
+		}
+		$("#restbetrag").val(rest.toFixed(2));
 	}
 
-	$(document).on("click", "#nueber", function () {
-		parseAndCalcAndTranfer();
+	$(document).on("click", "#invoiceNueber", function () {
+		parseAndCalcAndTranferInvoice();
 	});
 	
 $(document).ready(function () {
@@ -146,7 +140,7 @@ $(document).ready(function () {
 				var jva = $("#select2-chosen-1").text();
 				
 				var contentNumeric = Array();
-				contentNumeric = getTableDataNumeric(contentNumeric);
+				contentNumeric = getTableDataNumeric(contentNumeric, "#InvoiceExample");
 				
 				var invoiceExtraHTML = getInvoiceExtraHTML(invoiceExtraHTML);
 			
@@ -228,18 +222,13 @@ echo '
 				<form id="items">
 				<div id="InvoiceExample" class="handsontable"></div>
 				<br/>
-				<div>
-					<div class="checkbox">
-					<label><input type="checkbox" value="" name="defaultDocInvoice" id="chkDefaultDocInvoice">Standard Dokument?</label>
-					</div>
-				</div>
 				<div id="invoiceExtraContainer">
 					<div class="row">
 					</div>
 					<div class="row invoiceExtra">
 						<div class="form-group form-group-sm">
 							<div class="col-md-2 col-md-offset-4">
-								<button type=button id="nueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
+								<button type=button id="invoiceNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
 							</div>
 							<label class="col-md-2 control-label" for="warenwertNetto">Warenwert netto</label>
 							<div class="col-md-2 form-group-sm">
@@ -304,6 +293,13 @@ echo '
 							<div class="col-md-2 form-group-sm">
 								<input type="numeric" step="0.01" min="0.00" id="restbetrag" class="form-control" placeholder="Restbetrag">
 							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="checkbox">
+							<label class="col-md-2 col-md-offset-4 control-label" for="chkDefaultDocInvoice"><b>Standard Dokument?&nbsp;</b></label>
+								&nbsp;<input type="checkbox" value="" name="defaultDocInvoice" id="chkDefaultDocInvoice">
+							</label>
 						</div>
 					</div>
 				</div>

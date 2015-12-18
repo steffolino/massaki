@@ -33,7 +33,10 @@ if(isset($jvaAddFormModel)){
 			
 			array_splice($colNames, -3);
 			
-			
+			// echo "<pre>";
+			// var_dump($jvaAddFormModel);
+			// echo "</pre>";
+						
 			//Awesome C like fix
 			foreach($tabs as &$tab) {
 				for($i=1;$i<10;$i++){
@@ -46,14 +49,15 @@ if(isset($jvaAddFormModel)){
 					}else{
 						$idTab = "-Witte";
 					}
-					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames,'htmlOptions' => array('id'=>   'addColName'.$i .$idTab)),'class'=>'col-sm-5',));
+					//ADD PRE-DEFINED COLUMNS
+					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames,'htmlOptions' => array('id'=>   'addColName'.$i .$idTab)),'class'=>'col-sm-5', 'label' => 'Spalte '.$i));
 				}
 			}
 		    echo "<br/>";
 			$this->widget(
 				'booster.widgets.TbTabs',
 				array(
-					'type' => 'tabs',
+					'type' => 'pills',
 					'justified' => true,
 					'tabs' => $tabs
 				)
@@ -65,7 +69,7 @@ if(isset($jvaAddFormModel)){
 		<?php
 	
 }else{
-	echo "Huha";
+	echo "There was an error. Please try again.";
 	
 } 
 $this->endWidget();

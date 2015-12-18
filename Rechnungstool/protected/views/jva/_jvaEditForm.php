@@ -1,21 +1,28 @@
 <script>
 
-$(document).on("click", "#colTypeSelection .btn-group .btn", function () {
-			//console.log("clicked");
+	// $(document).on("click", "#colTypeSelection .btn-group .btn", function (e) {
+			// //console.log("clicked");
+			// e.preventDefault();
+			// $(this).addClass('active');
+			// $(this).siblings('.btn').removeClass('active');
+			// showCorrectColContent();
+	// });
+
+	$(document).on("click", "#jvaDetailsEditContent #colTypeSelection .btn-group .btn", function (e) {
+			console.log("clicked coltypeselection");
 			$(this).addClass('active');
 			$(this).siblings('.btn').removeClass('active');
 			showCorrectColContent();
-			
 	});
 
 	function showCorrectColContent(){
 			var radio = "empty";
-			$("#colTypeSelection .btn").each(function() {
-			if($(this).hasClass('active')) {
-				radio = $(this).attr('id');
-			}
+			$("#colTypeSelection .btn-group .btn").each(function() {
+				if($(this).hasClass('active')) {
+					radio = $(this).attr('id');
+				}
 			});
-			//console.log(radio);
+			console.log(radio);
 			switch(radio){
 					case "ikSelected":
 						$("#WitteEditForm").hide();
@@ -51,13 +58,6 @@ $(document).ready(function () {
 		$("#IkEditForm").hide();
 		$("#LoehneEditForm").hide();
 		
-		
-		
-		
-	
-		
-		
-		
 });
 </script>
 <?php 
@@ -66,11 +66,11 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 	array_splice($colNames, -3);
 	
 	$form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'id'=>'jvaEditForm',
-	'type' => 'horizontal',
-	'htmlOptions' => array('class' => 'well'),
-	//'enableAjaxValidation'=>true,
-	//'focus'=>array($jvaEditFormModel,'jvaName'),
+		'id'=>'jvaEditForm',
+		'type' => 'horizontal',
+		'htmlOptions' => array('class' => 'well'),
+		//'enableAjaxValidation'=>true,
+		//'focus'=>array($jvaEditFormModel,'jvaName'),
 	)); 
 	
 	//TODO: create Form
@@ -147,17 +147,34 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				)
 			)
 		);?>
-	<div id="colTypeSelection">
-										<form >
-													<div class="btn-group btn-group-sm" role=group>
-														<button type="button" class="btn btn-default" id="ikSelected">IK</button>
-														<button type="button" class="btn btn-default" id="memmelSelected">Logistik Memmeldsdorf</button>
-														<button type="button" class="btn btn-default" id="loehneSelected">Logistik Löhne</button>
-														<button type="button" class="btn btn-default" id="witteSelected">Wittekindshof</button>
-													</div>
-										</form>
-									</div>
-									<?php
+	<br/>
+	<div id="colTypeSelection" class="col-sm-12">
+		<form >
+			<?php 
+			// $this->widget(
+				// 'booster.widgets.TbTabs',
+				// array(
+					// 'type' => 'pills',
+					// 'justified' => true,
+					// 'tabs' =>  array (
+						// array('label' => 'IK', 'content' => '<br/>', 'itemOptions' => array('id' => 'ikSelected')),
+						// array('label' => 'Logistik Memmelsdorf', 'content' => '<br/>', 'itemOptions' => array('id' => 'memmelSelected')),
+						// array('label' => 'Logistik Löhne', 'content' => '<br/>',  'itemOptions' => array('id' => 'loehneSelected')),
+						// array('label' => 'Wittekindshof', 'content' => '<br/>', 'itemOptions' => array('id' => 'witteSelected')),
+					// ),
+				// )
+			// ); 
+			?>
+			<div class="btn-group btn-group-sm" role=group>
+				<button type="button" class="btn btn-default" id="ikSelected">IK</button>
+				<button type="button" class="btn btn-default" id="memmelSelected">Logistik Memmeldsdorf</button>
+				<button type="button" class="btn btn-default" id="loehneSelected">Logistik Löhne</button>
+				<button type="button" class="btn btn-default" id="witteSelected">Wittekindshof</button>
+			</div>
+		</form>
+	</div>
+	<br/><br/><br/>
+	<?php
 //		echo "<h1>Ey oida ".var_dump($jvaEditFormModel->jvaColIk->colDef1) ."</h1>";
 //		echo "<h1>Ey oida ".$jvaEditFormModel->jvaColIk->colDef2->colId."</h1>";
 	?><div id="IkEditForm"><?php
@@ -417,7 +434,7 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 		);
 		?></div>
 		<div id="LoehneEditForm"><?php
-	echo $form->dropDownListGroup($jvaEditFormModel->jvaColLoehne->colDef1,
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColLoehne->colDef1,
 			'colName',
 			array(
 				'class'=>'col-sm-5',
@@ -545,133 +562,132 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 		);
 		?></div>
 		<div id="WitteEditForm"><?php
-
-echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef1,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 1',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef1->colDefId => array('selected' => true)),
-						'id' => 'colName1-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef2,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 2',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef2->colDefId => array('selected' => true)),
-						'id' => 'colName2-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef3,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 3',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef3->colDefId => array('selected' => true)),
-						'id' => 'colName3-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef4,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 4',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef4->colDefId => array('selected' => true)),
-						'id' => 'colName4-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef5,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 5',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef5->colDefId => array('selected' => true)),
-						'id' => 'colName5-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef6,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 6',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef6->colDefId => array('selected' => true)),
-						'id' => 'colName6-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef7,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 7',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef7->colDefId => array('selected' => true)),
-						'id' => 'colName7-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef8,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 8',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef8->colDefId => array('selected' => true)),
-						'id' => 'colName8-Witte',
-					)
-				),
-			)
-		);
-		echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef9,
-			'colName',
-			array(
-				'class'=>'col-sm-5',
-				'label' => 'Spalte 9',
-				'widgetOptions' => array(
-					'data'=>$colNames, 
-					'htmlOptions' => array(
-						'options' => array($jvaEditFormModel->jvaColWitte->colDef9->colDefId => array('selected' => true)),
-						'id' => 'colName9-Witte',
-					)
-				),
-			)
-		);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef1,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 1',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef1->colDefId => array('selected' => true)),
+							'id' => 'colName1-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef2,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 2',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef2->colDefId => array('selected' => true)),
+							'id' => 'colName2-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef3,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 3',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef3->colDefId => array('selected' => true)),
+							'id' => 'colName3-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef4,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 4',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef4->colDefId => array('selected' => true)),
+							'id' => 'colName4-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef5,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 5',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef5->colDefId => array('selected' => true)),
+							'id' => 'colName5-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef6,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 6',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef6->colDefId => array('selected' => true)),
+							'id' => 'colName6-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef7,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 7',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef7->colDefId => array('selected' => true)),
+							'id' => 'colName7-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef8,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 8',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef8->colDefId => array('selected' => true)),
+							'id' => 'colName8-Witte',
+						)
+					),
+				)
+			);
+			echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef9,
+				'colName',
+				array(
+					'class'=>'col-sm-5',
+					'label' => 'Spalte 9',
+					'widgetOptions' => array(
+						'data'=>$colNames, 
+						'htmlOptions' => array(
+							'options' => array($jvaEditFormModel->jvaColWitte->colDef9->colDefId => array('selected' => true)),
+							'id' => 'colName9-Witte',
+						)
+					),
+				)
+			);
 		?></div><?php
 
 
@@ -724,7 +740,9 @@ echo $form->dropDownListGroup($jvaEditFormModel->jvaColWitte->colDef1,
 	$this->endWidget();
 }else{
 	?>
+	<br/>
 	<div class="hero-unit"><b>Bitte wählen Sie eine Aktion aus!</b></div>
+	<br/>
 	<?php
 }
 ?>

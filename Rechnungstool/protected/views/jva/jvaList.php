@@ -4,8 +4,8 @@
 </div-->
 <?php
 	echo '
-	<div class="row col-md-10 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
-		<div id="successAlert" class="col-md-12 col-md-offset-0 alert alert-success" style="display:none; text-align:center;">
+	<div class="row col-md-9 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
+		<div id="successAlert" class="col-md-11 col-md-offset-0 alert alert-success" style="display:none; text-align:center;">
 			<button type="button" class="customClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 style="margin-top: 10px; margin-bottom:10px;" id="successAlertContent"></h4>
 		</div>
@@ -17,7 +17,12 @@
 		</div>
 	</div>';
 ?>
-<div class="row col-md-1 col-md-offset-11" style="position:fixed; z-index:6; bottom: 40px;">
+<div id="infoBarContainer" class="row col-md-2 col-md-offset-10" style="position:fixed; z-index:6; bottom: 440px;">
+	<div class="well-sm">
+		<span id="infoBar">JVA Editieren</span>
+	</div>
+</div>
+<div class="row col-md-1 col-md-offset-10" style="position:fixed; z-index:6; bottom: 40px;">
 	<div class="pull-right">
 		<a id="scrollUpa" style="cursor:pointer; "><i alt="Scroll Top" class="fa fa-2x fa-angle-double-up"></i></a>
 	</div>
@@ -133,12 +138,14 @@
 <script>
 
 	$(document).on("click", ".jvaListItem", function () {
-				changeJvaNameHeader();
+				// changeJvaNameHeader();
 				//console.log("clicked " + $(this).val());
 				$("#jvaDetailsAddContent").hide();
 				$("#jvaDetailsEditContent").show();
 				changeJvaNameHeader();
-				submitJVAId($(this).val());		
+				submitJVAId($(this).val());
+				$("#infoBar").html('JVA editieren');
+				$("#infoBarContainer").removeClass('alert-info').addClass('alert-success').show();
 	});
 
 	$(document).on("click", "#scrollUpa", function () {
@@ -146,9 +153,38 @@
 			body.stop().animate({scrollTop:0}, '1000', 'swing', function() { 
 		});
 	});
+	
+	// $(document).on("click", "#jvaAddForm .nav li a", function (e) {
+			// e.preventDefault();
+			// console.log("clicking nav");
+			// $(this).addClass('active');
+			// $(this).siblings().removeClass('active');
+
+			// var indy = $("#jvaAddForm .nav li a").index(this);
+			// console.log("index: " + indy);
+			// $(".tab-content").children().fadeOut('fast');
+			// var showTab = $(".tab-content").children().eq(indy);
+			// console.log(showTab);
+			// showTab.fadeIn('fast');
+	// });
+	
+		// $("#jvaAddForm .nav li a").on('click', function(e) {
+			// e.preventDefault();
+			// console.log("clicking nav");
+			// $(this).addClass('active');
+			// $(this).siblings().removeClass('active');
+
+			// var index = $("#jvaAddForm .nav li a").index(this);
+			
+			// $(".tab-content").index(index).fadeIn('fast');
+			
+		// });
+	
 
 //TODO: put in extra file
 	$(document).ready(function () {
+		
+		$("#infoBarContainer").hide();
 		
 		$(".customClose").on('click', function (e) {
 			console.log("closing");
@@ -156,8 +192,6 @@
 			parent = $(this).closest('.alert');
 			parent.slideUp('fast');
 		})
-		
-		
 		
 		var selectedJva;
 	
@@ -167,54 +201,62 @@
 			$("#jvaEditForm")[0].reset();
 		});
 		
-			$("#jvaDetailsAddContent").hide();	
+		$("#jvaDetailsAddContent").hide();	
+		changeJvaNameHeader();
+
+		$(".buttonAddJva").on('click', function(){
+			//console.log("add");
+			$("#jvaListContent").children('input:radio').each(function() { 
+				$(this).prop('checked', false).checkboxradio("refresh");
+				console.log($(this));
+			});
+			$("#jvaDetailsEditContent").hide();
+			$("#jvaDetailsAddContent").show();
 			changeJvaNameHeader();
-
-			$(".buttonAddJva").on('click', function(){				
-				//console.log("add");
-				$("#jvaDetailsEditContent").hide();
-				$("#jvaDetailsAddContent").show();
-				changeJvaNameHeader();
-			});
+			$("#infoBar").html('JVA erstellen');
+			$("#infoBarContainer").removeClass('alert-success').addClass('alert-info').show();
+		});
+		
+		$("#confirmDeactivateJVA").on('click',function(e){
+			//console.log("confirmed deact");
+			deactivateJva(selectedJva.val());
+			$("#infoBarContainer").hide();
+		});
+		
+		$(".buttonDeactivateJva").on('click',function(e){
+			e.preventDefault();
+			selectedJva = $(".jvaListItem:checked");
+			if(selectedJva.val() !== undefined) {
+				//get values from list
+				var jvaId = selectedJva.val();
+				var jvaName = selectedJva.parent().text();
+				//console.log(jvaId);
+				//console.log(jvaName);
+				//hide alert anyway
+				$("#errorAlert").slideUp('fast');
+				//Set name and show modal
+				$("#deactivateModalJvaName").html(jvaName);
+				$("#deactivateModal").modal('show');
+			} else {
+				//show: please select a jva
+				$("#errorAlertContent").html('Bitte w&auml;hlen Sie zuerst eine JVA.');
+				$("#errorAlert").slideDown('fast');
+			}
 			
-			$("#confirmDeactivateJVA").on('click',function(e){
-				//console.log("confirmed deact");
-				deactivateJva(selectedJva.val());
-			});
-
-			$(".buttonDeactivateJva").on('click',function(e){
-				e.preventDefault();
-				selectedJva = $(".jvaListItem:checked");
-				if(selectedJva.val() !== undefined) {
-					//get values from list
-					var jvaId = selectedJva.val();
-					var jvaName = selectedJva.parent().text();
-					//console.log(jvaId);
-					//console.log(jvaName);
-					//hide alert anyway
-					$("#errorAlert").slideUp('fast');
-					//Set name and show modal
-					$("#deactivateModalJvaName").html(jvaName);
-					$("#deactivateModal").modal('show');
-				} else {
-					//show: please select a jva
-					$("#errorAlertContent").html('Bitte w&auml;hlen Sie zuerst eine JVA.');
-					$("#errorAlert").slideDown('fast');
-				}
-				
-			});
-			
-			$(".changeJva").on('click', function(){
-					saveJvaData();
-			});	
-			
-			$("#JvaAddModel_jvaName").on('input',function(){
-				if($('#JvaAddModel_jvaName').val()!== ""){
-					$("#jvaNameHeading").text($('#JvaAddModel_jvaName').val());
-				}else{
-					$("#jvaNameHeading").text("JVA ...");
-				}
-			});
+		});
+		
+		$(".changeJva").on('click', function(){
+				saveJvaData();
+				$("#infoBarContainer").hide();
+		});	
+		
+		$("#JvaAddModel_jvaName").on('input',function(){
+			if($('#JvaAddModel_jvaName').val()!== ""){
+				$("#jvaNameHeading").text($('#JvaAddModel_jvaName').val());
+			}else{
+				$("#jvaNameHeading").text("JVA ...");
+			}
+		});
 	});
 	
 	function deactivateJva(jvaID){
@@ -381,16 +423,19 @@
 	}
 	
 	function changeJvaNameHeader(){
-			if($("#jvaName").val() !== ""){
-				if($("#jvaDetailsEditContent").is(":visible")){
-					$("#jvaNameHeading").text($('#jvaName').val());
+			console.log("changing header");
+			var t = setTimeout(function () {
+				if(($("#jvaName").val() !== "") && typeof($('#jvaName').val()) !== 'undefined'){
+					if($("#jvaDetailsEditContent").is(":visible")){
+						$("#jvaNameHeading").text($('#jvaName').val() +" | "+$("#jvaNameExt").val());
+						console.log($('#jvaName').val() +" | "+$("#jvaNameExt").val());
+					}else{
+						$("#jvaNameHeading").text("JVA ...");
+					}
 				}else{
 					$("#jvaNameHeading").text("JVA ...");
 				}
-			}else{
-				$("#jvaNameHeading").text("JVA ...");
-			}
-		
+			}, 300);
 	}
 	
 	

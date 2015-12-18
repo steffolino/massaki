@@ -2,11 +2,18 @@
 var hot;
 </script>
 
-<div class="row col-md-1 col-md-offset-11" style="position:fixed; z-index:6; bottom: 40px;">
+<style>
+.invoiceExtra, .creditNoteExtra, .deliveryNoticeExtra {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+</style>
+
+<!--div class="row col-md-1 col-md-offset-11" style="position:fixed; z-index:6; bottom: 40px;">
 	<div class="pull-right">
 		<a id="scrollUpa" style="cursor:pointer; "><i alt="Scroll Top" class="fa fa-2x fa-angle-double-up"></i></a>
 	</div>
-</div>
+</div-->
 
 <!-- MAIN -->
 <div class=row>
@@ -118,10 +125,22 @@ var hot;
 		$("#docContentEmpty").show();
 	})
 	
-	$(document).on("change", "#jvaName, #nummernkreisSelect", function () {
+	$(document).on("select2-selecting", "#jvaName", function(e) { 
 			if(readyWhenYouAre()) {	
 				showCorrectDocContent();
-				//MAGIIIIIIC!!!!!!
+				//MAGIIIIIIC!!!!!! --> doesnt work
+				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
+				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
+				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
+				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
+		}
+	});
+
+	$(document).on("change", "#nummernkreisSelect", function () {
+			console.log("changed event");
+			if(readyWhenYouAre()) {	
+				showCorrectDocContent();
+				//MAGIIIIIIC!!!!!! --> doesnt work
 				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
 				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
 				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
@@ -316,10 +335,10 @@ var hot;
 						 container = document.getElementById('CollectiveInvoiceExample');
 						break;
 					case "Lieferschein":
-						 container = document.getElementById('DeliveryExample');
+						 container = document.getElementById('DeliveryNoticeExample');
 						break;
 					case "Gutschrift":
-						container = document.getElementById('CreditExample');
+						container = document.getElementById('CreditNoteExample');
 						break;
 					default:
 						break;

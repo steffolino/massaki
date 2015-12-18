@@ -261,35 +261,39 @@ class DocumentController extends Controller
 		// $pdfModel = new PdfModel;
 		// $documentPdf = $pdfModel->createPdf();
 
-		// # mPDF
-        // $mPDF1 = Yii::app()->ePdf->mpdf();
+		# mPDF
+        $mPDF1 = Yii::app()->ePdf->mpdf();
 
-        // # You can easily override default constructor's params
-        // $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
+        # You can easily override default constructor's params
+        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
 
-        // # render (full page)
-		// date_default_timezone_set('Europe/Berlin');
-		// $curDate = date("Ymd_His");
+        # render (full page)
+		date_default_timezone_set('Europe/Berlin');
+		$curDate = date("Ymd_His");
 
-        // # Load a stylesheet
-		// $stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
-		// //echo $stylesheet;
-        // $mPDF1->WriteHTML($stylesheet, 1);
-        // $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType), true));
+        # Load a stylesheet
+		$stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
+		//echo $stylesheet;
 		
-		// /*** INTERESTING FOR RENDERING DOCUMENTS / INVOICES */
-        // # renderPartial (only 'view' of current controller)
-// //        $mPDF1->WriteHTML($this->renderPartial('index', array(), true));
+		/*** INTERESTING FOR RENDERING DOCUMENTS / INVOICES */
+        # renderPartial (only 'view' of current controller)
+//        $mPDF1->WriteHTML($this->renderPartial('index', array(), true));
 
-        // # Renders image
-// //        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
+        # Renders image
+//        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
 
-        // # Outputs ready PDF
-		// $filePath = Yii::getPathOfAlias('webroot')."/pdf/".$docType."/";
-		// $fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
-		// $mPDF1->Output($filePath.$fileName, "F");		
 		
 		$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument);
+
+        $mPDF1->WriteHTML($stylesheet, 1);
+        $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
+        # Outputs ready PDF
+		$filePath = Yii::getPathOfAlias('webroot')."/pdf/".$docType."/";
+		$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
+		$mPDF1->Output($filePath.$fileName, "F");		
+
+		// echo var_dump($result->counter);
+		// var_dump($result);
 	}
 	
 	
