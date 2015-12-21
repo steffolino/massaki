@@ -132,7 +132,7 @@ class DocumentController extends Controller
 			}
 			$docValues = new DocumentvaluesImplementierung;
 			$doc = new DocumentImplementierung;
-			$lastUsedDocId = $doc->getLastUsedDocumentId(trim($jvaName),trim($jvaExt),$docTypeId);
+			$lastUsedDocId = $doc->getLastUsedDocumentId(trim($jvaName),trim($jvaExt),$docTypeId,$numberCircle);
 			$documentValues = $docValues->getDocumentValuesByDocumentId($lastUsedDocId);
 			
 			foreach($documentValues as $rows){

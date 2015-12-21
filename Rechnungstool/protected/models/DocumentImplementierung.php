@@ -189,13 +189,22 @@ class DocumentImplementierung extends Document
 	}
 	
 	
-	public function getLastUsedDocumentId($jvaName,$jvaNameExt,$docType){
+	public function getLastUsedDocumentId($jvaName,$jvaNameExt,$docType,$counter){
+		if($counter === "ik"){
+				$counterName = "IK%";
+		}else if($counter === "memmel"){
+				$counterName = "Logistik Memmelsdorf%";
+		}else if($counter === "loehne"){
+				$counterName = "Logistik Loehne%";
+		}else{
+				$counterName = "Wittekindshof%";	
+		}
 		$jva = new JvaModel;
 		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
 		$jvaId = $jvaObject->jvaDataId;
 		$docId = Document::model()->find(
-				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" ORDER BY timeStamp DESC',
-				array(':jvaId'=>$jvaId,':docType'=>$docType)
+				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY timeStamp DESC',
+				array(':jvaId'=>$jvaId,':docType'=>$docType,':counter'=>$counterName)
 			);
 			if($docId !== NULL){
 				return $docId->documentId;
