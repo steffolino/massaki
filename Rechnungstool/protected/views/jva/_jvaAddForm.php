@@ -36,7 +36,7 @@ if(isset($jvaAddFormModel)){
 			// echo "<pre>";
 			// var_dump($jvaAddFormModel);
 			// echo "</pre>";
-						
+			//var_dump($colNames);			
 			//Awesome C like fix
 			foreach($tabs as &$tab) {
 				for($i=1;$i<10;$i++){

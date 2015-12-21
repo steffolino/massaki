@@ -280,10 +280,10 @@ class JvaModel extends CFormModel
 		$newJva->jvaColWitte->col12 = $jvaColWitte12;
 		$newJva->jvaColWitte->save();
 		
-		$newJva->jvaColIk = $newJva->jvaColIk->colConfigId;
-		$newJva->jvaColMemmel = $newJva->jvaColMemmel->colConfigId;
-		$newJva->jvaColLoehne = $newJva->jvaColLoehne->colConfigId;
-		$newJva->jvaColWitte = $newJva->jvaColWitte->colConfigId;
+		$newJva->jvaColConfig = $newJva->jvaColIk->colConfigId;
+		$newJva->jvaColMemm = $newJva->jvaColMemmel->colConfigId;
+		$newJva->jvaColLoeh = $newJva->jvaColLoehne->colConfigId;
+		$newJva->jvaColWitt= $newJva->jvaColWitte->colConfigId;
 		
 		$result = $newJva->save();
 		

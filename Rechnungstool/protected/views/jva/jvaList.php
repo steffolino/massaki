@@ -183,6 +183,8 @@
 
 //TODO: put in extra file
 	$(document).ready(function () {
+		//pre-fill colnames in jvaAddForm
+		setDefaultColConfigs();
 		
 		$("#infoBarContainer").hide();
 		
@@ -197,15 +199,20 @@
 	
 		$(".resetButt").on('click', function (e) {
 			e.preventDefault();
-			$("#jvaAddForm")[0].reset();
-			$("#jvaEditForm")[0].reset();
+			if($("#jvaEditForm").is(':visible')){
+				$("#jvaEditForm")[0].reset();
+				changeJvaNameHeader();
+			}else{
+				$("#jvaAddForm")[0].reset();
+				changeJvaNameHeader();
+			}
 		});
 		
 		$("#jvaDetailsAddContent").hide();	
 		changeJvaNameHeader();
 
 		$(".buttonAddJva").on('click', function(){
-			//console.log("add");
+			console.log("add");
 			$("#jvaListContent").children('input:radio').each(function() { 
 				$(this).prop('checked', false).checkboxradio("refresh");
 				console.log($(this));
@@ -258,6 +265,55 @@
 			}
 		});
 	});
+	
+	function setDefaultColConfigs(){
+		//default values...
+		$("#addColName1-Ik option:eq(1)").attr('selected', true);
+		$("#addColName2-Ik option:eq(2)").attr('selected', true);
+		$("#addColName3-Ik option:eq(3)").attr('selected', true);
+		$("#addColName4-Ik option:eq(4)").attr('selected', true);
+		
+		$("#addColName1-Memmel option:eq(5)").attr('selected', true);
+		$("#addColName2-Memmel option:eq(7)").attr('selected', true);
+		
+		$("#addColName1-Loehne option:eq(5)").attr('selected', true);
+		$("#addColName2-Loehne option:eq(7)").attr('selected', true);
+		
+		$("#addColName1-Witte option:eq(4)").attr('selected', true);
+		
+		//...empty all others
+		$("#addColName5-Ik option:eq(0)").attr('selected', true);
+		$("#addColName6-Ik option:eq(0)").attr('selected', true);
+		$("#addColName7-Ik option:eq(0)").attr('selected', true);
+		$("#addColName8-Ik option:eq(0)").attr('selected', true);
+		$("#addColName9-Ik option:eq(0)").attr('selected', true);
+		
+		$("#addColName3-Memmel option:eq(0)").attr('selected', true);
+		$("#addColName4-Memmel option:eq(0)").attr('selected', true);
+		$("#addColName5-Memmel option:eq(0)").attr('selected', true);
+		$("#addColName6-Memmel option:eq(0)").attr('selected', true);
+		$("#addColName7-Memmel option:eq(0)").attr('selected', true);
+		$("#addColName8-Memmel option:eq(0)").attr('selected', true);
+		$("#addColName9-Memmel option:eq(0)").attr('selected', true);
+		
+		$("#addColName3-Loehne option:eq(0)").attr('selected', true);
+		$("#addColName4-Loehne option:eq(0)").attr('selected', true);
+		$("#addColName5-Loehne option:eq(0)").attr('selected', true);
+		$("#addColName6-Loehne option:eq(0)").attr('selected', true);
+		$("#addColName7-Loehne option:eq(0)").attr('selected', true);
+		$("#addColName8-Loehne option:eq(0)").attr('selected', true);
+		$("#addColName9-Loehne option:eq(0)").attr('selected', true);
+		
+		$("#addColName2-Witte option:eq(0)").attr('selected', true);
+		$("#addColName3-Witte option:eq(0)").attr('selected', true);
+		$("#addColName4-Witte option:eq(0)").attr('selected', true);
+		$("#addColName5-Witte option:eq(0)").attr('selected', true);
+		$("#addColName6-Witte option:eq(0)").attr('selected', true);
+		$("#addColName7-Witte option:eq(0)").attr('selected', true);
+		$("#addColName8-Witte option:eq(0)").attr('selected', true);
+		$("#addColName9-Witte option:eq(0)").attr('selected', true);
+		
+	}
 	
 	function deactivateJva(jvaID){
 		// console.log("calling controller");
@@ -364,42 +420,42 @@
 			jvaDataArray.push($('#JvaAddModel_jvaCustNumDesc').val());
 			jvaDataArray.push($('#JvaAddModel_jvaFooter').val());
 			jvaDataArray.push($('#JvaAddModel_jvaAddress').val());
-			jvaDataArray.push($('#addColName1Ik option:selected').text());
-			jvaDataArray.push($('#addColName2Ik option:selected').text());
-			jvaDataArray.push($('#addColName3Ik option:selected').text());
-			jvaDataArray.push($('#addColName4Ik option:selected').text());
-			jvaDataArray.push($('#addColName5Ik option:selected').text());
-			jvaDataArray.push($('#addColName6Ik option:selected').text());
-			jvaDataArray.push($('#addColName7Ik option:selected').text());
-			jvaDataArray.push($('#addColName8Ik option:selected').text());
-			jvaDataArray.push($('#addColName9Ik option:selected').text());
-			jvaDataArray.push($('#addColName1Memmel option:selected').text());
-			jvaDataArray.push($('#addColName2Memmel option:selected').text());
-			jvaDataArray.push($('#addColName3Memmel option:selected').text());
-			jvaDataArray.push($('#addColName4Memmel option:selected').text());
-			jvaDataArray.push($('#addColName5Memmel option:selected').text());
-			jvaDataArray.push($('#addColName6Memmel option:selected').text());
-			jvaDataArray.push($('#addColName7Memmel option:selected').text());
-			jvaDataArray.push($('#addColName8Memmel option:selected').text());
-			jvaDataArray.push($('#addColName9Memmel option:selected').text());
-			jvaDataArray.push($('#addColName1Loehne option:selected').text());
-			jvaDataArray.push($('#addColName2Loehne option:selected').text());
-			jvaDataArray.push($('#addColName3Loehne option:selected').text());
-			jvaDataArray.push($('#addColName4Loehne option:selected').text());
-			jvaDataArray.push($('#addColName5Loehne option:selected').text());
-			jvaDataArray.push($('#addColName6Loehne option:selected').text());
-			jvaDataArray.push($('#addColName7Loehne option:selected').text());
-			jvaDataArray.push($('#addColName8Loehne option:selected').text());
-			jvaDataArray.push($('#addColName9Loehne option:selected').text());
-			jvaDataArray.push($('#addColName1Witte option:selected').text());
-			jvaDataArray.push($('#addColName2Witte option:selected').text());
-			jvaDataArray.push($('#addColName3Witte option:selected').text());
-			jvaDataArray.push($('#addColName4Witte option:selected').text());
-			jvaDataArray.push($('#addColName5Witte option:selected').text());
-			jvaDataArray.push($('#addColName6Witte option:selected').text());
-			jvaDataArray.push($('#addColName7Witte option:selected').text());
-			jvaDataArray.push($('#addColName8Witte option:selected').text());
-			jvaDataArray.push($('#addColName9Witte option:selected').text());
+			jvaDataArray.push($('#addColName1-Ik option:selected').text());
+			jvaDataArray.push($('#addColName2-Ik option:selected').text());
+			jvaDataArray.push($('#addColName3-Ik option:selected').text());
+			jvaDataArray.push($('#addColName4-Ik option:selected').text());
+			jvaDataArray.push($('#addColName5-Ik option:selected').text());
+			jvaDataArray.push($('#addColName6-Ik option:selected').text());
+			jvaDataArray.push($('#addColName7-Ik option:selected').text());
+			jvaDataArray.push($('#addColName8-Ik option:selected').text());
+			jvaDataArray.push($('#addColName9-Ik option:selected').text());
+			jvaDataArray.push($('#addColName1-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName2-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName3-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName4-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName5-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName6-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName7-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName8-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName9-Memmel option:selected').text());
+			jvaDataArray.push($('#addColName1-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName2-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName3-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName4-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName5-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName6-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName7-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName8-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName9-Loehne option:selected').text());
+			jvaDataArray.push($('#addColName1-Witte option:selected').text());
+			jvaDataArray.push($('#addColName2-Witte option:selected').text());
+			jvaDataArray.push($('#addColName3-Witte option:selected').text());
+			jvaDataArray.push($('#addColName4-Witte option:selected').text());
+			jvaDataArray.push($('#addColName5-Witte option:selected').text());
+			jvaDataArray.push($('#addColName6-Witte option:selected').text());
+			jvaDataArray.push($('#addColName7-Witte option:selected').text());
+			jvaDataArray.push($('#addColName8-Witte option:selected').text());
+			jvaDataArray.push($('#addColName9-Witte option:selected').text());
 			// jvaDataArray.push($('#JvaAddModel_colName10 option:selected').text());
 			// jvaDataArray.push($('#JvaAddModel_colName11 option:selected').text());
 			// jvaDataArray.push($('#JvaAddModel_colName12 option:selected').text());
@@ -414,9 +470,16 @@
 				$("#successAlertContent").html('Neue JVA erfolgreich hinzugefügt')
 				$("#successAlert").fadeIn('fast');
 				$("#jvaListContent").empty();
-				$("#jvaDetailsAddContent").empty();
+				$('#JvaAddModel_jvaName').val('');
+				$('#JvaAddModel_jvaNameExt').val('');
+				$('#JvaAddModel_jvaCustNum').val('');
+				$('#JvaAddModel_jvaCustNumDesc').val('');
+				$('#JvaAddModel_jvaFooter').val('');
+				$('#JvaAddModel_jvaAddress').val('');
+				setDefaultColConfigs();
 				$("#jvaListContent").html(data);
 				$("#jvaNameHeading").html('...');
+				
 			});
 		}
 		
