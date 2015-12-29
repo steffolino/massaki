@@ -98,14 +98,12 @@ echo '
 																	$("#docContentCollectiveInvoice").html(data);
 																});
 															}',
-															'id'=>'documentId'
+															'id'=>'BulkDocumentId'
 															)
 														),
 														// if grid doesn't have a checkbox column type, it will attach
 														// one and this configuration will be part of it
-														'checkBoxColumnConfig' => array(
-															'name' => 'id'
-														),
+														
 													),
 													'columns' => $gridColumns,
 												));

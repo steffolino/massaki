@@ -65,7 +65,7 @@
 																	}'
 															),
 															'events' => array(
-																'select' => 'js:function () { console.log(item); }'
+																//'select' => 'js:function () { console.log(item); }'
 															),
 													),
 												)
@@ -174,7 +174,7 @@
 	});
 
 	$(document).on("click", "#filterToggle", function () {
-		console.log("toggled");
+		//console.log("toggled");
 		$("#filterRow").toggle('slow');
 	});
 	
@@ -186,16 +186,16 @@
 				selectedDocType = $(this).attr('id');
 			}
 		});
-		console.log(selectedDocType);
+		//console.log(selectedDocType);
 		var nameSet = $("#select2-chosen-1").text();
-		console.log(nameSet);
+		//console.log(nameSet);
 		var searchTerm = $("#SearchFormModel_freeSearchTerm").val();
-		console.log(searchTerm);
+		//console.log(searchTerm);
 		var startDate = $(".editable").first().text();
 		var endDate = $(".editable").last().text();
-		console.log(startDate + " " + endDate);
+		//console.log(startDate + " " + endDate);
 		var filtersEnabled = $("#filterRow").is(':visible');
-		console.log(filtersEnabled);
+	//	console.log(filtersEnabled);
 		if(filtersEnabled) {
 			$.ajax({
 				method: "POST",

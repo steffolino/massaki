@@ -1,7 +1,15 @@
  <script>
 var hot;
 </script>
+<?php
+$baseUrl = Yii::app()->baseUrl; 
+$cs = Yii::app()->getClientScript();
+$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.js');
+$cs->registerCssFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.css');
+$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/ruleJS.all.full.js');
+$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
 
+?>
 <style>
 .invoiceExtra, .creditNoteExtra, .deliveryNoticeExtra {
 	padding-top: 5px;
@@ -31,7 +39,7 @@ var hot;
 										'id' => 'jvaName',
 										'options' => array(
 											'width' => '260px',
-											'minimumInputLength'=>'4',
+											'minimumInputLength'=>'3',
 											'placeholder' => 'JVA Name',
 											'ajax'       => array(
 														'url'       => Yii::app()->controller->createUrl('jva/getJvaAsJson'),
@@ -43,7 +51,7 @@ var hot;
 																results: $.map(data, function (item) {
 																	return {
 																		text: item.jvaName + " | " + item.jvaNameExt,
-																		value: item.jvaDataId,
+																		value: item.jvaName + " | " + item.jvaNameExt,
 																		id: item.jvaDataId
 																	}
 																})
@@ -126,25 +134,28 @@ var hot;
 	})
 	
 	$(document).on("select2-selecting", "#jvaName", function(e) { 
+			console.log("Jva Changed to " + $("#select2-chosen-1").text());
 			if(readyWhenYouAre()) {	
-				showCorrectDocContent();
-				//MAGIIIIIIC!!!!!! --> doesnt work
+			
 				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
 				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
 				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
 				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
+				
+			
 		}
 	});
 
 	$(document).on("change", "#nummernkreisSelect", function () {
-			console.log("changed event");
+			
 			if(readyWhenYouAre()) {	
-				showCorrectDocContent();
-				//MAGIIIIIIC!!!!!! --> doesnt work
+				
 				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
 				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
 				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
 				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
+				
+				
 		}
 	});
 	
@@ -153,7 +164,13 @@ var hot;
 			$(this).siblings('.btn').removeClass('active');
 			
 			if(readyWhenYouAre()) {
-				showCorrectDocContent();
+				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
+				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
+				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
+				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
+				if(document.readyState == "complete"){
+					showCorrectDocContent();
+				}
 			}
 	});
 
@@ -166,6 +183,7 @@ var hot;
 	});
 	
 	function readyWhenYouAre() {
+		nameSet = "";
 		var nameSet = $("#select2-chosen-1").text();
 		var nrKreisSet = $("#nummernkreisSelect").val();
 		var docTypeSet = false;
@@ -175,6 +193,7 @@ var hot;
 				buttonPressed = $(this).text();
 			}
 		});
+		
 		if((nameSet !== "JVA Name" && nameSet !== "" && nameSet.length > 3) && nrKreisSet !== null && docTypeSet === true) {
 			console.log("readyTogo: "+nameSet + " " + nrKreisSet + " " + docTypeSet);
 			$.ajax({
@@ -208,7 +227,7 @@ var hot;
 						break;
 					
 				}
-		
+			
 		  });
 			return true;
 		} else {

@@ -203,7 +203,7 @@ class DocumentImplementierung extends Document
 		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
 		$jvaId = $jvaObject->jvaDataId;
 		$docId = Document::model()->find(
-				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY timeStamp DESC',
+				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY timeStamp DESC, documentId DESC',
 				array(':jvaId'=>$jvaId,':docType'=>$docType,':counter'=>$counterName)
 			);
 			if($docId !== NULL){
@@ -224,10 +224,19 @@ class DocumentImplementierung extends Document
 	}
 	
 	
-	public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt){
+	public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt,$numberCircle){
 		$jva = new JvaModel;
 		$jvaObject = $jva->getJvaByName(trim($jvaName), trim($jvaNameExt));
 		$jvaId = $jvaObject->jvaDataId;
+		if($numberCircle === "ik"){
+				$number = "IK%";
+			}else if($numberCircle === "memmel"){
+				$number = "Logistik Memmelsdorf%";
+			}else if($numberCircle === "loehne"){
+				$number = "Logistik Loehne%";
+			}else{
+				$number ="Witte%";	
+			}
 		//Document::model()->with('docType')->findAll('jvaId=:jvaId AND documentId NOT IN collectiveinvoices.deliveryNoteId AND (docTypeName = "Rechnung" OR docTypeName = "Lieferschein")',array('jvaId'=>$jvaId));
 		return $document = Yii::app()->db->createCommand()
 					->select()
@@ -236,6 +245,7 @@ class DocumentImplementierung extends Document
 					->andWhere('docTypeName = "Rechnung" OR docTypeName = "Lieferschein"')
 					->andWhere('document.documentId NOT IN (Select deliveryNoteId from collectiveinvoice)')
 					->andWhere('document.jvaId = jvaData.jvaDataId')
+					->andWhere('counter LIKE :counter',array(':counter'=>$number))
 					->queryAll();
 	}
 	

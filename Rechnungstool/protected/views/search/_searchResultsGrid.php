@@ -10,7 +10,7 @@
 											
 											//cf. http://yiibooster.clevertech.biz/extendedGridView
 												$this->widget('booster.widgets.TbExtendedGridView', array(
-													'id'=>'documentId',
+													'id'=>'documentIdSearch',
 													'type' => 'striped bordered',
 													'dataProvider' => $gridDataProvider,
 													'template' => "{items}",
@@ -23,13 +23,14 @@
 															'size' => 'small',
 															'label' => 'Action auf alle anwenden',
 															//'click' => 'js:function(values){alert(values);}',
-															'id'=>'documentId'
+															'id'=>'documentIdAction'
 															)
 														),
 														// if grid doesn't have a checkbox column type, it will attach
 														// one and this configuration will be part of it
 														'checkBoxColumnConfig' => array(
-															'name' => 'id'
+															
+															'name' => 'CheckId'
 														),
 													),
 													'columns' => $gridColumns,
