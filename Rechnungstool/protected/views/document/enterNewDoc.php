@@ -124,7 +124,11 @@ var hot;
 		$(".panel-body-exclusive").hide();
 		$("#docContentEmpty").show();
 	})
-	
+
+	/***
+	** !!! TODO: fix
+	** CHANGING docSelection shows handsontable every time --> changing nummernkreis & jvaName does not	
+	**/
 	$(document).on("select2-selecting", "#jvaName", function(e) { 
 			if(readyWhenYouAre()) {	
 				showCorrectDocContent();
@@ -149,6 +153,7 @@ var hot;
 	});
 	
 	$(document).on("click", "#docSelection .btn-group .btn", function () {
+
 			$(this).addClass('active');
 			$(this).siblings('.btn').removeClass('active');
 			
@@ -206,7 +211,6 @@ var hot;
 						break;
 					default:
 						break;
-					
 				}
 		
 		  });
@@ -315,7 +319,6 @@ var hot;
 						displayData = [[""]];						
 						break;
 			}
-			
 		}
 		
 		
@@ -416,7 +419,7 @@ var hot;
 				var plugin2 = hot.getPlugin('autoColumnSize');
 				var lastVisRow = plugin.getLastVisibleRow();
 				var lastVisCol = plugin2.getLastVisibleColumn();
-				console.log("lastRow: "+lastVisRow);
+				// console.log("lastRow: "+lastVisRow);
 
 			var a = 97;
 			var charArray = {};

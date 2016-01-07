@@ -143,9 +143,6 @@ $(document).ready(function () {
 				contentNumeric = getTableDataNumeric(contentNumeric, "#InvoiceExample");
 				
 				var invoiceExtraHTML = getInvoiceExtraHTML(invoiceExtraHTML);
-			
-				
-			
 							
 				$.ajax({
 				  method: "POST",
@@ -179,30 +176,20 @@ $(document).ready(function () {
 		// alert(invoiceExtraVals);
 		
 		invoiceExtra = Array();
+				
+		var j=0;
+	
+		invoiceExtraVals.each(function(i, v){
+			if(j == 5) {
+				//DATE  
+				invoiceExtra[i] = $(this).val();					
+			} else {
+				invoiceExtra[i] = parseFloat($(this).val());
+			}
+			j++;
+			console.log($(this).val());
+		});
 		
-		// for(var i = 0; i < invoiceExtraKids.length; i++) {
-			// invoiceExtra[i] = invoiceExtraVals[i].val();
-		// }
-		
-		// invoiceExtraKids.each(function(i, v){
-			// invoiceExtra[i] = Array();
-			// invoiceExtra[i] = $(this).text();
-			// invoiceExtra[i][0] = invoiceExtraVals[i];
-			// console.log();
-			var j=0;
-		
-			invoiceExtraVals.each(function(i, v){
-				if(j == 5) {
-					//DATE  
-					invoiceExtra[i] = $(this).val();					
-				} else {
-					invoiceExtra[i] = parseFloat($(this).val());
-				}
-				j++;
-				console.log($(this).val());
-			});
-			
-		// });
 
 		return invoiceExtra;
 

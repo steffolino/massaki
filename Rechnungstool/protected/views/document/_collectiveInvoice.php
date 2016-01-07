@@ -60,8 +60,7 @@ echo '
 				<form id="items">
 				<div id="CollectiveInvoiceExample">';
 				 if(isset($gridDataProvider) && !empty($gridDataProvider)){
-										//var_dump($gridDataProvider);
-											
+										//var_dump($gridDataProvider);											
 											//cf. http://yiibooster.clevertech.biz/extendedGridView
 												$this->widget('booster.widgets.TbExtendedGridView', array(
 													'id'=>'CollectiveGrid',
@@ -108,6 +107,30 @@ echo '
 														),
 													),
 													'columns' => $gridColumns,
+													//TODO: work this out
+													/*
+													'columns' =>  array(
+														// 'jvaName',
+														// 'jva_creationDate',
+														// 'zaehler',
+														$gridColumns,
+														array(
+																 'class'=>'bootstrap.widgets.TbButtonColumn',
+																 'template' => '{postview} {preview}',
+																// Buttons config
+																'buttons' => array(
+																	'postview' => array(
+																		'label' => '...',     // text label of the button
+																		'url' => '...',       // the PHP expression for generating the URL of the button
+																		'click' => '...',     // a JS function to be invoked when the button is clicked
+																	),
+																	'preview' => array(
+																		// Another button config
+																	),
+																),
+														),
+													),
+													*/
 												));
 											}
 											echo '

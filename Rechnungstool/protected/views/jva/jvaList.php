@@ -40,7 +40,7 @@
 							<div class="panel-footer">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+										<div class="btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
 											<a role=button class="btn btn-danger buttonDeactivateJva"><i class="fa fa-minus"> JVA deaktivieren</i></a>
 											<a role=button class="btn btn-success buttonAddJva"><i class="fa fa-plus"> JVA hinzuf&uuml;gen</i></a>
 										</div>
@@ -53,7 +53,7 @@
 							<div class="panel-footer">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+										<div class="btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
 											<a role=button class="btn btn-danger buttonDeactivateJva"><i class="fa fa-minus"> JVA deaktivieren</i></a>
 											<a role=button class="btn btn-success buttonAddJva"><i class="fa fa-plus"> JVA hinzuf&uuml;gen</i></a>
 										</div>
@@ -70,7 +70,7 @@
 							<div class="panel-footer">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+										<div class="btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
 											<a role=button class="btn btn-warning resetButt" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
 											<a role=button class="btn btn-info changeJva"><i class='fa fa-check'> Änderungen übernehmen</i></a>
 											</div>
@@ -89,7 +89,7 @@
 							<div class="panel-footer">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+										<div class="btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
 											<a role=button class="btn btn-warning resetButt" ><i class='fa fa-close'> Änderungen Verwerfen</i></a>								
 											<a role=button class="btn btn-info changeJva"><i class='fa fa-check'> Änderungen übernehmen</i></a>
 											</div>

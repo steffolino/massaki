@@ -124,9 +124,9 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 				<p class="small blue ulined"> <?php echo MASSAK_ADDRESSE_KLEIN ?></p>
 				<p> <?php echo $jva->jvaName; ?></p>
 				<?php
-				if(!empty($jva->jvaNameExt)) {
-					echo "<p>".$jva->jvaNameExt."</p>";
-				}
+				// if(!empty($jva->jvaNameExt)) {
+					// echo "<p>".$jva->jvaNameExt."</p>";
+				// }
 				?>
 				<p><?php echo $jva->jvaAddress; ?></p>
 			</div>
