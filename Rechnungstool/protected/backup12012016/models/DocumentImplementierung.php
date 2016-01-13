@@ -1,5 +1,6 @@
 <?php
 
+
 class DocumentImplementierung extends Document
 {
 	
@@ -206,8 +207,11 @@ class DocumentImplementierung extends Document
 		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
 		$jvaId = $jvaObject->jvaDataId;
 		$docId = Document::model()->find(
+<<<<<<< HEAD
 				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY documentId DESC',
-				// 'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY timeStamp DESC, documentId DESC',
+=======
+				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY timeStamp DESC, documentId DESC',
+>>>>>>> 68200cc41cfb060cc792b963409e7c76d372e45b
 				array(':jvaId'=>$jvaId,':docType'=>$docType,':counter'=>$counterName)
 			);
 			if($docId !== NULL){
@@ -225,8 +229,12 @@ class DocumentImplementierung extends Document
 		
 	}
 	
-	// public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt){	
+<<<<<<< HEAD
+	public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt){
+=======
+	
 	public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt,$numberCircle){
+>>>>>>> 68200cc41cfb060cc792b963409e7c76d372e45b
 		$jva = new JvaModel;
 		$jvaObject = $jva->getJvaByName(trim($jvaName), trim($jvaNameExt));
 		$jvaId = $jvaObject->jvaDataId;

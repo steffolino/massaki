@@ -45,10 +45,13 @@ class DocumentController extends Controller
 	
 		if($docTypeName === "Sammelrechnung"){
 			$doc = new DocumentImplementierung;
-			// $possibleDocs = $doc->getInvoicesDeliveryNotInCollective($jvaName,$jvaExt);
-			// $gridDataProvider  =new CArrayDataProvider($possibleDocs,
+<<<<<<< HEAD
+			$possibleDocs = $doc->getInvoicesDeliveryNotInCollective($jvaName,$jvaExt);
+			$gridDataProvider  =new CArrayDataProvider($possibleDocs,
+=======
 			$possibleDocs = $doc->getInvoicesDeliveryNotInCollective($jvaName,$jvaExt,$numberCircle);
 			$gridDataProvider  =new CArrayDataProvider($possibleDocs, 	
+>>>>>>> 68200cc41cfb060cc792b963409e7c76d372e45b
 					array(
 						'keyField' => 'documentId',  
 						'id'=>'documentId'

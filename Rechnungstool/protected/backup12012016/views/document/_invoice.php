@@ -113,8 +113,10 @@
 	$(document).on("click", "#invoiceNueber", function () {
 		parseAndCalcAndTranferInvoice();
 	});
+	
+$(document).ready(function () {
 
-	  $(document).on("click","#writingDoc",function(){
+  $(document).on("click","#writingDoc",function(){
 			//var $container = $('#example');
 			//var handsontable = $container.data('handsontable');
 			//alert(container);
@@ -157,7 +159,6 @@
 					}
 				})
 				  .done(function(data) {
-						jQuery.noConflict();
 						var dataArr = jQuery.parseJSON(data);
 						$("#pdfFilePath").attr('src', dataArr.filePath);
 						$("#counterType").val(dataArr.counterType);
@@ -165,11 +166,8 @@
 						// alert("data transferred to PHP");
 				  });	
 		}
-
-	
-$(document).ready(function () {
   		
-});
+	});
 
   	
 	function getInvoiceExtraHTML(invoiceExtra) {

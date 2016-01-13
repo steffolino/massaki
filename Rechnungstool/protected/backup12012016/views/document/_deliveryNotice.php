@@ -163,7 +163,6 @@ $(document).ready(function () {
 					}
 				})
 				  .done(function( data ) {
-  						jQuery.noConflict();
 						var dataArr = jQuery.parseJSON(data);
 						$("#pdfFilePath").attr('src', dataArr.filePath);
 						$("#counterType").val(dataArr.counterType);

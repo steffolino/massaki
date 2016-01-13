@@ -13,28 +13,8 @@
 ?>
 
 <script>
-	/**BELOW ALREADY IN _invoice.php **/
-	// function getTableDataNumeric (tableData, tableID) {
-			// console.log("getting table datatata");
-			
-			// var htCoreData = $(tableID+" .htCore tbody tr");
-			// console.log("htCoreData: " + htCoreData);
-			// htCoreData.each(function(i, v){
-				// console.log(i);
-				// tableData[i] = Array();
-				// $(this).children('td').each(function(ii, vv){
-					// tableData[i][ii] = $(this).text();
-				// }); 
-			// });
-			// tableData = tableData.slice(0, hot.countRows());
-			// // tableData = JSON.stringify(tableData);
-			// // console.log("tData: "+tableData);
-			// // console.log(hot.countRows());
 
-		 // return (tableData);
-	// };
-
-	function parseAndCalcAndTranferDeliveryNotice () {
+	function parseAndCalcAndTranferCreditNote () {
 		
 		var tableData = Array();
 		
@@ -42,7 +22,7 @@
 		var sevenTotal = 0;
 		var nineTeenTotal = 0;
 		
-		tableData = getTableDataNumeric(tableData, "#DeliveryNoticeExample");
+		tableData = getTableDataNumeric(tableData, "#CreditNoteExample");
 		console.log("tableData: " +tableData);
 		var tableLength = tableData.length;
 		for(var i = 0; i < tableLength; i++) {
@@ -68,62 +48,62 @@
 		var MwSt19 = parseFloat(nineTeenTotal * 0.19).toFixed(2);
 		var MwSt7 = parseFloat(sevenTotal * 0.07).toFixed(2);
 		var MwSt0 = parseFloat(zeroTotal).toFixed(2);
-		doTheTransferDeliveryNotice(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
+		doTheTransferCreditNote(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
 		console.log(warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
 	} ;
 	
-	function doTheTransferDeliveryNotice(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {
+	function doTheTransferCreditNote(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {
 		console.log("doingTheTransfer: "+ warenwertNetto+ MwSt19+ MwSt7+ MwSt0+ warenwertBrutto);
 		if(typeof(warenwertNetto) !== 'undefined') {
-			$(".deliveryNoticeExtra #warenwertNetto").val(warenwertNetto);
+			$(".creditNoteExtra #warenwertNetto").val(warenwertNetto);
 		} else {
-			$(".deliveryNoticeExtra #warenwertNetto").val('0.00');			
+			$(".creditNoteExtra #warenwertNetto").val('0.00');			
 		}
 		if(typeof(warenwertBrutto) !== 'undefined') {
-			$(".deliveryNoticeExtra #warenwertBrutto").val(warenwertBrutto);
+			$(".creditNoteExtra #warenwertBrutto").val(warenwertBrutto);
 		} else {
-			$(".deliveryNoticeExtra #warenwertBrutto").val('0.00');			
+			$(".creditNoteExtra #warenwertBrutto").val('0.00');			
 		}
 		if(typeof(MwSt0) !== 'undefined') {
-			$(".deliveryNoticeExtra #mwst0").val(MwSt0);
+			$(".creditNoteExtra #mwst0").val(MwSt0);
 		} else {
-			$(".deliveryNoticeExtra #mwst0").val('0.00');			
+			$(".creditNoteExtra #mwst0").val('0.00');			
 		}
 		if(typeof(MwSt7) !== 'undefined') {
-			$(".deliveryNoticeExtra #mwst7").val(MwSt7);
+			$(".creditNoteExtra #mwst7").val(MwSt7);
 		} else {
-			$(".deliveryNoticeExtra #mwst7").val('0.00');			
+			$(".creditNoteExtra #mwst7").val('0.00');			
 		}
 		if(typeof(MwSt19) !== 'undefined') {
-			$(".deliveryNoticeExtra #mwst19").val(MwSt19);
+			$(".creditNoteExtra #mwst19").val(MwSt19);
 		} else {
-			$(".deliveryNoticeExtra #mwst19").val('0.00');			
+			$(".creditNoteExtra #mwst19").val('0.00');			
 		}
 		var rest = parseFloat(parseFloat(warenwertBrutto));
-		if ($(".deliveryNoticeExtra #bezahltExternVal").val() !== '') {
-			rest = rest - parseFloat($(".deliveryNoticeExtra #bezahltExternVal").val());
-			console.log(parseFloat($(".deliveryNoticeExtra #bezahltExternVal").val()));
-			console.log(parseFloat($(".deliveryNoticeExtra #bereitsBerechnet").val()));
+		if ($(".creditNoteExtra #bezahltExternVal").val() !== '') {
+			rest = rest - parseFloat($(".creditNoteExtra #bezahltExternVal").val());
+			console.log(parseFloat($(".creditNoteExtra #bezahltExternVal").val()));
+			console.log(parseFloat($(".creditNoteExtra #bereitsBerechnet").val()));
 			console.log(rest);
 		}
 		if($("#bereitsBerechnet").val() !== '') {
-			rest = rest - parseFloat($(".deliveryNoticeExtra #bereitsBerechnet").val()).toFixed(2);
+			rest = rest - parseFloat($(".creditNoteExtra #bereitsBerechnet").val()).toFixed(2);
 		}
-		$(".deliveryNoticeExtra #restbetrag").val(rest.toFixed(2));
+		$(".creditNoteExtra #restbetrag").val(rest.toFixed(2));
 		console.log("done transferring");
 	}
 
-	$(document).on("click", "#deliveryNoticeNueber", function () {
-		// console.log("#deliveryNoticeNueber");
-		parseAndCalcAndTranferDeliveryNotice();
+	$(document).on("click", "#creditNoteNueber", function () {
+		console.log("nueber");
+		parseAndCalcAndTranferCreditNote();
 	});
 	
 $(document).ready(function () {
 
   $(document).on("click","#writingDoc",function(){
 
-	if($("#DeliveryNoticeExample").is(':visible')){		
+	if($("#CreditNoteExample").is(':visible')){		
 		var buttonPressed;
 			$("#docSelection .btn").each(function() {
 				if($(this).hasClass('active')) {
@@ -131,7 +111,7 @@ $(document).ready(function () {
 				}
 			});
 			var defaultDocument;
-			if($("#chkDefaultDocDelivery").is(':checked')){
+			if($("#chkDefaultDocCredit").is(':checked')){
 				defaultDocument = "yes";
 			}else{
 				defaultDocument ="no";
@@ -144,15 +124,16 @@ $(document).ready(function () {
 				var jva = $("#select2-chosen-1").text();
 				
 				var contentNumeric = Array();
-				contentNumeric = getTableDataNumeric(contentNumeric, "#DeliveryNoticeExample");
-				var deliveryNoticeExtraHTML = getdeliveryNoticeExtraHTML(deliveryNoticeExtraHTML);
+				contentNumeric = getTableDataNumeric(contentNumeric, "#CreditNoteExample");
+				var creditNoteExtraHTML = getcreditNoteExtraHTML(creditNoteExtraHTML);
+	
 	
 				$.ajax({
 				  method: "POST",
 				  type: "json",
 				  url: "index.php?r=document/getTableData",
 				  data: { 	
-							deliveryNoticeExtra: deliveryNoticeExtraHTML,
+							creditNoteExtra: creditNoteExtraHTML,
 							content: content,
 							contentNumeric: contentNumeric,
 							headers: header,
@@ -163,7 +144,6 @@ $(document).ready(function () {
 					}
 				})
 				  .done(function( data ) {
-  						jQuery.noConflict();
 						var dataArr = jQuery.parseJSON(data);
 						$("#pdfFilePath").attr('src', dataArr.filePath);
 						$("#counterType").val(dataArr.counterType);
@@ -174,23 +154,33 @@ $(document).ready(function () {
 	});
 
   	
-	function getdeliveryNoticeExtraHTML(deliveryNoticeExtra) {
+	function getcreditNoteExtraHTML(creditNoteExtra) {
 
-		var deliveryNoticeExtraKids = $("#deliveryNoticeExtraContainer .deliveryNoticeExtra .form-group .control-label");
-		var deliveryNoticeExtraVals = $("#deliveryNoticeExtraContainer .deliveryNoticeExtra .form-group .form-control");
+		var creditNoteExtraKids = $("#creditNoteExtraContainer .creditNoteExtra .form-group .control-label");
+		var creditNoteExtraVals = $("#creditNoteExtraContainer .creditNoteExtra .form-group .form-control");
 
-		// alert(deliveryNoticeExtraKids);
-		// alert(deliveryNoticeExtraVals);
+		// alert(creditNoteExtraKids);
+		// alert(creditNoteExtraVals);
 		
-		deliveryNoticeExtra = Array();		
+		creditNoteExtra = Array();
+		
+		// for(var i = 0; i < creditNoteExtraKids.length; i++) {
+			// creditNoteExtra[i] = creditNoteExtraVals[i].val();
+		// }
+		
+		// creditNoteExtraKids.each(function(i, v){
+			// creditNoteExtra[i] = Array();
+			// creditNoteExtra[i] = $(this).text();
+			// creditNoteExtra[i][0] = creditNoteExtraVals[i];
+			// console.log();
 			var j=0;
 		
-			deliveryNoticeExtraVals.each(function(i, v){
+			creditNoteExtraVals.each(function(i, v){
 				if(j == 5) {
 					//DATE  
-					deliveryNoticeExtra[i] = $(this).val();					
+					creditNoteExtra[i] = $(this).val();					
 				} else {
-					deliveryNoticeExtra[i] = parseFloat($(this).val());
+					creditNoteExtra[i] = parseFloat($(this).val());
 				}
 				j++;
 				console.log($(this).val());
@@ -198,7 +188,7 @@ $(document).ready(function () {
 			
 		// });
 
-		return deliveryNoticeExtra;
+		return creditNoteExtra;
 
 	}
 
@@ -209,25 +199,25 @@ $(document).ready(function () {
 echo '
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-heading">Lieferschein</h3>
+		<h3 class="panel-heading">Gutschrift</h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
 				<form id="items">
-				<div id="DeliveryNoticeExample" class="handsontable"></div>
+				<div id="CreditNoteExample" class="handsontable"></div>
 				</form>
 			</div>
 			<br>
 		</div>
 		<br/>
-		<div id="deliveryNoticeExtraContainer">
+		<div id="creditNoteExtraContainer">
 			<div class="row">
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<div class="col-md-2 col-md-offset-4">
-						<button type=button id="deliveryNoticeNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
+						<button type=button id="creditNoteNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
 					</div>
 					<label class="col-md-2 control-label" for="warenwertNetto">Warenwert netto</label>
 					<div class="col-md-2 form-group-sm">
@@ -235,7 +225,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 			<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="mwst0">MwSt (0%)</label>
 					<div class="col-md-2 form-group-sm">
@@ -243,7 +233,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="mwst7">MwSt (7%)</label>
 					<div class="col-md-2 form-group-sm">
@@ -251,7 +241,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="mwst19">MwSt (19%)</label>
 					<div class="col-md-2 form-group-sm">
@@ -259,7 +249,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="warenwertBrutto">Warenwert brutto</label>
 					<div class="col-md-2 form-group-sm">
@@ -267,7 +257,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="bezahltExternDate">Bezahlt von Externen</label>
 					<div class="col-md-2 form-group-sm">
@@ -278,7 +268,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="bereitsBerechnet">Bereits berechnet</label>
 					<div class="col-md-2 form-group-sm">
@@ -286,7 +276,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
+			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="restbetrag">Restbetrag</label>
 					<div class="col-md-2 form-group-sm">
@@ -297,8 +287,8 @@ echo '
 		</div>
 		<div class="row">
 			<div class="checkbox">
-				<label class="col-md-2 col-md-offset-4 control-label" for="chkDefaultDocDelivery"><b>Standard Dokument?&nbsp;</b></label>
-					&nbsp;<input type="checkbox" value="" name="defaultDocDelivery" id="chkDefaultDocDelivery">
+				<label class="col-md-2 col-md-offset-4 control-label" for="chkDefaultDocCredit"><b>Standard Dokument?&nbsp;</b></label>
+					&nbsp;<input type="checkbox" value="" name="defaultDocCredit" id="chkDefaultDocCredit">
 				</label>
 			</div>
 		</div>

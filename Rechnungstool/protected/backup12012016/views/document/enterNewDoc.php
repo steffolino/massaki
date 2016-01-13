@@ -1,12 +1,3 @@
-<?php
-	$baseUrl = Yii::app()->baseUrl; 
-	$cs = Yii::app()->getClientScript();
-	$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.js');
-	$cs->registerCssFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.css');
-	$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/ruleJS.all.full.js');
-	$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
-?>
-
 <script>
 var hot;
 </script>
@@ -114,7 +105,7 @@ var hot;
 				
 				</form>
 					<div id="docContentEmpty" class="row panel-body panel-body-exclusive">
-							<h4 style="text-align: center">Bitte w&auml;hlen Sie einen <b>JVA-Namen</b>, einen <b>Dokumenten-Typ</b> und einen <b>Nummernkreis</b>.</h4>
+							<h4 style="text-align: center">Bitte waehlen Sie einen <b>JVA-Namen</b>, einen <b>Dokumenten-Typ</b> und einen <b>Nummernkreis</b>.</h4>
 							<!--embed id='pdfFilePath' src="http://localhost:8888/massaki/rechnungstool/pdf/temp/JVAElPalmar_Rechnung_20160112_002446.pdf" width="510px" height="590px"-->
 					</div>
 					<div id="docContentInvoice" class="row panel-body panel-body-exclusive">
@@ -398,21 +389,21 @@ var hot;
 				switch(buttonPressed){
 					case "Rechnung":
 						loadInvoiceData(JSON.parse(data), buttonPressed);
-						// console.log("dataButton: "+data + " " + buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						//alert("data Loaded");
 						break;
 					case "Sammelrechnung":
 						//loadInvoiceData(JSON.parse(data,buttonPressed));
 						loadCollectiveData(data);
-						// console.log("dataButton: "+data + " " + buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Lieferschein":
 						loadInvoiceData(JSON.parse(data), buttonPressed);
-						// console.log("dataButton: "+data + " " + buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Gutschrift":
 						loadInvoiceData(JSON.parse(data), buttonPressed);
-						// console.log("dataButton: "+data + " " + buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					default:
 						break;
