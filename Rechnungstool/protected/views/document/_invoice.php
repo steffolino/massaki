@@ -141,7 +141,6 @@ $(document).ready(function () {
 				
 				var contentNumeric = Array();
 				contentNumeric = getTableDataNumeric(contentNumeric, "#InvoiceExample");
-				
 				var invoiceExtraHTML = getInvoiceExtraHTML(invoiceExtraHTML);
 							
 				$.ajax({
@@ -159,8 +158,12 @@ $(document).ready(function () {
 							defaultDocument: defaultDocument,
 					}
 				})
-				  .done(function( data ) {
-						alert("data transferred to PHP");				
+				  .done(function(data) {
+						var dataArr = jQuery.parseJSON(data);
+						$("#pdfFilePath").attr('src', dataArr.filePath);
+						$("#counterType").val(dataArr.counterType);
+						$("#previewModal").modal('show');
+						// alert("data transferred to PHP");
 				  });	
 		}
   		

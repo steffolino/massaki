@@ -31,6 +31,7 @@ class DocumentController extends Controller
 		$this->render('enterNewDoc',array('allRows'=>$allRows, 'result'=>$result));
 	}
 	
+	
 	public function actionLoadTableData(){
 		$jvaModel = new JvaModel;
 		$jvaNamePlusExt = $_POST["jva"];
@@ -41,17 +42,19 @@ class DocumentController extends Controller
 		$jvaNamePlusExtArray = explode("|",$jvaNamePlusExt);
 		$jvaName = $jvaNamePlusExtArray[0];
 		$jvaExt = $jvaNamePlusExtArray[1];
+	
 		if($docTypeName === "Sammelrechnung"){
 			$doc = new DocumentImplementierung;
 			$possibleDocs = $doc->getInvoicesDeliveryNotInCollective($jvaName,$jvaExt);
-			$gridDataProvider  =new CArrayDataProvider($possibleDocs, 	
+			$gridDataProvider  =new CArrayDataProvider($possibleDocs,
 					array(
 						'keyField' => 'documentId',  
 						'id'=>'documentId'
 						,));
 			$gridColumns = array('documentId::ID','jvaName::Jva Name','timeStamp','counter::Zähler');
 			$this->renderPartial('_collectiveInvoice', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
-		}else{
+		
+		} else {
 			$docTypeId = $docTypeImpl->getDocIdByName($docTypeName);
 			$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
 			if($numberCircle === "ik"){
@@ -68,7 +71,6 @@ class DocumentController extends Controller
 			$data = array();
 			$allData = array();
 			$counter = 0;
-			
 		
 			$col1 = $jvaModel->getColNameById($defaultColConfig->col1);
 			if($col1 !== NULL && $col1 !== ' '){
@@ -130,6 +132,7 @@ class DocumentController extends Controller
 				array_push($header,$col12);
 				$counter++;
 			}
+
 			$docValues = new DocumentvaluesImplementierung;
 			$doc = new DocumentImplementierung;
 			$lastUsedDocId = $doc->getLastUsedDocumentId(trim($jvaName),trim($jvaExt),$docTypeId,$numberCircle);
@@ -139,56 +142,57 @@ class DocumentController extends Controller
 				
 				$data = array();
 				$value1 = $rows->value1;
-				if($value1 !== NULL ){
-					array_push($data,$value1);
+				if($value1 !== "Gesamt:") {
+					if($value1 !== NULL) {
+						array_push($data,$value1);
+					}
+					
+					$value2 = $rows->value2;
+					if($value2 !== NULL ){
+						array_push($data,$value2);
+					}
+					$value3 = $rows->value3;
+					if($value3 !== NULL ){
+						array_push($data,$value3);
+					}
+					$value4 = $rows->value4;
+					if($value4 !== NULL ){
+						array_push($data,$value4);
+					}
+					$value5 = $rows->value5;
+					if($value5 !== NULL ){
+						array_push($data,$value5);
+					}
+					$value6 = $rows->value6;
+					if($value6 !== NULL ){
+						array_push($data,$value6);
+					}
+					$value7 = $rows->value7;
+					if($value7 !== NULL ){
+						array_push($data,$value7);
+					}
+					$value8 = $rows->value8;
+					if($value8 !== NULL ){
+						array_push($data,$value8);
+					}
+					$value9 = $rows->value9;
+					if($value9 !== NULL ){
+						array_push($data,$value9);
+					}
+					$value10 = $rows->value10;
+					if($value10 !== NULL ){
+						array_push($data,$value10);
+					}
+					$value11 = $rows->value11;
+					if($value11 !== NULL ){
+						array_push($data,$value11);
+					}
+					$value12 = $rows->value12;
+					if($value12 !== NULL ){
+						array_push($data,$value12);
+					}
+					array_push($allData,$data);
 				}
-				
-				$value2 = $rows->value2;
-				if($value2 !== NULL ){
-					array_push($data,$value2);
-				}
-				$value3 = $rows->value3;
-				if($value3 !== NULL ){
-					array_push($data,$value3);
-				}
-				$value4 = $rows->value4;
-				if($value4 !== NULL ){
-					array_push($data,$value4);
-				}
-				$value5 = $rows->value5;
-				if($value5 !== NULL ){
-					array_push($data,$value5);
-				}
-				$value6 = $rows->value6;
-				if($value6 !== NULL ){
-					array_push($data,$value6);
-				}
-				$value7 = $rows->value7;
-				if($value7 !== NULL ){
-					array_push($data,$value7);
-				}
-				$value8 = $rows->value8;
-				if($value8 !== NULL ){
-					array_push($data,$value8);
-				}
-				$value9 = $rows->value9;
-				if($value9 !== NULL ){
-					array_push($data,$value9);
-				}
-				$value10 = $rows->value10;
-				if($value10 !== NULL ){
-					array_push($data,$value10);
-				}
-				$value11 = $rows->value11;
-				if($value11 !== NULL ){
-					array_push($data,$value11);
-				}
-				$value12 = $rows->value12;
-				if($value12 !== NULL ){
-					array_push($data,$value12);
-				}
-				
-				array_push($allData,$data);
 			}
 			
 			$everything = array();
@@ -228,12 +232,13 @@ class DocumentController extends Controller
 			$contentNumeric = "";
 		}
 		
-		$contactPerson = "Frau Duenn"; 
+		$contactPerson = "Herr Aumueller"; 
 		
 		$allRows = array();
 		$row  = array();
 		$counter = 0;
-		foreach($content as $zeile){
+		//PARSE NUMBERS INSTEAD OF SUM()
+		foreach($contentNumeric as $zeile){
 			
 			foreach($zeile as $cell){
 				array_push($row,$cell);
@@ -282,23 +287,65 @@ class DocumentController extends Controller
         # Renders image
 //        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
 
-		
-		$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument);
+		$filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/".$docType."/";
+		// $filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/";
+		$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
+
+		$completeFilePathName = $filePath.$fileName;
+
+		// $result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument, $completeFilePathName);
+		$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument, "pdf/temp/".$docType."/".$fileName);
+
 
         $mPDF1->WriteHTML($stylesheet, 1);
         $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
-        # Outputs ready PDF
-		$filePath = Yii::getPathOfAlias('webroot')."/pdf/".$docType."/";
-		$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
-		$mPDF1->Output($filePath.$fileName, "F");		
 
+
+		$mPDF1->Output($completeFilePathName, "F");
+		
+		//pass also $documentId, leave out counter 
+		echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType));
 		// echo var_dump($result->counter);
 		// var_dump($result);
 	}
 	
+	public function actionDeleteThatPdf() {
+		if(isset($_POST['filePath']) && isset($_POST['counterType'])) {
+			//TODO: action for deleting 
+			$filePath = $_POST['filePath'];
+			$counterType = $_POST['counterType'];
+			$docImpl = new DocumentImplementierung;
+			//TODO: Revert Counter
+			$revertResult = $docImpl->revertCounter($counterType);
+			if($revertResult) {
+				$result = $docImpl->deleteDocumentByFilePath($filePath);
+				unlink(Yii::getPathOfAlias('webroot')."/".$filePath);
+				echo json_encode($revertResult);
+			} else {
+				echo "error reverting counter";
+			}
+			// echo $result.$filePath;
+		} else {
+			echo "error deleting";
+		}
+	}
 	
+	public function actionSaveThatPdf() {
+		if(isset($_POST['filePath'])){
+			$filePath = $_POST['filePath'];
+			$newFilePath = str_replace("/temp", "", $filePath);
+			if (copy(Yii::getPathOfAlias('webroot')."/".$filePath, Yii::getPathOfAlias('webroot')."/".$newFilePath)) {
+			  unlink(Yii::getPathOfAlias('webroot')."/".$filePath);
+			}
+			$docImpl = new DocumentImplementierung;
+			$result = $docImpl->updateFilePath($filePath, $newFilePath);			
+			echo $newFilePath;
+		}
+	}
 	
 	public function actionAddToCollectiveInvoice(){
+		//TODO: generate PDF from single documents and preview in modal and calculate total of all invoices as collectiveinvoicetotal
+		// rest similar to regular invoice stuff: preview -> save / cancel
 		if(isset($_POST['data'])){
 			$collectiveData = $_POST['data'];
 			$collectiveImpl = new CollectiveinvoiceImplementierung;

@@ -13,6 +13,7 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 ?>
 
 <script>
+	/**BELOW ALREADY IN _invoice.php **/
 	// function getTableDataNumeric (tableData, tableID) {
 			// console.log("getting table datatata");
 			
@@ -114,7 +115,7 @@ $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-rule
 	}
 
 	$(document).on("click", "#deliveryNoticeNueber", function () {
-		console.log("#deliveryNoticeNueber");
+		// console.log("#deliveryNoticeNueber");
 		parseAndCalcAndTranferDeliveryNotice();
 	});
 	
@@ -146,7 +147,6 @@ $(document).ready(function () {
 				contentNumeric = getTableDataNumeric(contentNumeric, "#DeliveryNoticeExample");
 				var deliveryNoticeExtraHTML = getdeliveryNoticeExtraHTML(deliveryNoticeExtraHTML);
 	
-	
 				$.ajax({
 				  method: "POST",
 				  type: "json",
@@ -163,7 +163,10 @@ $(document).ready(function () {
 					}
 				})
 				  .done(function( data ) {
-						alert("data transferred to PHP");				
+						var dataArr = jQuery.parseJSON(data);
+						$("#pdfFilePath").attr('src', dataArr.filePath);
+						$("#counterType").val(dataArr.counterType);
+						$("#previewModal").modal('show');
 				  });	
 		}
   		
@@ -178,17 +181,7 @@ $(document).ready(function () {
 		// alert(deliveryNoticeExtraKids);
 		// alert(deliveryNoticeExtraVals);
 		
-		deliveryNoticeExtra = Array();
-		
-		// for(var i = 0; i < deliveryNoticeExtraKids.length; i++) {
-			// deliveryNoticeExtra[i] = deliveryNoticeExtraVals[i].val();
-		// }
-		
-		// deliveryNoticeExtraKids.each(function(i, v){
-			// deliveryNoticeExtra[i] = Array();
-			// deliveryNoticeExtra[i] = $(this).text();
-			// deliveryNoticeExtra[i][0] = deliveryNoticeExtraVals[i];
-			// console.log();
+		deliveryNoticeExtra = Array();		
 			var j=0;
 		
 			deliveryNoticeExtraVals.each(function(i, v){

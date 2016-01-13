@@ -144,7 +144,10 @@ $(document).ready(function () {
 					}
 				})
 				  .done(function( data ) {
-						alert("data transferred to PHP");				
+						var dataArr = jQuery.parseJSON(data);
+						$("#pdfFilePath").attr('src', dataArr.filePath);
+						$("#counterType").val(dataArr.counterType);
+						$("#previewModal").modal('show');
 				  });	
 		}
   		

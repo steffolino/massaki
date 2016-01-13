@@ -9,11 +9,27 @@ var hot;
 }
 </style>
 
-<!--div class="row col-md-1 col-md-offset-11" style="position:fixed; z-index:6; bottom: 40px;">
-	<div class="pull-right">
-		<a id="scrollUpa" style="cursor:pointer; "><i alt="Scroll Top" class="fa fa-2x fa-angle-double-up"></i></a>
+
+<!--ALERTS -->
+<div class="row col-md-9 col-md-offset-1" style="position:fixed; z-index:500; top:50px;">
+	<div id="successAlert" class="col-md-11 col-md-offset-0 alert alert-success" style="display:none; text-align:center;">
+		<button type="button" class="customClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 style="margin-top: 10px; margin-bottom:10px;" id="successAlertContent"></h4>
 	</div>
-</div-->
+</div>
+<div class="row col-md-10 col-md-offset-1" style="position:fixed; z-index:500; top:50px;">
+	<div id="errorAlert" class="col-md-12 col-md-offset-0 alert alert-danger" style="display:none; text-align:center;">
+		<button type="button" class="customClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 style="margin-top:10px; margin-bottom:10px;" id="errorAlertContent"></h4>
+	</div>
+</div>
+
+<!-- INFO BAR -->
+<div id="infoBarContainer" class="row col-md-3 col-md-offset-9" style="position:fixed; z-index:1111; bottom: 440px; display:none;">
+	<div class="alert alert-success well-sm" style="box-shadow: 5px 5px 10px #888888;">
+		<span id="infoBar">Einen Moment bitte ...</span>
+	</div>
+</div>
 
 <!-- MAIN -->
 <div class=row>
@@ -90,6 +106,7 @@ var hot;
 				</form>
 					<div id="docContentEmpty" class="row panel-body panel-body-exclusive">
 							<h4 style="text-align: center">Bitte waehlen Sie einen <b>JVA-Namen</b>, einen <b>Dokumenten-Typ</b> und einen <b>Nummernkreis</b>.</h4>
+							<!--embed id='pdfFilePath' src="http://localhost:8888/massaki/rechnungstool/pdf/temp/JVAElPalmar_Rechnung_20160112_002446.pdf" width="510px" height="590px"-->
 					</div>
 					<div id="docContentInvoice" class="row panel-body panel-body-exclusive">
 						<?php $this->renderPartial('_invoice'); ?>
@@ -108,58 +125,230 @@ var hot;
 								<div class="col-md-4 col-md-offset-8">
 									<div class="btn-group btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
 										<a role=button class="btn btn-danger"><i class="fa fa-close"id="cancelDoc"> Abbrechen</i></a>
-										<a role=button class="btn btn-success"><i class="fa fa-check" id="writingDoc"> Schreiben</i></a>
+										<a role=button class="btn btn-success"><i class="fa fa-check" id="writingDoc"> Vorschau</i></a>
 									</div>
 								</div>
 							</div>
 					</div>
 		</div>
-</div>	
+</div>
+<div class="modal " id="previewModal">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title">Vorschau</h4>
+	  </div>
+	  <div class="modal-body">
+		<embed id="pdfFilePath" src="" width="550px" height="480px">
+	  </div>
+	  <div class="modal-footer">
+		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
+			<p>Dieses Dokument sollte 3 mal gedruckt werden.</p>
+		</div>
+		<button id="deleteButton" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+		<a id="saveButton" type="submit" class="btn btn-primary">Speichern</a>
+		<input id="counterType" type=hidden />
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 	
 <script>
-		
+
+	// $(document).on('hide.bs.modal','#previewModal', function () {
+		// console.log("hiding modal");
+		// var filePath = $("#pdfFilePath").attr('src');
+		// console.log("filePath:" + filePath);
+		// $.ajax({
+			// method: "POST",
+			// type: "json",
+			// url: "index.php?r=document/deleteThatPdf",
+			// data: { 
+				// filePath: filePath,
+			// },
+			// })
+		// .done(function(data) {
+			// setTimeout(function() {
+				// $("#previewModal").modal("hide");
+				// showCancelMessage(data);
+			// }, 500);
+		// });
+	// });
 	
+	// $(document).on("click", ".modal-backdrop in", function (e) {
+		// e.preventDefault();
+	// })
+
+	$(document).ajaxStart(function () {
+		$("#infoBarContainer").show();
+	});
+
+	$(document).ajaxComplete(function () {
+		setTimeout(function () {
+			$("#infoBarContainer").hide();
+		}, 500);
+	});
+
+	$(document).on("click", ".customClose", function (e) {
+		console.log("closing");
+		e.preventDefault();
+		parent = $(this).closest('.alert');
+		parent.slideUp('fast');
+	});
+		
+	$(document).on("click", "#deleteButton", function() {
+		var filePath = $("#pdfFilePath").attr('src');
+		var counterType = $("#counterType").val();
+		console.log("filePath:" + filePath);
+		if(typeof(filePath) !== 'undefined' && typeof(counterType) !== 'undefined') {
+			$.ajax({
+				method: "POST",
+				type: "json",
+				url: "index.php?r=document/deleteThatPdf",
+				data: { 
+					filePath: filePath,
+					counterType: counterType
+				},
+				})
+			.done(function(data) {
+				setTimeout(function() {
+					$("#previewModal").modal("hide");
+					showCancelMessage(data);
+				}, 500);
+			});
+		} else {
+			alert("Es ist ein Fehler beim Löschen aufgetreten");
+		}
+	});
+	
+	$(document).on("click", "#saveButton", function() {
+		var filePath = $("#pdfFilePath").attr('src');
+		console.log("filePath:" + filePath);
+		$.ajax({
+			method: "POST",
+			type: "json",
+			url: "index.php?r=document/saveThatPdf",
+			data: { 
+				filePath: filePath,
+			},
+			})
+		.success(function(data) {
+			setTimeout(function() {
+				$("#previewModal").modal("hide");
+				showSaveSuccessAlert(data);
+			}, 500);
+		})
+		.error(function(data) {
+			setTimeout(function() {
+				$("#previewModal").modal("hide");
+				showSaveErrorAlert(data);
+			}, 500);
+		});
+	});
+	
+	function showCancelMessage (data) {
+		$("#successAlertContent").html("Entwurf wurde verworfen.");
+		$("#successAlert").slideDown('fast');
+	}
+
+	function showSaveSuccessAlert (filePath) {
+		$("#successAlertContent").html("PDF wurde gespeichert unter " + filePath);
+		$("#successAlert").slideDown('fast');
+	}
+
+	function showSaveErrorAlert (errorCode) {
+		$("#errorAlertContent").html("Es ist ein Fehler beim Speichern aufgetreten: " + errorCode + "<br/> Bitte versuchen Sie es erneut.");
+		$("#errorAlert").slideDown('fast');
+	}
 	
 	$(document).ready(function () {
+		$('#previewModal').modal({backdrop: 'static', keyboard: false});
+		$("#previewModal").modal("hide");
 		$(".panel-body-exclusive").hide();
 		$("#docContentEmpty").show();
 	})
 
 	/***
-	** !!! TODO: fix
+	** !!! TODO: fixed!
 	** CHANGING docSelection shows handsontable every time --> changing nummernkreis & jvaName does not	
 	**/
-	$(document).on("select2-selecting", "#jvaName", function(e) { 
+	$(document).on("select2-selecting", "#jvaName", function(e) {
+		setTimeout(function () {
+
+			var radio = "";
+			$("#docSelection .btn").each(function() {
+				if($(this).hasClass('active')) {
+					radio = "#"+$(this).attr('id');
+				}
+			});
+
+			var nameSet = $("#select2-chosen-1").text();
+			if (nameSet.indexOf('Wittekindshof') !== -1) {
+				console.log("we have a witte");
+				doTheWitte();
+			}
 			if(readyWhenYouAre()) {	
-				showCorrectDocContent();
 				//MAGIIIIIIC!!!!!! --> doesnt work
-				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
-				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
-				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
-				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
-		}
+				// $("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
+				// $("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
+				// $("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
+				// $("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
+				if(hot  && radio.indexOf("Collective") === -1) {
+					hot.destroy();
+				}
+				showCorrectDocContent();
+			}
+		}, 500);
 	});
+	
+	function doTheWitte() {
+		$("#nummernkreisSelect").val('witte');
+	}
 
 	$(document).on("change", "#nummernkreisSelect", function () {
 			console.log("changed event");
-			if(readyWhenYouAre()) {	
-				showCorrectDocContent();
-				//MAGIIIIIIC!!!!!! --> doesnt work
-				$("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
-				$("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
-				$("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
-				$("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
-		}
+			
+			setTimeout(function () {
+
+				var radio = "";
+				$("#docSelection .btn").each(function() {
+					if($(this).hasClass('active')) {
+						radio = "#"+$(this).attr('id');
+					}
+				});				
+
+				if(readyWhenYouAre()) {	
+					//MAGIIIIIIC!!!!!! --> doesnt work
+					// $("#docContentInvoice").load(location.href+" #docContentInvoice>*","");
+					// $("#docContentCollectiveInvoice").load(location.href+" #docContentCollectiveInvoice>*","");
+					// $("#docContentDeliveryNotice").load(location.href+" #docContentDeliveryNotice>*","");
+					// $("#docContentCreditNote").load(location.href+" #docContentCreditNote>*","");
+					if(hot  && radio.indexOf("Collective") === -1) {
+						hot.destroy();
+					}
+					showCorrectDocContent();
+				}
+			}, 500);
 	});
 	
 	$(document).on("click", "#docSelection .btn-group .btn", function () {
 
 			$(this).addClass('active');
 			$(this).siblings('.btn').removeClass('active');
-			
-			if(readyWhenYouAre()) {
-				showCorrectDocContent();
-			}
+			setTimeout(function () {
+				if(readyWhenYouAre()) {
+					//hot instance does exist?
+					if(hot) {
+						//hot instance has not been destroyed already?
+						// --> switch between sammelrechnung and rechnung/gutschrift/lieferschein
+						if(hot.rootElement !== null) {
+							hot.destroy();
+						}
+					}
+					console.log("after");
+					showCorrectDocContent();
+				}
+			}, 500);
 	});
 
 	$(document).on("mouseenter", "#docSelection .btn-group .btn", function () {
@@ -174,12 +363,15 @@ var hot;
 		var nameSet = $("#select2-chosen-1").text();
 		var nrKreisSet = $("#nummernkreisSelect").val();
 		var docTypeSet = false;
+
 		$("#docSelection .btn").each(function() {
 			if($(this).hasClass('active')) {
 				docTypeSet = true;
 				buttonPressed = $(this).text();
 			}
 		});
+		// console.log("nameSet + nameSet.length + nrKreisSet + docTypeSet: " + nameSet + " ; " + nameSet.length + " ; " + nrKreisSet + " ; " + docTypeSet);
+
 		if((nameSet !== "JVA Name" && nameSet !== "" && nameSet.length > 3) && nrKreisSet !== null && docTypeSet === true) {
 			console.log("readyTogo: "+nameSet + " " + nrKreisSet + " " + docTypeSet);
 			$.ajax({
@@ -196,18 +388,22 @@ var hot;
 				//alert(data);
 				switch(buttonPressed){
 					case "Rechnung":
-						loadInvoiceData(JSON.parse(data,buttonPressed));
+						loadInvoiceData(JSON.parse(data), buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						//alert("data Loaded");
 						break;
 					case "Sammelrechnung":
 						//loadInvoiceData(JSON.parse(data,buttonPressed));
 						loadCollectiveData(data);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Lieferschein":
-						loadInvoiceData(JSON.parse(data,buttonPressed));
+						loadInvoiceData(JSON.parse(data), buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Gutschrift":
-						loadInvoiceData(JSON.parse(data,buttonPressed));
+						loadInvoiceData(JSON.parse(data), buttonPressed);
+						console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					default:
 						break;
@@ -223,6 +419,7 @@ var hot;
 		
 	function showCorrectDocContent(){
 		var radio = "empty";
+		
 		$("#docSelection .btn").each(function() {
 			if($(this).hasClass('active')) {
 				radio = "#"+$(this).attr('id');
@@ -265,14 +462,16 @@ var hot;
 	}
 	
 	
-	function loadInvoiceData(data,docType){
-		
+	function loadInvoiceData(data, docType){
+		console.log("data: " + data + " docType: " + docType);
 		// console.log("document ready");
 		var header = data[0];
-		var headerLength = header.length;
-		console.log(headerLength);
 		var displayData = data[1];
-		if(jQuery.isEmptyObject(displayData)){
+		var headerLength = header.length;
+		
+		console.log("displayData: " + displayData);
+		
+		if(jQuery.isEmptyObject(displayData)) {
 			switch(headerLength){
 					case 0:
 						displayData = [];
@@ -318,9 +517,52 @@ var hot;
 					default:
 						displayData = [[""]];						
 						break;
-			}
-		}
+			//DisplayData exists
+			//need to clean "gesamt-row" for its generated automatically
+			//UPDATE: cleaned before via PHP
+			} 
+		} 
 		
+		var container;
+		console.log("buttonSwitch: " + buttonPressed);
+
+		switch(buttonPressed){
+					case "Rechnung":
+						 container = document.getElementById('InvoiceExample');
+						 initHandson(container, displayData, header);
+						break;
+					case "Sammelrechnung":
+						 container = document.getElementById('CollectiveInvoiceExample');
+						break;
+					case "Lieferschein":
+						 container = document.getElementById('DeliveryNoticeExample');
+						 initHandson(container, displayData, header);
+						 break;
+					case "Gutschrift":
+						container = document.getElementById('CreditNoteExample');
+						 initHandson(container, displayData, header);
+						 break;
+					default:
+						break;
+					
+		}
+	}
+	
+	function initHandson(container, displayData, header) {
+				
+		hot = new Handsontable(container, {
+		  data: displayData,
+		  // language: de,
+		  // minSpareRows: 1,
+		  allowInvalid: true,
+		  formulas: true,
+		  rowHeaders: true,
+		  colHeaders: header,
+		  manualColumnResize: true,
+		  manualRowMove: true,
+		  colWidths: [160, 160, 160, 160, 100, 100, 100],
+		  contextMenu: true,
+		}); 
 		
 		var boldAndAlignRenderer = function (instance, td, row, col, prop, value, cellProperties) {
 			Handsontable.renderers.TextRenderer.apply(this, arguments);
@@ -328,116 +570,99 @@ var hot;
 			td.style.verticalAlign = 'middle';
 			td.style.textAlign = 'center';
 		};
-
-		var container;
-		switch(buttonPressed){
-					case "Rechnung":
-						 container = document.getElementById('InvoiceExample');
-						break;
-					case "Sammelrechnung":
-						 container = document.getElementById('CollectiveInvoiceExample');
-						break;
-					case "Lieferschein":
-						 container = document.getElementById('DeliveryNoticeExample');
-						break;
-					case "Gutschrift":
-						container = document.getElementById('CreditNoteExample');
-						break;
-					default:
-						break;
-					
-		}
 		
-				
-		if(!($(container).children().hasClass('ht_master handsontable'))){
-						
-			hot = new Handsontable(container, {
-			  data: displayData,
-			  // language: de,
-			  // minSpareRows: 1,
-			  formulas: true,
-			  rowHeaders: true,
-			  colHeaders: header,
-			  manualColumnResize: true,
-			  manualRowMove: true,
-			  colWidths: [160, 160, 160, 160, 100, 100, 100],
-			  contextMenu: true,
-			}); 
+		// var diffRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+			// Handsontable.cellTypes['formula'].renderer.apply(this, arguments);
+			// td.style.backgroundColor = '#c3f89c';
+			// td.style.fontWeight = 'bold';
+		// };
+		 // var totalRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+			// Handsontable.renderers.TextRenderer.apply(this, arguments);
+			// // td.cellType = 'formula';
+			// td.style.fontWeight = 'bold';
+			// td.style.textAlign = 'right';
+		// };
 			
-			var diffRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-				Handsontable.cellTypes['formula'].renderer.apply(this, arguments);
-				td.style.backgroundColor = '#c3f89c';
-				td.style.fontWeight = 'bold';
-			};
-			 var totalRenderer = function(instance, td, row, col, prop, value, cellProperties) {
-				Handsontable.renderers.TextRenderer.apply(this, arguments);
-				// td.cellType = 'formula';
-				td.style.fontWeight = 'bold';
-				td.style.textAlign = 'right';
-		  };
-			
+		var plugin = hot.getPlugin('autoRowSize');
+		var plugin2 = hot.getPlugin('autoColumnSize');
+		var lastVisRow = plugin.getLastVisibleRow();
+		var lastVisCol = plugin2.getLastVisibleColumn();
+		
+		fakeValid = function (value, callback) {
+			setTimeout(function(){
+				callback(true);
+			}, 1000);
+		};
+		
+		hot.updateSettings({
+			cells: 
+				function (row, col, prop) {						
+					var cellProperties = {validator:fakeValid};
+					//NOT LAST ROW, LAST 3 COLS
+					if (row !== hot.countRows() && col > (lastVisCol - 3)) {
+						cellProperties.type = 'numeric';
+						cellProperties.format = '000.00';
+					}
+					// LAST ROW, NOT LAST 3 COLS
+					if(row == hot.countRows() && col < (lastVisCol - 3)){
+						cellProperties.validator = fakeValid;
+					}
+					// LAST ROW, LAST 3 COLS
+					if(row == hot.countRows() && col > (lastVisCol - 3)){
+						cellProperties.validator = fakeValid;
+						// cellProperties.renderer = totalRenderer;
+						// cellProperties.format = '000.00';
+						// cellProperties.type = 'formula';
+					}
+					return cellProperties;
+				},
+		});
+		
+		var headerLength = header.length;
+		createRowCallback();
+		Handsontable.hooks.add('afterCreateRow', createRowCallback, hot);
+		
+		// Handsontable.hooks.add('afterCreateRow', updateSettings, hot);
+		
+		function createRowCallback () {
 			var plugin = hot.getPlugin('autoRowSize');
 			var plugin2 = hot.getPlugin('autoColumnSize');
 			var lastVisRow = plugin.getLastVisibleRow();
 			var lastVisCol = plugin2.getLastVisibleColumn();
-			
-			fakeValid = function (value, callback) {
-				setTimeout(function(){
-					callback(true);
-				}, 1000);
-			};
-			
-			hot.updateSettings({
-				cells: 
-					function (row, col, prop) {						
-						var cellProperties = {};
-						//NOT LAST ROW, LAST 3 COLS
-						if (row !== hot.countRows() && col > (lastVisCol - 3)) {
-							cellProperties.type = 'numeric';
-							cellProperties.format = '000.00';
-						}
-						//LAST ROW, NOT LAST 3 COLS
-						if(row == hot.countRows() && col < (lastVisCol - 3)){
-							this.renderer = totalRenderer;
-						}
-						//LAST ROW, LAST 3 COLS
-						if(row == hot.countRows() && col > (lastVisCol - 3)){
-							cellProperties.validator = fakeValid;
-							// cellProperties.renderer = totalRenderer;
-							cellProperties.format = '000.00';
-							cellProperties.type = 'numeric';
-						}
-						return cellProperties;
-					},
-			});
-			
-			Handsontable.hooks.add('afterCreateRow', createRowCallback, hot);
-		}		
-			
-		function createRowCallback () {
-				var plugin = hot.getPlugin('autoRowSize');
-				var plugin2 = hot.getPlugin('autoColumnSize');
-				var lastVisRow = plugin.getLastVisibleRow();
-				var lastVisCol = plugin2.getLastVisibleColumn();
-				// console.log("lastRow: "+lastVisRow);
-
+			var headerLength = lastVisCol;
+			console.log("countRows: " + hot.countRows());
+			// console.log("lastRow: "+lastVisRow);
+			console.log("hL: " + headerLength);
 			var a = 97;
 			var charArray = {};
 			for (var i = 0; i<26; i++) {
 				charArray[i] = String.fromCharCode(a + i);
 			}
 			// var tpl = ['Gesamt'];
-			for (var j = 0; j < headerLength; j++) {
-				if((headerLength - j) < 4) {
-					hot.setDataAtCell(parseInt(lastVisRow+1), j, '=SUM('+charArray[j]+'1:'+charArray[j]+parseInt(lastVisRow+1)+')');
-					hot.setDataAtCell(parseInt(lastVisRow+1), j, '=SUM('+charArray[j]+'1:'+charArray[j]+parseInt(lastVisRow+1)+')');
-					hot.setDataAtCell(parseInt(lastVisRow+1), j, '=SUM('+charArray[j]+'1:'+charArray[j]+parseInt(lastVisRow+1)+')');
-					console.log("pushing: " + (headerLength - j) +" at " + j);
-					console.log("Value at "+ parseInt(lastVisRow+1)+" "+j+" : "+hot.getValue(parseInt(lastVisRow+1), j));
-				}
+			for (var j = 0; j < parseInt(hot.countRows()); j++) {
+					for (var k = 0; k < parseInt(hot.countCols()); k++) {
+						// hot.setCellMeta (k, j, 'readOnly', false);
+						//Found Gesamt but not in last Row
+						hot.setCellMeta(j,k,'readOnly', false);
+						if(hot.getDataAtCell(j,k) === 'Gesamt:' && j !== parseInt(hot.countRows() - 1)) {
+							console.log("found wrong entry for Gesamt:  - deleting ...");
+							var jDeletableRow = j;
+						}
+						if(j === jDeletableRow) {
+							hot.setDataAtCell(j,k, '');
+						}
+						if(parseInt(headerLength - k) < 3) {
+							hot.setDataAtCell(parseInt(lastVisRow+1), k, '=SUM('+charArray[k]+'1:'+charArray[k]+parseInt(hot.countRows()-1)+')');
+							hot.setCellMeta (parseInt(lastVisRow+1), k, 'readOnly', true);
+							// hot.setCellMeta (parseInt(lastVisRow+1), k, 'validator', fakeValid);
+						} 
+					}
 			}
 			hot.setDataAtCell(parseInt(lastVisRow+1), 0, 'Gesamt:');
-		}	
+			// hot.mergeCells({row: parseInt(lastVisRow+1), col: 0, rowspan: 0, colspan: 3});
+			hot.setCellMeta (parseInt(lastVisRow+1), 0, 'readOnly', true);
+		}		
 	}
+	
 
 </script>

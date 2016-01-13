@@ -4,7 +4,7 @@
 class DocumentImplementierung extends Document
 {
 	
-	public function insertNewDocument($docType,$jvaId,$contactPerson,$arrayOfValuesAndHeaders,$counterType,$defaultDocument){
+	public function insertNewDocument($docType,$jvaId,$contactPerson,$arrayOfValuesAndHeaders,$counterType,$defaultDocument, $filePathName){
 		$newDoc = new Document;
 		$newDoc->contact_person = $contactPerson;
 		$newDoc->jva = $jvaId;
@@ -16,6 +16,7 @@ class DocumentImplementierung extends Document
 		}
 		$newDoc->docType = $docTypeId;
 		$newDoc->docTypeId = $docTypeId;
+
 		$lastUsedCounterImpl = new LastusedcounterImplementierung;
 		$lastUsedCounter = $lastUsedCounterImpl->getLastUsedCounterByName(strtoupper($counterType));
 		$counterTypeId = $lastUsedCounter->lastUsedCounterId;
@@ -25,8 +26,11 @@ class DocumentImplementierung extends Document
 		$newDoc->counter = $counterName . " " . $counterStatus;
 		$newDoc->yearCounter0 =yearcounter::model()->findByPK(1)->yearCounterId;
 		$newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
-		$newDoc->timeStamp = date('Y-m-d');
-		$pdfLocation = "Auf der Platte";
+		
+		date_default_timezone_set('Europe/Berlin');
+		$newDoc->timeStamp = date('Y-m-d H:m:s');
+
+		$pdfLocation = $filePathName;
 		$newDoc->pdf_location = $pdfLocation;
 		$newDoc->save();
 		 
@@ -203,7 +207,7 @@ class DocumentImplementierung extends Document
 		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
 		$jvaId = $jvaObject->jvaDataId;
 		$docId = Document::model()->find(
-				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY timeStamp DESC',
+				'jvaId=:jvaId AND docTypeId=:docType AND defaultDoc = "yes" AND counter LIKE :counter ORDER BY documentId DESC',
 				array(':jvaId'=>$jvaId,':docType'=>$docType,':counter'=>$counterName)
 			);
 			if($docId !== NULL){
@@ -211,18 +215,15 @@ class DocumentImplementierung extends Document
 			}else{
 				return NULL;
 			}
-			
-			
-			
-		
 		
 	}
+	
+	
 	
 	public function getDocumentWithId($docId){
 		return $document = Document::model()->findByPK($docId);
 		
 	}
-	
 	
 	public function getInvoicesDeliveryNotInCollective($jvaName,$jvaNameExt){
 		$jva = new JvaModel;
@@ -240,8 +241,37 @@ class DocumentImplementierung extends Document
 	}
 	
 	
+	//TODO: change to AR
+	//TODO2: update constraints to work properly - done
+	//TODO3: enable updating filePath - done
+	public function deleteDocumentByFilePath($filePath) {
+		$filePath = "%".$filePath;
+		$docToBeDeleted = Yii::app()->db->createCommand()
+			->delete('document', 'pdf_location LIKE :filePath', array(':filePath'=>$filePath));
+		return $docToBeDeleted;
+	}
 	
-	
+	public function updateFilePath($oldFilePath, $newFilePath) {
+		$oldFilePath = "%".$oldFilePath;
+		$docToBeDeleted = Yii::app()->db->createCommand()
+			->update('document', array('pdf_location' => $newFilePath), 'pdf_location LIKE :oldFilePath', array(':oldFilePath' => $oldFilePath));
+			// ->where(, array(':oldFilePath' => $oldFilePath));
+				// ), 'pdf_location LIKE :oldFilePath', array(':newFilePath'=> $newFilePath, ':oldFilePath' => $oldFilePath));  
+		return $docToBeDeleted;
+	}
+
+	public function revertCounter ($counterType) {
+		$lastUsedCounterImpl = new LastusedcounterImplementierung;
+		$lastUsedCounter = $lastUsedCounterImpl->getLastUsedCounterByName(strtoupper($counterType));
+		$counterTypeId = $lastUsedCounter->lastUsedCounterId;
+		$counterName = $lastUsedCounter->lastUsedCounterName;
+		$counterStatus = $lastUsedCounter->lastUsedCounterStatus;
+		$lastUsedCounterImplResult = $lastUsedCounterImpl->decrementCounter($counterTypeId);
+		return $lastUsedCounterImplResult;
+		// $newDoc->counter = $counterName . " " . $counterStatus;
+		// $newDoc->yearCounter0 =yearcounter::model()->findByPK(1)->yearCounterId;
+		// $newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
+	}
 	
 }
 
