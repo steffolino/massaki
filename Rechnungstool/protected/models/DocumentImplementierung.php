@@ -171,9 +171,7 @@ class DocumentImplementierung extends Document
 		//$this->createPdfOutOfDocument($docId);
 		return $newDoc;
 	}
-	
-	
-	
+		
 	public function createPdfOutOfDocument($documentId){
 		//TODO: create PDF from Form
 		$document = $this->getDocumentWithId($documentId);

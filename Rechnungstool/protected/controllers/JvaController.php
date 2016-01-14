@@ -198,7 +198,9 @@ class JvaController extends Controller
 		// $colNames = $jvaModel->allColNames;
 		if(isset($_POST['jvaID'])) {
 			$jvaID = htmlspecialchars($_POST['jvaID']);
-			$jvaModel->deactivateJvaById($jvaID);
+			$deactivateResult = $jvaModel->deactivateJvaById($jvaID);
+		} else {
+			echo "Error deactivation";
 		}
 		$jvaModel->getAllJvas();
 		$jvaList = $jvaModel->allJvas;

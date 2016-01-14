@@ -126,7 +126,6 @@ class JvaModel extends CFormModel
 		$jva = $this->getJvaByName($name,$ext);
 		$jva->jvaDeactivated = "y";
 		$jva->save();
-		
 	}
 	public function deactivateJvaById($id){
 		$jva = $this->getJvaById($id);
@@ -135,6 +134,7 @@ class JvaModel extends CFormModel
 		}
 		$jva->jvaDeactivated = "y";
 		$jva->save();
+		return $jva;
 	}
 	
 	public function deactivateJvaByCustNum($custNum){

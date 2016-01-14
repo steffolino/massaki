@@ -157,7 +157,7 @@
 					}
 				})
 				  .done(function(data) {
-						jQuery.noConflict();
+						// jQuery.noConflict();
 						var dataArr = jQuery.parseJSON(data);
 						$("#pdfFilePath").attr('src', dataArr.filePath);
 						$("#counterType").val(dataArr.counterType);

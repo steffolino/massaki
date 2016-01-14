@@ -1,7 +1,3 @@
-<!-- HEAD -->
-<!--div class=row>
-	<p>Test head</p>
-</div-->
 <?php
 	echo '
 	<div class="row col-md-9 col-md-offset-1" style="position:fixed; z-index:5; top:50px;">
@@ -317,7 +313,7 @@
 	
 	function deactivateJva(jvaID){
 		// console.log("calling controller");
-		// console.log("jvaID "+jvaID);
+		console.log("jvaID "+jvaID);
 		$.ajax({
 		  method: "POST",
 		  url: "index.php?r=jva/deactivateJVAById",

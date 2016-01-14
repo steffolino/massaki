@@ -13,7 +13,8 @@
 ?>
 <script>
 
-$(document).ready(function () {
+jQuery(function ($) {
+	// jQuery.noConflict();
 	function getAllSelectedRows(){
 		var nameSetT = $("#select2-chosen-1").text();
 		var resultT = [];														
