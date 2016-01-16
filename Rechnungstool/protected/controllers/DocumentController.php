@@ -68,6 +68,7 @@ class DocumentController extends Controller
 			}else{
 				$defaultColConfig = $jvaModel->getDefColByJva($jva,"Witte");	
 			}
+			$printAmount = $defaultColConfig->printAmount;
 			$headerAndData = array();
 			$header = array();
 			$data = array();
@@ -202,7 +203,7 @@ class DocumentController extends Controller
 			array_push($everything,$allData);
 			
 			//var_dump($header);
-			echo json_encode($everything);
+			echo json_encode(array('dataVal'=>$everything,'printAmount'=>$printAmount));
 		}
 		
 	}

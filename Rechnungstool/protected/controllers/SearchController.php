@@ -25,7 +25,17 @@ class SearchController extends Controller
 			$document = $docImpl->getDocumentWithCounter($selectedCounter);
 			$path = $document->pdf_location;
 			$path =  $path;
-			echo json_encode($path); 
+			if (strpos($document->counter, 'IK') ){
+				$printAmount = $document->jva->jvaColIk->printAmount;
+			}else if(strpos($document->counter, 'Memmelsdorf')){
+				
+				$printAmount = $document->jva->jvaColMemmel->printAmount;
+			}else if(strpos($document->counter, 'Loehne')){
+				$printAmount = $document->jva->jvaColLoehne->printAmount;
+			}else{
+				$printAmount = $document->jva->jvaColWitte->printAmount;
+			}
+			echo json_encode(array("path"=>$path,"printAmount"=>trim($printAmount))); 
 			//var_dump($path);
 		}else{
 			echo "Error";

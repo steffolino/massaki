@@ -59,8 +59,10 @@ $(document).ready(function () {
 																  .done(function(data){
 																	  var dataArrS = jQuery.parseJSON(data);
 																	  // alert(dataArrS);
-																		$("#pdfFilePathSearch").attr("src", dataArrS);
+																		$("#pdfFilePathSearch").attr("src", dataArrS.path);
+																		$("#printAmountLabel").text(dataArrS.printAmount);
 																		$("#previewPdfModal").modal("show");
+																		
 																	});	
 															}',
 															'id'=>'documentIdAction'
@@ -94,7 +96,7 @@ $(document).ready(function () {
 	  </div>
 	  <div class="modal-footer">
 		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
-			<p>Dieses Dokument sollte 3 mal gedruckt werden.</p>
+			<p>Dieses Dokument sollte <div id ="printAmountLabel"></div>mal gedruckt werden.</p>
 		</div>
 		
 		<a id="OkButton" type="button" data-dismiss="modal" class="btn btn-primary">Ok</a>

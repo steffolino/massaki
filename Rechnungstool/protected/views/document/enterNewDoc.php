@@ -152,7 +152,7 @@ var hot;
 	  </div>
 	  <div class="modal-footer">
 		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
-			<p>Dieses Dokument sollte 3 mal gedruckt werden.</p>
+			<p>Dieses Dokument sollte <div id="printAmountLabel"></div> mal gedruckt werden.</p>
 		</div>
 		<button id="deleteButton" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
 		<a id="saveButton" type="submit" class="btn btn-primary">Speichern</a>
@@ -394,24 +394,26 @@ var hot;
 				}
 			})
 			.done(function(data) {
+				var dataArr = jQuery.parseJSON(data);
+				$('#printAmountLabel').text(trim(dataArr.printAmount));
 				//alert(data);
 				switch(buttonPressed){
 					case "Rechnung":
-						loadInvoiceData(JSON.parse(data), buttonPressed);
+						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						//alert("data Loaded");
 						break;
 					case "Sammelrechnung":
 						//loadInvoiceData(JSON.parse(data,buttonPressed));
-						loadCollectiveData(data);
+						loadCollectiveData(dataArr.dataVal);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Lieferschein":
-						loadInvoiceData(JSON.parse(data), buttonPressed);
+						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Gutschrift":
-						loadInvoiceData(JSON.parse(data), buttonPressed);
+						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					default:
