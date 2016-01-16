@@ -394,25 +394,32 @@ var hot;
 				}
 			})
 			.done(function(data) {
-				var dataArr = jQuery.parseJSON(data);
-				$('#printAmountLabel').text(trim(dataArr.printAmount));
 				//alert(data);
+				
+				var dataArr;
 				switch(buttonPressed){
 					case "Rechnung":
+					dataArr = jQuery.parseJSON(data);
+					$('#printAmountLabel').text(trim(dataArr.printAmount));
 						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						//alert("data Loaded");
 						break;
 					case "Sammelrechnung":
 						//loadInvoiceData(JSON.parse(data,buttonPressed));
-						loadCollectiveData(dataArr.dataVal);
+						
+						loadCollectiveData(data);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Lieferschein":
+						dataArr = jQuery.parseJSON(data);
+						$('#printAmountLabel').text(trim(dataArr.printAmount));
 						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Gutschrift":
+						dataArr = jQuery.parseJSON(data);
+						$('#printAmountLabel').text(trim(dataArr.printAmount));
 						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
