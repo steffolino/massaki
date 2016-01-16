@@ -27,7 +27,7 @@ class DocumentImplementierung extends Document
 		$newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
 		
 		date_default_timezone_set('Europe/Berlin');
-		$newDoc->timeStamp = date('Y-m-d H:m:s');
+		$newDoc->timeStamp = date('Y-m-d H:i:s');
 
 		$pdfLocation = $filePathName;
 		$newDoc->pdf_location = $pdfLocation;
@@ -282,6 +282,17 @@ class DocumentImplementierung extends Document
 		// $newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
 	}
 	
+	public function getDocumentWithCounter($counter){
+			$doc = Document::model()->find(
+				'counter=:counter',
+				array(':counter'=>$counter)
+			);
+			if(!empty($doc)){
+				return $doc;
+			}else{
+				return NULL;
+			}
+	}
 }
 
 ?>
