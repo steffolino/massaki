@@ -318,6 +318,8 @@ var hot;
 			setTimeout(function() {
 				$("#previewModalCollect").modal("hide");
 				showSaveSuccessAlert(data);
+				readyWhenYouAre();
+				
 			}, 500);
 		})
 		.error(function(data) {
