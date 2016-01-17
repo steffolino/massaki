@@ -475,7 +475,7 @@ var hot;
 				switch(buttonPressed){
 					case "Rechnung":
 					dataArr = jQuery.parseJSON(data);
-					$('#printAmountLabel').text(trim(dataArr.printAmount));
+					$('#printAmountLabel').text(dataArr.printAmount);
 						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						//alert("data Loaded");
@@ -488,13 +488,13 @@ var hot;
 						break;
 					case "Lieferschein":
 						dataArr = jQuery.parseJSON(data);
-						$('#printAmountLabel').text(trim(dataArr.printAmount));
+						$('#printAmountLabel').text(dataArr.printAmount);
 						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;
 					case "Gutschrift":
 						dataArr = jQuery.parseJSON(data);
-						$('#printAmountLabel').text(trim(dataArr.printAmount));
+						$('#printAmountLabel').text(dataArr.printAmount);
 						loadInvoiceData(dataArr.dataVal, buttonPressed);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;

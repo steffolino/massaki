@@ -445,7 +445,7 @@ class DocumentController extends Controller
 			$mPDF1->Output($completeFilePathName, "F");
 		
 			//pass also $documentId, leave out counter 
-			echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType,'newId'=>$newId));
+			echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType,'newId'=>$resultCounter));
 			//var_dump($contentNumeric);
 		}
 	}

@@ -295,8 +295,39 @@ class DocumentImplementierung extends Document
 	}
 	
 	public function getSumDataPerDocument($arrayOfDocumentValues){
-		//TODO: implement Sum calc per Document with rows 'Gesamt:'
-		
+		$sumNineTeen;
+		$sumSeven;
+		$sumZero;
+		foreach($arrayOfDocumentValues as $row){
+			if($row['value1'] === "Gesamt:"){
+				$counter = 0;
+				foreach($row as $cell){
+					if(isset($cell) && $cell !== NULL){
+						$counter++;
+					}else{
+						break;
+					}
+					
+				}
+				$counter--;
+				$counter--;
+				$readCounter = "value" . $counter;
+				$sumNineTeen = $row[$readCounter];
+				//var_dump($sumNineTeen);
+				$counter--;
+				$readCounter = "value" . $counter;
+				$sumSeven = $row[$readCounter];
+				//var_dump($sumSeven);
+				$counter--;
+				$readCounter = "value" . $counter;
+				$sumZero = $row[$readCounter];
+				//var_dump($sumZero);
+				
+			}
+		}
+		$sum = ($sumNineTeen + $sumNineTeen * 0.19) + ($sumSeven + $sumSeven * 0.07) + ($sumZero);
+		//$sum = intval($sumNineTeen)  + intval($sumSeven)  + intval($sumZero);
+		return $sum;
 	}
 	
 	
@@ -307,10 +338,10 @@ class DocumentImplementierung extends Document
 		foreach($collectiveData as $documentId){
 			$document = $this->getDocumentWithId($documentId);
 			array_push($documentArray,$document->counter);
-			array_push($documentArray,date("m.d.y",$document->timeStamp));
+			array_push($documentArray,$document->timeStamp);
 			$documentValues = $documentValuesImpl->getDocumentValuesByDocumentId($document->documentId);
 			$sum = $this->getSumDataPerDocument($documentValues);
-			$sum = 0;
+			//$sum= 0;
 			array_push($documentArray,$sum);
 			array_push($resultArray,$documentArray);
 			$documentArray = array();

@@ -44,7 +44,7 @@ class CollectiveinvoiceImplementierung extends Collectiveinvoice
 	}
 	
 	public function deleteCollectiveInvoicePerId($collectiveId){
-		$coll=Collectiveinvoice::model()->findByPk($collectiveId); 
+		$coll=Collectiveinvoice::model()->findAll('collectInvoiceId=:collectiveId',array('collectiveId'=>$collectiveId); 
 		$coll->delete();
 		
 	}
