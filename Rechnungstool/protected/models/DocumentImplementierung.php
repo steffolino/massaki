@@ -293,6 +293,39 @@ class DocumentImplementierung extends Document
 				return NULL;
 			}
 	}
+	
+	public function getSumDataPerDocument($arrayOfDocumentValues){
+		//TODO: implement Sum calc per Document with rows 'Gesamt:'
+		
+	}
+	
+	
+	public function getNecessaryDataForCollectivePreview($collectiveData){
+		$resultArray = array();
+		$documentArray = array();
+		$documentValuesImpl = new DocumentvaluesImplementierung;
+		foreach($collectiveData as $documentId){
+			$document = $this->getDocumentWithId($documentId);
+			array_push($documentArray,$document->counter);
+			array_push($documentArray,date("m.d.y",$document->timeStamp));
+			$documentValues = $documentValuesImpl->getDocumentValuesByDocumentId($document->documentId);
+			$sum = $this->getSumDataPerDocument($documentValues);
+			$sum = 0;
+			array_push($documentArray,$sum);
+			array_push($resultArray,$documentArray);
+			$documentArray = array();
+		}
+		return $resultArray;
+	}
+	
+	public function getInvoiceExtraFromAllSum($arrayOfData){
+		//TODO: calculate Invoice Extra Array
+		 
+		$test = array();
+		array_push($test,0);
+		return $test;
+	}
+	
 }
 
 ?>

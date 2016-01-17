@@ -161,6 +161,28 @@ var hot;
 	</div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal " id="previewModalCollect">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title">Vorschau</h4>
+	  </div>
+	  <div class="modal-body">
+		<embed id="pdfFilePathCollect" src="" width="550px" height="480px">
+	  </div>
+	  <div class="modal-footer">
+		<!-- <div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
+			 <p>Dieses Dokument sollte <div id="printAmountLabelCollect"></div> mal gedruckt werden.</p>
+		 </div>-->
+		<button id="deleteButtonCollect" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+		<a id="saveButtonCollect" type="submit" class="btn btn-primary">Speichern</a>
+		<input id="counterTypeCollect" type=hidden />
+		<input id="collectiveId" type=hidden />
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 	
 <script>
 
@@ -229,7 +251,33 @@ var hot;
 			alert("Es ist ein Fehler beim Löschen aufgetreten");
 		}
 	});
-	
+		$(document).on("click", "#deleteButtonCollect", function() {
+		var filePath = $("#pdfFilePathCollect").attr('src');
+		var counterType = $("#counterTypeCollect").val();
+		var collId = $("#collectiveId").val();
+		console.log("filePath:" + filePath);
+		if(typeof(filePath) !== 'undefined' && typeof(counterType) !== 'undefined') {
+			$.ajax({
+				method: "POST",
+				type: "json",
+				url: "index.php?r=document/deleteThatPdf",
+				data: { 
+					filePath: filePath,
+					counterType: counterType,
+					docType: "Sammelrechnung",
+					collId: collId,
+				},
+				})
+			.done(function(data) {
+				setTimeout(function() {
+					$("#previewModalCollect").modal("hide");
+					showCancelMessage(data);
+				}, 500);
+			});
+		} else {
+			alert("Es ist ein Fehler beim Löschen aufgetreten");
+		}
+	});
 	$(document).on("click", "#saveButton", function() {
 		var filePath = $("#pdfFilePath").attr('src');
 		console.log("filePath:" + filePath);
@@ -250,6 +298,31 @@ var hot;
 		.error(function(data) {
 			setTimeout(function() {
 				$("#previewModal").modal("hide");
+				showSaveErrorAlert(data);
+			}, 500);
+		});
+	});
+	$(document).on("click", "#saveButtonCollect", function() {
+		var filePath = $("#pdfFilePathCollect").attr('src');
+		console.log("filePath:" + filePath);
+		$.ajax({
+			method: "POST",
+			type: "json",
+			url: "index.php?r=document/saveThatPdf",
+			data: { 
+				filePath: filePath,
+				docType:"Sammelrechnung",
+			},
+			})
+		.success(function(data) {
+			setTimeout(function() {
+				$("#previewModalCollect").modal("hide");
+				showSaveSuccessAlert(data);
+			}, 500);
+		})
+		.error(function(data) {
+			setTimeout(function() {
+				$("#previewModalCollect").modal("hide");
 				showSaveErrorAlert(data);
 			}, 500);
 		});
@@ -407,7 +480,7 @@ var hot;
 						break;
 					case "Sammelrechnung":
 						//loadInvoiceData(JSON.parse(data,buttonPressed));
-						
+						//$('#printAmountLabel').text(trim(dataArr.printAmount));
 						loadCollectiveData(data);
 						// console.log("dataButton: "+data + " " + buttonPressed);
 						break;

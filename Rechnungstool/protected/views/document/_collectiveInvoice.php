@@ -9,7 +9,9 @@
 // $cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
 
 // C:\inetpub\wwwroot\massaki\Rechnungstool\js\handsontable-0.19.0\dist
-
+$baseUrl = Yii::app()->baseUrl; 
+$cs = Yii::app()->getClientScript();
+$cs->registerScriptFile($baseUrl.'/protected\extensions\bootstrap\assets\js\bootstrap.js');
 ?>
 <script>
 
@@ -19,6 +21,13 @@ jQuery(function ($) {
 		var nameSetT = $("#select2-chosen-1").text();
 		var resultT = [];														
 		var tbodyrowT = $('#CollectiveGrid table tbody tr');
+		var counterTypeT = $('#nummernkreisSelect option:selected').text();
+		var buttonPressedT;
+				$("#docSelection .btn").each(function() {
+					if($(this).hasClass('active')) {
+						buttonPressedT = $(this).text();
+					}
+				});
 		tbodyrowT.each(function(){
 			if($(this).hasClass("selected")){
 				var valueT = $(this).find("td:eq(1)").text();
@@ -30,11 +39,19 @@ jQuery(function ($) {
 				type: "json",
 				url: "index.php?r=document/addToCollectiveInvoice",
 				data: { 
+					counterType: counterTypeT,
+					docType: buttonPressedT,
 					data: resultT,
 					jva: nameSetT,
 				}
 		}).done(function(data) {
-			$('#docContentCollectiveInvoice').html(data);
+			var dataArr = jQuery.parseJSON(data);
+			$("#pdfFilePathCollect").attr('src', dataArr.filePath);
+			$("#counterTypeCollect").val(dataArr.counterType);
+			$("#collectiveId").val(dataArr.newId);
+			$("#previewModalCollect").modal('show');
+			
+			//$('#docContentCollectiveInvoice').html(data);
 		});
 	}
 	
@@ -75,11 +92,19 @@ echo '
 															'buttonType' => 'button',
 															'context' => 'primary',
 															'size' => 'small',
-															'label' => 'Ausgewählte Dokumente zu einer Sammelrechnung zusammenfassen',
+															'label' => 'Ausgewählte Dokumente zu einer Sammelrechnung zusammenfassen und Preview anzeigen',
 															'click' => 'js:function getAllSelectedRows(){
 																var nameSet = $("#select2-chosen-1").text();
 																var result = [];
 																var tbodyrow = $(\'#CollectiveGrid table tbody tr\');
+																
+																var counterType = $("#nummernkreisSelect option:selected").text();
+																var buttonPressed;
+																$("#docSelection .btn").each(function() {
+																	if($(this).hasClass("active")) {
+																		buttonPressed = $(this).text();
+																	}
+																});
 																tbodyrow.each(function(){
 																	if($(this).hasClass("selected")){
 																		var value = $(this).find("td:eq(1)").text();
@@ -91,11 +116,18 @@ echo '
 																		type: "json",
 																		url: "index.php?r=document/addToCollectiveInvoice",
 																		data: { 
+																			counterType: counterType,
+																			docType: buttonPressed,
 																			data: result,
 																			jva:nameSet,
 																		}
 																}).done(function(data) {
-																	$("#docContentCollectiveInvoice").html(data);
+																	//$("#docContentCollectiveInvoice").html(data);
+																	var dataArr = jQuery.parseJSON(data);
+																	$("#pdfFilePathCollect").attr("src", dataArr.filePath);
+																	$("#counterTypeCollect").val(dataArr.counterType);
+																	$("#collectiveId").val(dataArr.newId);
+																	$("#previewModalCollect").modal("show");
 																});
 															}',
 															'id'=>'BulkDocumentId'
