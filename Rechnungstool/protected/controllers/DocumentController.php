@@ -388,8 +388,8 @@ class DocumentController extends Controller
 			
 			//get data of selected 
 			$contentNumeric = $neuDoc->getNecessaryDataForCollectivePreview($collectiveData);
-			$invoiceExtra = $neuDoc->getInvoiceExtraFromAllSum($contentNumeric);
-			$invoiceExtra = "";
+			$invoiceExtra = $neuDoc->getInvoiceExtraFromAllSum($collectiveData);
+			
 			
 			$allRows = array();
 			$row  = array();
