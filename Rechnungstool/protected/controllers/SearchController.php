@@ -16,13 +16,24 @@ class SearchController extends Controller
 				$this->render('error', $error);
 		}
 	}
+	public function actionUpdatedPrintStatus(){
+		$docImpl = new DocumentImplementierung;
+		$document = $docImpl->getDocumentWithCounter($_POST['counter']);
+		$docImpl->updatePrintedStatus($document->documentId,$_POST['printedFlag']);
+		echo "true";
+	}
+	
 
 	public function actionGetPreviewPdf(){
 		
 		if(isset($_POST['documentCounter'][0])){
+			
 			$selectedCounter = $_POST['documentCounter'][0];
 			$docImpl = new DocumentImplementierung;
+			
 			$document = $docImpl->getDocumentWithCounter($selectedCounter);
+			
+			$printedFlag = $document->printed;
 			$path = $document->pdf_location;
 			$path =  $path;
 			if (strpos($document->counter, 'IK') ){
@@ -35,7 +46,7 @@ class SearchController extends Controller
 			}else{
 				$printAmount = $document->jva->jvaColWitte->printAmount;
 			}
-			echo json_encode(array("path"=>$path,"printAmount"=>trim($printAmount))); 
+			echo json_encode(array("path"=>$path,"printAmount"=>trim($printAmount),"counter"=>$document->counter,"printedFlag"=>$printedFlag)); 
 			//var_dump($path);
 		}else{
 			echo "Error";

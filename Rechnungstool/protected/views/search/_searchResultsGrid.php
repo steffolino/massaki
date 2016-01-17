@@ -10,8 +10,32 @@ $cs->registerScriptFile($baseUrl.'/protected\extensions\bootstrap\assets\js\boot
 $(document).ready(function () {
 	
 		$('#previewModal').modal({backdrop: 'static', keyboard: false});
-		$("#previewModal").modal("hide");
-	
+		
+		
+		$(document).on("click", "#OkButton", function () {
+			$("#previewModal").modal("hide");
+			var printedCheck ;
+			if($("#printed").is(":checked")){
+				printedCheck = 1;
+			}else{
+					printedCheck = 0;
+			}
+			var counter = $("#counter").val();
+			$.ajax({
+				  method: "POST",
+				  type: "json",
+				  url: "index.php?r=search/updatedPrintStatus",
+				  data: { 	
+							printedFlag:printedCheck,
+							counter:counter,
+					}
+				})
+				 .done(function(data){
+						$("#previewPdfModal").modal("hide");
+				});												
+				
+		});
+		
 	})
 </script>
 <div class="panel panel-warning">
@@ -48,11 +72,13 @@ $(document).ready(function () {
 																	}
 																});
 																
+																
 																$.ajax({
 																  method: "POST",
 																  type: "json",
 																  url: "index.php?r=search/getPreviewPdf",
 																  data: { 	
+																			
 																			documentCounter: result
 																	}
 																})
@@ -61,6 +87,13 @@ $(document).ready(function () {
 																	  // alert(dataArrS);
 																		$("#pdfFilePathSearch").attr("src", dataArrS.path);
 																		$("#printAmountLabel").text(dataArrS.printAmount);
+																		//alert(dataArrS.printedFlag);
+																		if(dataArrS.printedFlag === "1" ||dataArrS.printedFlag === 1 ){
+																			$("#printed").attr("checked", true);
+																		}else{
+																			$("#printed").attr("checked", false);
+																		}																		
+																		$("#counter").val(dataArrS.counter);
 																		$("#previewPdfModal").modal("show");
 																		
 																	});	
@@ -98,8 +131,9 @@ $(document).ready(function () {
 		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
 			<p>Dieses Dokument sollte <div id ="printAmountLabel"></div>mal gedruckt werden.</p>
 		</div>
-		
-		<a id="OkButton" type="button" data-dismiss="modal" class="btn btn-primary">Ok</a>
+		<input type="checkbox"  id="printed" > Schon gedruckt?<br>
+		<a id="OkButton" type="button"  class="btn btn-primary">Ok</a>
+		<input type="hidden" id="counter">
 			  </div>
 	</div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

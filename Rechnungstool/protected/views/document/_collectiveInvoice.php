@@ -12,6 +12,7 @@
 $baseUrl = Yii::app()->baseUrl; 
 $cs = Yii::app()->getClientScript();
 $cs->registerScriptFile($baseUrl.'/protected\extensions\bootstrap\assets\js\bootstrap.js');
+
 ?>
 <script>
 
@@ -49,6 +50,12 @@ jQuery(function ($) {
 			$("#pdfFilePathCollect").attr('src', dataArr.filePath);
 			$("#counterTypeCollect").val(dataArr.counterType);
 			$("#collectiveId").val(dataArr.newId);
+			if(dataArr.printedFlag === 1){
+				$("#printedCollect").prop('checked', true);
+			}else{
+				$("#printedCollect").prop('checked', false);
+			}
+			
 			$("#previewModalCollect").modal('show');
 			
 			//$('#docContentCollectiveInvoice').html(data);

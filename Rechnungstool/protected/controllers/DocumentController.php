@@ -298,7 +298,7 @@ class DocumentController extends Controller
 
 		// $result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument, $completeFilePathName);
 		$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument, "pdf/temp/".$docType."/".$fileName);
-
+		$printedFlag = $result->printed;
 
         $mPDF1->WriteHTML($stylesheet, 1);
         $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
@@ -307,7 +307,7 @@ class DocumentController extends Controller
 		$mPDF1->Output($completeFilePathName, "F");
 		
 		//pass also $documentId, leave out counter 
-		echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType));
+		echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType,'printedFlag'=>$printedFlag));
 		// echo var_dump($result->counter);
 		// var_dump($result);
 	}
@@ -436,7 +436,7 @@ class DocumentController extends Controller
 			$stylesheet = file_get_contents(Yii::getPathOfAlias('bootstrap.assets.css') . '\bootstrap.css');
 			
 			$result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument, "pdf/temp/".$docType."/".$fileName);
-
+			$printedFlag = $result->printed;
 
 			$mPDF1->WriteHTML($stylesheet, 1);
 			$mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
@@ -445,7 +445,7 @@ class DocumentController extends Controller
 			$mPDF1->Output($completeFilePathName, "F");
 		
 			//pass also $documentId, leave out counter 
-			echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType,'newId'=>$resultCounter));
+			echo json_encode(array('filePath' => "pdf/temp/".$docType."/".$fileName, 'counterType' => $counterType,'newId'=>$resultCounter,'printedFlag'=>$printedFlag));
 			//var_dump($contentNumeric);
 		}
 	}

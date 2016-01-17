@@ -491,6 +491,12 @@ class DocumentImplementierung extends Document
 		return $resultArray;
 	}
 	
+	public function updatePrintedStatus($documentId,$printedFlag){
+		$document = $this->getDocumentWithId($documentId);
+		$document->printed = $printedFlag;
+		$document->save();
+		
+	}
 }
 
 ?>

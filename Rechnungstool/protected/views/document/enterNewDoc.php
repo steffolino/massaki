@@ -154,6 +154,7 @@ var hot;
 		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
 			<p>Dieses Dokument sollte <div id="printAmountLabel"></div> mal gedruckt werden.</p>
 		</div>
+		<input type="checkbox"  id="printed" > Schon gedruckt?<br>
 		<button id="deleteButton" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
 		<a id="saveButton" type="submit" class="btn btn-primary">Speichern</a>
 		<input id="counterType" type=hidden />
@@ -175,8 +176,10 @@ var hot;
 		<!-- <div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
 			 <p>Dieses Dokument sollte <div id="printAmountLabelCollect"></div> mal gedruckt werden.</p>
 		 </div>-->
+		 	<input type="checkbox"  id="printedCollect" > Schon gedruckt?<br>
 		<button id="deleteButtonCollect" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
 		<a id="saveButtonCollect" type="submit" class="btn btn-primary">Speichern</a>
+		
 		<input id="counterTypeCollect" type=hidden />
 		<input id="collectiveId" type=hidden />
 	  </div>
