@@ -64,7 +64,7 @@ class DocumentController extends Controller
 						'keyField' => 'documentId',  
 						'id'=>'documentId'
 						,));
-			$gridColumns = array('documentId::ID','jvaName::Jva Name','timeStamp','counter::Zähler');
+			$gridColumns = array('documentId::ID','jvaName::Jva Name','timeStamp::Datum','counter::Zähler');
 			$this->renderPartial('_collectiveInvoice', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
 		
 		} else {
@@ -301,8 +301,7 @@ class DocumentController extends Controller
 		$printedFlag = $result->printed;
 
         $mPDF1->WriteHTML($stylesheet, 1);
-        $mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
-
+		$mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
 
 		$mPDF1->Output($completeFilePathName, "F");
 		
@@ -354,6 +353,7 @@ class DocumentController extends Controller
 		//TODO: generate PDF from single documents and preview in modal and calculate total of all invoices as collectiveinvoicetotal
 		// rest similar to regular invoice stuff: preview -> save / cancel
 		if(isset($_POST['data'])){
+			$jvaModel = new JvaModel;
 			$collectiveData = $_POST['data'];
 			$collectiveImpl = new CollectiveinvoiceImplementierung;
 			$resultCounter = $collectiveImpl->insertNewCollectiveInvoice($collectiveData);
@@ -364,6 +364,7 @@ class DocumentController extends Controller
 			$jvaName = $jvaNamePlusExtArray[0];
 			$jvaExt = $jvaNamePlusExtArray[1];
 			$counterType = $_POST['counterType'];
+			$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
 			//This is for re-rendering of the yiiBooster
 			// if($result > 0){
 				// $doc = new DocumentImplementierung;
@@ -384,7 +385,7 @@ class DocumentController extends Controller
 			$neuDoc = new DocumentImplementierung;
 			//Start of PDF Preview Modal after selecting data for collective invoices
 			//Hardcode Header 
-			$header = array('Zähler','Datum','Gesamtbetrag');
+			$header = array('Rechnungsnummer','Rechnungsdatum','Rechnungsbetrag');
 			
 			//get data of selected 
 			$contentNumeric = $neuDoc->getNecessaryDataForCollectivePreview($collectiveData);
@@ -439,8 +440,7 @@ class DocumentController extends Controller
 			$printedFlag = $result->printed;
 
 			$mPDF1->WriteHTML($stylesheet, 1);
-			$mPDF1->WriteHTML($this->render('pdfTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
-
+			$mPDF1->WriteHTML($this->render('pdfCollectiveTemplate', array('displayData' => $contentNumeric, 'header' => $header, 'jva' => $jva, 'curDate' => $curDate, 'invoiceExtra' => $invoiceExtra, 'docType' => $docType, 'counter' => $result->counter), true));
 
 			$mPDF1->Output($completeFilePathName, "F");
 		

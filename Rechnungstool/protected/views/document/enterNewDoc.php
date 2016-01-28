@@ -132,7 +132,7 @@ var hot;
 					<div class="row panel-footer">
 							<div class="row">
 								<div class="col-md-4 col-md-offset-8">
-									<div class="btn-group btn-group btn-group-justified" role="group" aria-label="JVA Liste bearbeiten">
+									<div class="btn-group btn-group btn-group-justified" id="previewCancelGroup" role="group" aria-label="JVA Liste bearbeiten">
 										<a role=button class="btn btn-danger"><i class="fa fa-close"id="cancelDoc"> Abbrechen</i></a>
 										<a role=button class="btn btn-success"><i class="fa fa-check" id="writingDoc"> Vorschau</i></a>
 									</div>
@@ -176,7 +176,7 @@ var hot;
 		<!-- <div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
 			 <p>Dieses Dokument sollte <div id="printAmountLabelCollect"></div> mal gedruckt werden.</p>
 		 </div>-->
-		 	<input type="checkbox"  id="printedCollect" > Schon gedruckt?<br>
+	 	<input type="checkbox"  id="printedCollect" > Schon gedruckt?<br>
 		<button id="deleteButtonCollect" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
 		<a id="saveButtonCollect" type="submit" class="btn btn-primary">Speichern</a>
 		
@@ -352,6 +352,7 @@ var hot;
 		$('#previewModal').modal({backdrop: 'static', keyboard: false});
 		$("#previewModal").modal("hide");
 		$(".panel-body-exclusive").hide();
+		$("#previewCancelGroup").hide('fast');
 		$("#docContentEmpty").show();
 	})
 
@@ -524,26 +525,32 @@ var hot;
 		// console.log(radio);
 		switch(radio){
 			case "empty":
+				$("#previewCancelGroup").hide('fast');
 				$("#docContentEmpty").siblings('.panel-body-exclusive').hide();
 				$("#docContentEmpty").show();
 				break;
 			case "#newInvoiceRadio":
+				$("#previewCancelGroup").show('fast');
 				$("#docContentInvoice").siblings('.panel-body-exclusive').hide();
 				$("#docContentInvoice").show();
 				break;
 			case "#newCollectiveInvoiceRadio":
+				$("#previewCancelGroup").hide('fast');
 				$("#docContentCollectiveInvoice").siblings('.panel-body-exclusive').hide();
 				$("#docContentCollectiveInvoice").show();
 				break;
 			case "#newDeliveryNoticeRadio":
+				$("#previewCancelGroup").show('fast');
 				$("#docContentDeliveryNotice").siblings('.panel-body-exclusive').hide();
 				$("#docContentDeliveryNotice").show();
 				break;
 			case "#newCreditNoteRadio":
+				$("#previewCancelGroup").show('fast');
 				$("#docContentCreditNote").siblings('.panel-body-exclusive').hide();
 				$("#docContentCreditNote").show();
 				break;
 			default:
+				$("#previewCancelGroup").hide('fast');
 				$("#docContentEmpty").siblings('.panel-body-exclusive').hide();
 				$("#docContentEmpty").show();
 				break;

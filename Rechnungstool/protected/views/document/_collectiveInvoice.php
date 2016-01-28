@@ -68,7 +68,6 @@ jQuery(function ($) {
 		}
 	});
   
-			
 
 });
 
@@ -99,7 +98,7 @@ echo '
 															'buttonType' => 'button',
 															'context' => 'primary',
 															'size' => 'small',
-															'label' => 'Ausgewählte Dokumente zu einer Sammelrechnung zusammenfassen und Preview anzeigen',
+															'label' => 'Ausgewählte Dokumente zu einer Sammelrechnung zusammenfassen und Vorschau anzeigen',
 															'click' => 'js:function getAllSelectedRows(){
 																var nameSet = $("#select2-chosen-1").text();
 																var result = [];

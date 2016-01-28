@@ -239,7 +239,7 @@ class DocumentImplementierung extends Document
 			}
 		//Document::model()->with('docType')->findAll('jvaId=:jvaId AND documentId NOT IN collectiveinvoices.deliveryNoteId AND (docTypeName = "Rechnung" OR docTypeName = "Lieferschein")',array('jvaId'=>$jvaId));
 		return $document = Yii::app()->db->createCommand()
-					->select()
+					->select("*, DATE_FORMAT(timestamp, '%d.%m.%Y') AS timeStamp")
 					->from('document, docType, jvaData')
 					->where('document.docTypeId = docType.docTypeId AND document.jvaId=:jvaId ', array(':jvaId'=>$jvaId))
 					->andWhere('docTypeName = "Rechnung" OR docTypeName = "Lieferschein"')
