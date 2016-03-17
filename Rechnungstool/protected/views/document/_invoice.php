@@ -50,25 +50,31 @@
 				console.log("0: "+tableData[i][parseInt(rowLength-3)]);
 				if( tableData[i][parseInt(rowLength-3)] !== '') {
 					zeroTotal = tableData[i][parseInt(rowLength-3)];
+					zeroTotal = zeroTotal.replace(" ", "").
+					zeroTotal = zeroTotal.replace(",", ".");
 				} 
 				if( tableData[i][parseInt(rowLength-2)] !== '') {
 					sevenTotal = tableData[i][parseInt(rowLength-2)];
+					sevenTotal = sevenTotal.replace(" ", "");
+					sevenTotal = sevenTotal.replace(",", ".");
 				}
 				if( tableData[i][parseInt(rowLength-1)] !== '') {
 					nineTeenTotal = tableData[i][parseInt(rowLength-1)];
+					nineTeenTotal = nineTeenTotal.replace(" ", "");
+					nineTeenTotal = nineTeenTotal.replace(",", ".");
 				}
 				// console.log("7: "+tableData[i][parseInt(rowLength-2)]);
 				// console.log("19:"+tableData[i][parseInt(rowLength-1)]);
 			}
 		}
-		var warenwertNetto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal * 0.93) + parseFloat(nineTeenTotal * 0.81)).toFixed(2);
+		var warenwertNetto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) * 0.93 + parseFloat(nineTeenTotal) * 0.81).toFixed(2);
 		var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
-		var MwSt19 = parseFloat(nineTeenTotal * 0.19).toFixed(2);
-		var MwSt7 = parseFloat(sevenTotal * 0.07).toFixed(2);
+		var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
+		var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
 		var MwSt0 = parseFloat(zeroTotal).toFixed(2);
 		doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
-		console.log(warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
+		console.log("0: " + MwSt0 + " " + warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
 	} ;
 	
 	function doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {

@@ -1,10 +1,16 @@
 <?php
 	$baseUrl = Yii::app()->baseUrl; 
 	$cs = Yii::app()->getClientScript();
-	$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.js');
-	$cs->registerCssFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable.full.css');
-	$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/lib/ruleJS/dist/full/ruleJS.all.full.js');
-	$cs->registerScriptFile($baseUrl.'/js/handsontable-0.19.0/dist/handsontable-ruleJS/src/handsontable.formula.js');
+	// $cs->registerScriptFile($baseUrl.'/js/handsontable-master/dist/handsontable.full.js');
+	// $cs->registerCssFile($baseUrl.'/js/handsontable-master/dist/handsontable.full.css');
+	// $cs->registerScriptFile($baseUrl.'/js/handsontable-master/dist/moment/moment.js');
+	// $cs->registerScriptFile($baseUrl.'/js/handsontable-master/lib/numeral/languages.js');
+	$cs->registerScriptFile($baseUrl."/js/hot-essential/handsontable.full.js");
+	$cs->registerCssFile($baseUrl."/js/hot-essential/handsontable.full.min.css");
+	$cs->registerScriptFile($baseUrl."/js/hot-essential/de.js");
+	$cs->registerScriptFile($baseUrl.'/js/handsontable-master/dist/handsontable-ruleJS/src/handsontable.formula.js');
+	$cs->registerScriptFile($baseUrl.'/js/handsontable-master/lib/numeral/numeral.js');
+	$cs->registerScriptFile($baseUrl.'/js/handsontable-master/lib/ruleJS/dist/full/ruleJS.all.full.js');
 ?>
 
 <script>
@@ -152,9 +158,9 @@ var hot;
 	  </div>
 	  <div class="modal-footer">
 		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
-			<p>Dieses Dokument sollte <div id="printAmountLabel"></div> mal gedruckt werden.</p>
+			<p>Dieses Dokument sollte <span id="printAmountLabel"></span> mal gedruckt werden.</p>
+			<input type="checkbox"  id="printed" > Schon gedruckt?<br>
 		</div>
-		<input type="checkbox"  id="printed" > Schon gedruckt?<br>
 		<button id="deleteButton" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
 		<a id="saveButton" type="submit" class="btn btn-primary">Speichern</a>
 		<input id="counterType" type=hidden />
@@ -173,13 +179,12 @@ var hot;
 		<embed id="pdfFilePathCollect" src="" width="550px" height="480px">
 	  </div>
 	  <div class="modal-footer">
-		<!-- <div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
-			 <p>Dieses Dokument sollte <div id="printAmountLabelCollect"></div> mal gedruckt werden.</p>
-		 </div>-->
-	 	<input type="checkbox"  id="printedCollect" > Schon gedruckt?<br>
+		<div class="alert alert-info col-md-7" style="font-size: 14px; padding:12px;">
+			<input type="checkbox"  id="printedCollect" > Schon gedruckt?<br>
+			<!--p>Dieses Dokument sollte <div id="printAmountLabelCollect"></div> mal gedruckt werden.</p-->
+		 </div>
 		<button id="deleteButtonCollect" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
 		<a id="saveButtonCollect" type="submit" class="btn btn-primary">Speichern</a>
-		
 		<input id="counterTypeCollect" type=hidden />
 		<input id="collectiveId" type=hidden />
 	  </div>
@@ -655,7 +660,7 @@ var hot;
 				
 		hot = new Handsontable(container, {
 		  data: displayData,
-		  // language: de,
+		  // language: 'de',
 		  // minSpareRows: 1,
 		  allowInvalid: true,
 		  formulas: true,
@@ -663,29 +668,10 @@ var hot;
 		  colHeaders: header,
 		  manualColumnResize: true,
 		  manualRowMove: true,
-		  colWidths: [160, 160, 160, 160, 100, 100, 100],
+		  colWidths: [160, 160, 160, 160, 100, 100, 100, 100, 100, 100],
 		  contextMenu: true,
-		}); 
+		});
 		
-		var boldAndAlignRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-			Handsontable.renderers.TextRenderer.apply(this, arguments);
-			td.style.fontWeight = 'bold';
-			td.style.verticalAlign = 'middle';
-			td.style.textAlign = 'center';
-		};
-		
-		// var diffRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-			// Handsontable.cellTypes['formula'].renderer.apply(this, arguments);
-			// td.style.backgroundColor = '#c3f89c';
-			// td.style.fontWeight = 'bold';
-		// };
-		 // var totalRenderer = function(instance, td, row, col, prop, value, cellProperties) {
-			// Handsontable.renderers.TextRenderer.apply(this, arguments);
-			// // td.cellType = 'formula';
-			// td.style.fontWeight = 'bold';
-			// td.style.textAlign = 'right';
-		// };
-			
 		var plugin = hot.getPlugin('autoRowSize');
 		var plugin2 = hot.getPlugin('autoColumnSize');
 		var lastVisRow = plugin.getLastVisibleRow();
@@ -694,17 +680,22 @@ var hot;
 		fakeValid = function (value, callback) {
 			setTimeout(function(){
 				callback(true);
-			}, 1000);
+			}, 750);
 		};
 		
 		hot.updateSettings({
 			cells: 
 				function (row, col, prop) {						
 					var cellProperties = {validator:fakeValid};
-					//NOT LAST ROW, LAST 3 COLS
-					if (row !== hot.countRows() && col > (lastVisCol - 3)) {
+					//NOT LAST ROW, LAST 6 COLS
+					if (row !== hot.countRows() && col > (lastVisCol - 6)) {
 						cellProperties.type = 'numeric';
-						cellProperties.format = '000.00';
+						cellProperties.format = '0,0.00';
+						cellProperties.language = 'de';
+						cellProperties.editor = Autocomplete2Editor;
+						// cellProperties.format = '00.00€';
+						// cellProperties.setValue = '123.45';
+						// cellProperties.readOnly = true;
 					}
 					// LAST ROW, NOT LAST 3 COLS
 					if(row == hot.countRows() && col < (lastVisCol - 3)){
@@ -717,17 +708,92 @@ var hot;
 						// cellProperties.format = '000.00';
 						// cellProperties.type = 'formula';
 					}
+					// console.log(cellProperties);
 					return cellProperties;
-				},
-		});
-		
-		var headerLength = header.length;
-		createRowCallback();
-		Handsontable.hooks.add('afterCreateRow', createRowCallback, hot);
-		
-		// Handsontable.hooks.add('afterCreateRow', updateSettings, hot);
-		
-		function createRowCallback () {
+				}
+			}
+		);
+
+	// Autocomplete2Editor Start
+	  var Autocomplete2Editor = Handsontable.editors.HandsontableEditor.prototype.extend();
+
+	Autocomplete2Editor.prototype.init = function () {
+		Handsontable.editors.HandsontableEditor.prototype.init.apply(this, arguments);
+	  };
+
+	  Autocomplete2Editor.prototype.createElements = function() {
+		Handsontable.editors.HandsontableEditor.prototype.createElements.apply(this, arguments);
+	  };
+
+	  Autocomplete2Editor.prototype.allowKeyEventPropagation = function(keyCode) {
+		  return true;
+	  };
+	  
+	  // var skipOne = false;
+	  function onBeforeKeyDown(event) {
+		// skipOne = false;
+		var editor = this.getActiveEditor();
+		var KEY_CODES = Handsontable.helper.KEY_CODES;
+		if (Handsontable.helper.isPrintableChar(event.keyCode) || event.keyCode === KEY_CODES.BACKSPACE ||
+		  event.keyCode === KEY_CODES.DELETE || event.keyCode === KEY_CODES.INSERT) {
+			  console.log("trigga");
+		}
+		if((event.keyCode === KEY_CODES.ENTER) && (event.keyCode === KEY_CODES.SHIFT)) {
+		  console.log("sth");
+		  // var timeOffset = 0;
+		}
+		  // on ctl+c / cmd+c don't update suggestion list
+		  if ((event.keyCode === KEY_CODES.ENTER) && (event.shiftKey)) {
+		  // if (event.ctrlKey && event.Enter) {
+			console.log("ctrlEnter");
+			insertNewRows();
+			return;
+		  }
+		  // if (!editor.isOpened()) {
+			// timeOffset += 10;
+		  // }
+
+		  // if (editor.htEditor) {
+			// editor.instance._registerTimeout(setTimeout(function() {
+			  // console.log(editor.TEXTAREA.value);
+			  // skipOne = true;
+			// }, timeOffset));
+		  // }
+		// }
+	  }
+
+	  Autocomplete2Editor.prototype.prepare = function() {
+		this.instance.addHook('beforeKeyDown', onBeforeKeyDown);
+		Handsontable.editors.HandsontableEditor.prototype.prepare.apply(this, arguments);
+	  };
+	  
+	  Autocomplete2Editor.prototype.close = function() {
+		Handsontable.editors.HandsontableEditor.prototype.close.apply(this, arguments);
+	  };
+	  
+	  Autocomplete2Editor.prototype.finishEditing = function(restoreOriginalValue) {
+		if (!restoreOriginalValue) {
+		  this.instance.removeHook('beforeKeyDown', onBeforeKeyDown);
+		}
+		var editor = hot.getActiveEditor();
+		var valuu = editor.TEXTAREA.value;
+		if(valuu.indexOf(',') <= -1) {
+			console.log("got the comma");
+			valuu = valuu.replace(" ", "");
+			valuu = valuu.replace(",", ".");
+			console.log(valuu);
+			valuu = parseFloat(parseFloat(editor.TEXTAREA.value) * 0.01).toFixed(2);
+			console.log(valuu);
+			editor.TEXTAREA.value = valuu;
+		}
+		Handsontable.editors.HandsontableEditor.prototype.finishEditing.apply(this, arguments);
+	  };
+
+	var headerLength = header.length;
+	createRowCallback();
+	Handsontable.hooks.add('afterCreateRow', createRowCallback, hot);
+
+	function createRowCallback () {
 			var plugin = hot.getPlugin('autoRowSize');
 			var plugin2 = hot.getPlugin('autoColumnSize');
 			var lastVisRow = plugin.getLastVisibleRow();
@@ -736,36 +802,68 @@ var hot;
 			console.log("countRows: " + hot.countRows());
 			// console.log("lastRow: "+lastVisRow);
 			console.log("hL: " + headerLength);
+			console.log("lastVisROw: " + lastVisRow);
 			var a = 97;
 			var charArray = {};
 			for (var i = 0; i<26; i++) {
 				charArray[i] = String.fromCharCode(a + i);
 			}
-			// var tpl = ['Gesamt'];
 			for (var j = 0; j < parseInt(hot.countRows()); j++) {
 					for (var k = 0; k < parseInt(hot.countCols()); k++) {
-						// hot.setCellMeta (k, j, 'readOnly', false);
 						//Found Gesamt but not in last Row
 						hot.setCellMeta(j,k,'readOnly', false);
-						if(hot.getDataAtCell(j,k) === 'Gesamt:' && j !== parseInt(hot.countRows() - 1)) {
+						//GESAMT
+						if((hot.getDataAtCell(j,k) === 'Gesamt:' && j !== parseInt(hot.countRows() - 1))) {
 							console.log("found wrong entry for Gesamt:  - deleting ...");
 							var jDeletableRow = j;
 						}
 						if(j === jDeletableRow) {
 							hot.setDataAtCell(j,k, '');
 						}
-						if(parseInt(headerLength - k) < 3) {
-							hot.setDataAtCell(parseInt(lastVisRow+1), k, '=SUM('+charArray[k]+'1:'+charArray[k]+parseInt(hot.countRows()-1)+')');
-							hot.setCellMeta (parseInt(lastVisRow+1), k, 'readOnly', true);
-							// hot.setCellMeta (parseInt(lastVisRow+1), k, 'validator', fakeValid);
-						} 
+						if((parseInt(headerLength - k) > 2) && (parseInt(headerLength - k) < 6))  {  //&& (parseInt(j) !== lastVisRow)) {
+							hot.setDataAtCell(parseInt(lastVisRow), headerLength-3, '0.00');
+							hot.setDataAtCell(parseInt(lastVisRow), headerLength-4, '0.00');
+							hot.setDataAtCell(parseInt(lastVisRow), headerLength-5, '0.00');
+							hot.setDataAtCell(parseInt(lastVisRow), headerLength-6, '0');
+						}
+						if((parseInt(headerLength - k) < 3))  {  //&& (parseInt(j) !== lastVisRow)) {
+							hot.setDataAtCell(parseInt(j), k, '='+charArray[parseInt(headerLength-6)]+parseInt(j+1)+'*'+charArray[parseInt(k-3)]+parseInt(j+1));
+						} 						
 					}
 			}
 			hot.setDataAtCell(parseInt(lastVisRow+1), 0, 'Gesamt:');
-			// hot.mergeCells({row: parseInt(lastVisRow+1), col: 0, rowspan: 0, colspan: 3});
+			hot.setDataAtCell(parseInt(lastVisRow+1), headerLength, '=SUM('+charArray[headerLength]+'1:'+charArray[headerLength]+parseInt(hot.countRows()-1)+')');
+			hot.setDataAtCell(parseInt(lastVisRow+1), headerLength-1, '=SUM('+charArray[headerLength-1]+'1:'+charArray[headerLength-1]+parseInt(hot.countRows()-1)+')');
+			hot.setDataAtCell(parseInt(lastVisRow+1), headerLength-2, '=SUM('+charArray[headerLength-2]+'1:'+charArray[headerLength-2]+parseInt(hot.countRows()-1)+')');
 			hot.setCellMeta (parseInt(lastVisRow+1), 0, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow+1), headerLength, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-1, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-2, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-3, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-4, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-5, 'readOnly', true);
+			// hot.alter('insert_row', lastVisRow);
 		}		
 	}
 	
+	$(document).on("keypress", function (e) {
+		if (e.keyCode == 13 && e.shiftKey) {
+			// prevent default behavior
+			e.preventDefault();
+			insertNewRows();
+		}
+	});
+	
+	function insertNewRows () {
+		for (var j = 0; j < parseInt(hot.countRows()); j++) {
+			for (var k = 0; k < parseInt(hot.countCols()); k++) {
+				hot.setCellMeta(j,k,'readOnly', false);
+				if(hot.getDataAtCell(j,k) === 'Gesamt:') {
+					var GesamtIndex = j - 1;
+				}
+			}
+		}
+		hot.alter('insert_row', GesamtIndex+1);
+	}
 
 </script>
