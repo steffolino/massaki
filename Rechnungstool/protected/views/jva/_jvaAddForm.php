@@ -28,6 +28,7 @@ if(isset($jvaAddFormModel)){
 				array('label' => 'Logistik Memmelsdorf', 'content' => '<br/>'),
 				array('label' => 'Logistik Löhne', 'content' => '<br/>'),
 				array('label' => 'Wittekindshof', 'content' => '<br/>'),
+				array('label' => 'EK', 'content' => '<br/>'),
 				// array('label' => 'Sammelrechnung', 'content' => '<br/>'),
 			);
 			
@@ -46,6 +47,8 @@ if(isset($jvaAddFormModel)){
 						$idTab = "-Memmel";
 					}else if($tab['label'] == 'Logistik Löhne'){
 						$idTab = "-Loehne";
+					}else if($tab['label'] == 'EK'){
+						$idTab = "-Ek";
 					}else{
 						$idTab = "-Witte";
 					}

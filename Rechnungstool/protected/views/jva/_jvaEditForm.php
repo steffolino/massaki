@@ -29,24 +29,35 @@
 						$("#MemmelEditForm").hide();
 						$("#IkEditForm").show();
 						$("#LoehneEditForm").hide();
+						$("#EkEditForm").hide();
+						break;
+					case "ekSelected":
+						$("#WitteEditForm").hide();
+						$("#MemmelEditForm").hide();
+						$("#EkEditForm").show();
+						$("#LoehneEditForm").hide();
+						$("#IkEditForm").hide();
 						break;
 					case "memmelSelected":
 						$("#WitteEditForm").hide();
 						$("#MemmelEditForm").show();
 						$("#IkEditForm").hide();
 						$("#LoehneEditForm").hide();
+						$("#EkEditForm").hide();
 						break;
 					case "loehneSelected":
 						$("#WitteEditForm").hide();
 						$("#MemmelEditForm").hide();
 						$("#IkEditForm").hide();
 						$("#LoehneEditForm").show();
+						$("#EkEditForm").hide();
 						break;
 					case "witteSelected":
 						$("#WitteEditForm").show();
 						$("#MemmelEditForm").hide();
 						$("#IkEditForm").hide();
 						$("#LoehneEditForm").hide();
+						$("#EkEditForm").hide();
 						break;
 					default:
 						break;
@@ -57,6 +68,7 @@ $(document).ready(function () {
 		$("#MemmelEditForm").hide();
 		$("#IkEditForm").hide();
 		$("#LoehneEditForm").hide();
+		$("#EkEditForm").hide();
 		
 });
 </script>
@@ -170,13 +182,14 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				<button type="button" class="btn btn-default" id="memmelSelected">Logistik Memmeldsdorf</button>
 				<button type="button" class="btn btn-default" id="loehneSelected">Logistik Löhne</button>
 				<button type="button" class="btn btn-default" id="witteSelected">Wittekindshof</button>
+				<button type="button" class="btn btn-default" id="ekSelected">EK</button>
 			</div>
 		</form>
 	</div>
 	<br/><br/><br/>
 	<?php
-//		echo "<h1>Ey oida ".var_dump($jvaEditFormModel->jvaColIk->colDef1) ."</h1>";
-//		echo "<h1>Ey oida ".$jvaEditFormModel->jvaColIk->colDef2->colId."</h1>";
+		// echo "<h1>Ey oida ".var_dump($jvaEditFormModel->jvaColE->colDef1) ."</h1>";
+		// echo "<h1>Ey oida ".$jvaEditFormModel->jvaColE->colDef2->colId."</h1>";
 	?><div id="IkEditForm"><?php
 		echo $form->dropDownListGroup($jvaEditFormModel->jvaColIk->colDef1,
 			'colName',
@@ -312,6 +325,146 @@ if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !=
 				'widgetOptions' => array(
 					'htmlOptions' => array(
 						'id' => 'Druck-Ik',
+					)
+				)
+			)
+		);
+		?></div>
+		<div id="EkEditForm"><?php
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef1,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 1',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef1->colDefId => array('selected' => true)),
+						'id' => 'colName1-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef2,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 2',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef2->colDefId => array('selected' => true)),
+						'id' => 'colName2-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef3,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 3',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef3->colDefId => array('selected' => true)),
+						'id' => 'colName3-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef4,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 4',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef4->colDefId => array('selected' => true)),
+						'id' => 'colName4-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef5,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 5',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef5->colDefId => array('selected' => true)),
+						'id' => 'colName5-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef6,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 6',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef6->colDefId => array('selected' => true)),
+						'id' => 'colName6-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef7,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 7',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef7->colDefId => array('selected' => true)),
+						'id' => 'colName7-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef8,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 8',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef8->colDefId => array('selected' => true)),
+						'id' => 'colName8-Ek',
+					)
+				),
+			)
+		);
+		echo $form->dropDownListGroup($jvaEditFormModel->jvaColE->colDef9,
+			'colName',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Spalte 9',
+				'widgetOptions' => array(
+					'data'=>$colNames, 
+					'htmlOptions' => array(
+						'options' => array($jvaEditFormModel->jvaColE->colDef9->colDefId => array('selected' => true)),
+						'id' => 'colName9-Ek',
+					)
+				),
+			)
+		);
+		echo $form->textFieldGroup($jvaEditFormModel->jvaColE,
+			'printAmount',
+			array(
+				'class'=>'col-sm-5',
+				'label' => 'Anzahl Druck',
+				'widgetOptions' => array(
+					'htmlOptions' => array(
+						'id' => 'Druck-Ek',
 					)
 				)
 			)

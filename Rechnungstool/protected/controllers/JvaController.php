@@ -56,6 +56,7 @@ class JvaController extends Controller
 			$jvaModel->getAllColNames();
 			$colNames = $jvaModel->allColNames;
 			$selectedJVA = $jvaModel->getJvaById($jvaID);
+			//var_dump($selectedJVA);
 			$this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=> $selectedJVA ,'colNames'=>$colNames), false, true);
 			
 		} else {
@@ -110,10 +111,20 @@ class JvaController extends Controller
 			$jvaColWitte7 = $_POST['data'][39];
 			$jvaColWitte8 = $_POST['data'][40];
 			$jvaColWitte9 = $_POST['data'][41];
-			$jvaPrintAmountIk = $_POST['data'][42];
-			$jvaPrintAmountMemmel = $_POST['data'][43];
-			$jvaPrintAmountLoehne = $_POST['data'][44];
-			$jvaPrintAmountWitte = $_POST['data'][45];
+			$jvaColEk1 = $_POST['data'][42];
+			$jvaColEk2 = $_POST['data'][43];
+			$jvaColEk3 = $_POST['data'][44];
+			$jvaColEk4 = $_POST['data'][45];
+			$jvaColEk5 = $_POST['data'][46];
+			$jvaColEk6 = $_POST['data'][47];
+			$jvaColEk7 = $_POST['data'][48];
+			$jvaColEk8 = $_POST['data'][49];
+			$jvaColEk9 = $_POST['data'][50];
+			$jvaPrintAmountIk = $_POST['data'][51];
+			$jvaPrintAmountMemmel = $_POST['data'][52];
+			$jvaPrintAmountLoehne = $_POST['data'][53];
+			$jvaPrintAmountWitte = $_POST['data'][54];
+			$jvaPrintAmountEk = $_POST['data'][55];
 			//echo $jvaCol9;
 			// $jvaCol10 = $_POST['data'][15];
 			// $jvaCol11 = $_POST['data'][16];
@@ -121,7 +132,7 @@ class JvaController extends Controller
 			// $jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
 
 			//97,98,99 hardcoded for MwSt
-			$jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaColIk1,$jvaColIk2,$jvaColIk3,$jvaColIk4,$jvaColIk5,$jvaColIk6,$jvaColIk7,$jvaColIk8,$jvaColIk9,'0% MwSt','7% MwSt','19% MwSt',$jvaColMemmel1,$jvaColMemmel2,$jvaColMemmel3,$jvaColMemmel4,$jvaColMemmel5,$jvaColMemmel6,$jvaColMemmel7,$jvaColMemmel8,$jvaColMemmel9,'0% MwSt','7% MwSt','19% MwSt',$jvaColLoehne1,$jvaColLoehne2,$jvaColLoehne3,$jvaColLoehne4,$jvaColLoehne5,$jvaColLoehne6,$jvaColLoehne7,$jvaColLoehne8,$jvaColLoehne9,'0% MwSt','7% MwSt','19% MwSt',$jvaColWitte1,$jvaColWitte2,$jvaColWitte3,$jvaColWitte4,$jvaColWitte5,$jvaColWitte6,$jvaColWitte7,$jvaColWitte8,$jvaColWitte9,'0% MwSt','7% MwSt','19% MwSt',$jvaPrintAmountIk ,$jvaPrintAmountMemmel ,$jvaPrintAmountLoehne ,$jvaPrintAmountWitte);
+			$jvaModel->updateJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaColIk1,$jvaColIk2,$jvaColIk3,$jvaColIk4,$jvaColIk5,$jvaColIk6,$jvaColIk7,$jvaColIk8,$jvaColIk9,'0% MwSt','7% MwSt','19% MwSt',$jvaColMemmel1,$jvaColMemmel2,$jvaColMemmel3,$jvaColMemmel4,$jvaColMemmel5,$jvaColMemmel6,$jvaColMemmel7,$jvaColMemmel8,$jvaColMemmel9,'0% MwSt','7% MwSt','19% MwSt',$jvaColLoehne1,$jvaColLoehne2,$jvaColLoehne3,$jvaColLoehne4,$jvaColLoehne5,$jvaColLoehne6,$jvaColLoehne7,$jvaColLoehne8,$jvaColLoehne9,'0% MwSt','7% MwSt','19% MwSt',$jvaColWitte1,$jvaColWitte2,$jvaColWitte3,$jvaColWitte4,$jvaColWitte5,$jvaColWitte6,$jvaColWitte7,$jvaColWitte8,$jvaColWitte9,'0% MwSt','7% MwSt','19% MwSt',$jvaColEk1,$jvaColEk2,$jvaColEk3,$jvaColEk4,$jvaColEk5,$jvaColEk6,$jvaColEk7,$jvaColEk8,$jvaColEk9,'0% MwSt','7% MwSt','19% MwSt',$jvaPrintAmountIk ,$jvaPrintAmountMemmel ,$jvaPrintAmountLoehne ,$jvaPrintAmountWitte,$jvaPrintAmountEk);
 			
 			$selectedJVA = $jvaModel->getJvaByName($jvaName,$jvaNameExt);
 			$this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=> $selectedJVA ,'colNames'=>$colNames), false, true);
@@ -179,17 +190,27 @@ class JvaController extends Controller
 			$jvaColWitte7 = $_POST['data'][39];
 			$jvaColWitte8 = $_POST['data'][40];
 			$jvaColWitte9 = $_POST['data'][41];
-			$jvaPrintAmountIk = $_POST['data'][42];
-			$jvaPrintAmountMemmel = $_POST['data'][43];
-			$jvaPrintAmountLoehne = $_POST['data'][44];
-			$jvaPrintAmountWitte = $_POST['data'][45];
+			$jvaColEk1 = $_POST['data'][42];
+			$jvaColEk2 = $_POST['data'][43];
+			$jvaColEk3 = $_POST['data'][44];
+			$jvaColEk4 = $_POST['data'][45];
+			$jvaColEk5 = $_POST['data'][46];
+			$jvaColEk6 = $_POST['data'][47];
+			$jvaColEk7 = $_POST['data'][48];
+			$jvaColEk8 = $_POST['data'][49];
+			$jvaColEk9 = $_POST['data'][50];
+			$jvaPrintAmountIk = $_POST['data'][51];
+			$jvaPrintAmountMemmel = $_POST['data'][52];
+			$jvaPrintAmountLoehne = $_POST['data'][53];
+			$jvaPrintAmountWitte = $_POST['data'][54];
+			$jvaPrintAmountEk = $_POST['data'][55];
 			// $jvaCol10 = $_POST['data'][15];
 			// $jvaCol11 = $_POST['data'][16];
 			// $jvaCol12 = $_POST['data'][17];
 			// $jvaModel->insertJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaCol1,$jvaCol2,$jvaCol3,$jvaCol4,$jvaCol5,$jvaCol6,$jvaCol7,$jvaCol8,$jvaCol9,$jvaCol10,$jvaCol11,$jvaCol12);
 
 			//97,98,99 hardcoded for MwSt
-			$jvaModel->insertJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaColIk1,$jvaColIk2,$jvaColIk3,$jvaColIk4,$jvaColIk5,$jvaColIk6,$jvaColIk7,$jvaColIk8,$jvaColIk9,'0% MwSt','7% MwSt','19% MwSt',$jvaColMemmel1,$jvaColMemmel2,$jvaColMemmel3,$jvaColMemmel4,$jvaColMemmel5,$jvaColMemmel6,$jvaColMemmel7,$jvaColMemmel8,$jvaColMemmel9,'0% MwSt','7% MwSt','19% MwSt',$jvaColLoehne1,$jvaColLoehne2,$jvaColLoehne3,$jvaColLoehne4,$jvaColLoehne5,$jvaColLoehne6,$jvaColLoehne7,$jvaColLoehne8,$jvaColLoehne9,'0% MwSt','7% MwSt','19% MwSt',$jvaColWitte1,$jvaColWitte2,$jvaColWitte3,$jvaColWitte4,$jvaColWitte5,$jvaColWitte6,$jvaColWitte7,$jvaColWitte8,$jvaColWitte9,'0% MwSt','7% MwSt','19% MwSt',$jvaPrintAmountIk ,$jvaPrintAmountMemmel ,$jvaPrintAmountLoehne ,$jvaPrintAmountWitte );
+			$jvaModel->insertJva($jvaName,$jvaNameExt,$jvaAddress,$jvaFooter,$jvaCustName,$jvaCustNameDesc,$jvaColIk1,$jvaColIk2,$jvaColIk3,$jvaColIk4,$jvaColIk5,$jvaColIk6,$jvaColIk7,$jvaColIk8,$jvaColIk9,'0% MwSt','7% MwSt','19% MwSt',$jvaColMemmel1,$jvaColMemmel2,$jvaColMemmel3,$jvaColMemmel4,$jvaColMemmel5,$jvaColMemmel6,$jvaColMemmel7,$jvaColMemmel8,$jvaColMemmel9,'0% MwSt','7% MwSt','19% MwSt',$jvaColLoehne1,$jvaColLoehne2,$jvaColLoehne3,$jvaColLoehne4,$jvaColLoehne5,$jvaColLoehne6,$jvaColLoehne7,$jvaColLoehne8,$jvaColLoehne9,'0% MwSt','7% MwSt','19% MwSt',$jvaColWitte1,$jvaColWitte2,$jvaColWitte3,$jvaColWitte4,$jvaColWitte5,$jvaColWitte6,$jvaColWitte7,$jvaColWitte8,$jvaColWitte9,'0% MwSt','7% MwSt','19% MwSt',$jvaColEk1,$jvaColEk2,$jvaColEk3,$jvaColEk4,$jvaColEk5,$jvaColEk6,$jvaColEk7,$jvaColEk8,$jvaColEk9,'0% MwSt','7% MwSt','19% MwSt',$jvaPrintAmountIk ,$jvaPrintAmountMemmel ,$jvaPrintAmountLoehne ,$jvaPrintAmountWitte,$jvaPrintAmountEk );
 			//$this->renderPartial('_jvaEditForm', array('jvaEditFormModel'=> $selectedJVA ,'colNames'=>$colNames), false, true);
 
 			$jvaModel = new JvaModel;

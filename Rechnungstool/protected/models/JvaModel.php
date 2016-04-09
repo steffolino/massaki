@@ -18,6 +18,7 @@ class JvaModel extends CFormModel
 	public  $jvaColMemm;
 	public  $jvaColLoeh;
 	public  $jvaColWitt;
+	public 	$jvaColEk;
 	
 	public function getAllJvas(){
 
@@ -97,6 +98,9 @@ class JvaModel extends CFormModel
 			case "Witte":
 				return DefaultColConfig::model()->findByPK($jva->jvaColWitt);
 				break;
+			case "Ek":
+				return DefaultColConfig::model()->findByPK($jva->jvaColEk);
+				break;
 			default:
 				break;
 		}
@@ -108,7 +112,7 @@ class JvaModel extends CFormModel
 		
 		
 	public function getDefColByJvaIKMemmLoehWitt ($jva){
-		return DefaultColConfig::model()->findByPK($jva->jvaColIK, $jva->jvaColMemm,$jva->jvaColLoeh, $jva->jvaColWitt);
+		return DefaultColConfig::model()->findByPK($jva->jvaColIK, $jva->jvaColMemm,$jva->jvaColLoeh, $jva->jvaColWitt,$jva->jvaColEk);
 	}
 	
 	public function activateJvaByName($name,$ext){
@@ -164,7 +168,7 @@ class JvaModel extends CFormModel
 		DefaultColConfig::model()->deleteByPK($colConfigId);
 	}
 	
-	public function insertJva($name,$nameExt,$address,$footer,$custNum,$custNumDesc,$colIk1,$colIk2,$colIk3,$colIk4,$colIk5,$colIk6,$colIk7,$colIk8,$colIk9,$colIk10,$colIk11,$colIk12,$colMemmel1,$colMemmel2,$colMemmel3,$colMemmel4,$colMemmel5,$colMemmel6,$colMemmel7,$colMemmel8,$colMemmel9,$colMemmel10,$colMemmel11,$colMemmel12,$colLoehne1,$colLoehne2,$colLoehne3,$colLoehne4,$colLoehne5,$colLoehne6,$colLoehne7,$colLoehne8,$colLoehne9,$colLoehne10,$colLoehne11,$colLoehne12,$colWitte1,$colWitte2,$colWitte3,$colWitte4,$colWitte5,$colWitte6,$colWitte7,$colWitte8,$colWitte9,$colWitte10,$colWitte11,$colWitte12,$printAmountIk,$printAmountMemmel,$printAmountLoehne,$printAmountWitte){
+	public function insertJva($name,$nameExt,$address,$footer,$custNum,$custNumDesc,$colIk1,$colIk2,$colIk3,$colIk4,$colIk5,$colIk6,$colIk7,$colIk8,$colIk9,$colIk10,$colIk11,$colIk12,$colMemmel1,$colMemmel2,$colMemmel3,$colMemmel4,$colMemmel5,$colMemmel6,$colMemmel7,$colMemmel8,$colMemmel9,$colMemmel10,$colMemmel11,$colMemmel12,$colLoehne1,$colLoehne2,$colLoehne3,$colLoehne4,$colLoehne5,$colLoehne6,$colLoehne7,$colLoehne8,$colLoehne9,$colLoehne10,$colLoehne11,$colLoehne12,$colWitte1,$colWitte2,$colWitte3,$colWitte4,$colWitte5,$colWitte6,$colWitte7,$colWitte8,$colWitte9,$colWitte10,$colWitte11,$colWitte12,$colEk1,$colEk2,$colEk3,$colEk4,$colEk5,$colEk6,$colEk7,$colEk8,$colEk9,$colEk10,$colEk11,$colEk12,$printAmountIk,$printAmountMemmel,$printAmountLoehne,$printAmountWitte,$printAmountEk){
 		$result = "false";
 		$jvaColIk1 = $this->getColIdByName($colIk1);
 		$jvaColIk2 = $this->getColIdByName($colIk2);
@@ -214,6 +218,19 @@ class JvaModel extends CFormModel
 		$jvaColWitte10 = $this->getColIdByName($colWitte10);
 		$jvaColWitte11 = $this->getColIdByName($colWitte11);
 		$jvaColWitte12 = $this->getColIdByName($colWitte12);
+		$jvaColEk1 = $this->getColIdByName($colEk1);
+		$jvaColEk2 = $this->getColIdByName($colEk2);
+		$jvaColEk3 = $this->getColIdByName($colEk3);
+		$jvaColEk4 = $this->getColIdByName($colEk4);
+		$jvaColEk5 = $this->getColIdByName($colEk5);
+		$jvaColEk6 = $this->getColIdByName($colEk6);
+		$jvaColEk7 = $this->getColIdByName($colEk7);
+		$jvaColEk8 = $this->getColIdByName($colEk8);
+		$jvaColEk9 = $this->getColIdByName($colEk9);
+		$jvaColEk10 = $this->getColIdByName($colEk10);
+		$jvaColEk11 = $this->getColIdByName($colEk11);
+		$jvaColEk12 = $this->getColIdByName($colEk12);
+		
 		
 		$newJva = new JvaData;
 		$newJva->jvaName = $name;
@@ -283,18 +300,34 @@ class JvaModel extends CFormModel
 		$newJva->jvaColWitte->col12 = $jvaColWitte12;
 		$newJva->jvaColWitte->printAmount = $printAmountWitte;
 		$newJva->jvaColWitte->save();
+		$newJva->jvaColE= new DefaultColConfig;
+		$newJva->jvaColE->col1 = $jvaColEk1;
+		$newJva->jvaColE->col2 = $jvaColEk2;
+		$newJva->jvaColE->col3 = $jvaColEk3;
+		$newJva->jvaColE->col4 = $jvaColEk4;
+		$newJva->jvaColE->col5 = $jvaColEk5;
+		$newJva->jvaColE->col6 = $jvaColEk6;
+		$newJva->jvaColE->col7 = $jvaColEk7;
+		$newJva->jvaColE->col8 = $jvaColEk8;
+		$newJva->jvaColE->col9 = $jvaColEk9;
+		$newJva->jvaColE->col10 = $jvaColEk10;
+		$newJva->jvaColE->col11 = $jvaColEk11;
+		$newJva->jvaColE->col12 = $jvaColEk12;
+		$newJva->jvaColE->printAmount = $printAmountEk;
+		$newJva->jvaColE->save();
 		
 		$newJva->jvaColConfig = $newJva->jvaColIk->colConfigId;
 		$newJva->jvaColMemm = $newJva->jvaColMemmel->colConfigId;
 		$newJva->jvaColLoeh = $newJva->jvaColLoehne->colConfigId;
 		$newJva->jvaColWitt= $newJva->jvaColWitte->colConfigId;
+		$newJva->jvaColEk = $newJva->jvaColE->colConfigId;
 		
 		$result = $newJva->save();
 		
 		return $result;
 	}
 	
-	public function updateJva($name,$nameExt,$address,$footer,$custNum,$custNumDesc,$colIk1,$colIk2,$colIk3,$colIk4,$colIk5,$colIk6,$colIk7,$colIk8,$colIk9,$colIk10,$colIk11,$colIk12,$colMemmel1,$colMemmel2,$colMemmel3,$colMemmel4,$colMemmel5,$colMemmel6,$colMemmel7,$colMemmel8,$colMemmel9,$colMemmel10,$colMemmel11,$colMemmel12,$colLoehne1,$colLoehne2,$colLoehne3,$colLoehne4,$colLoehne5,$colLoehne6,$colLoehne7,$colLoehne8,$colLoehne9,$colLoehne10,$colLoehne11,$colLoehne12,$colWitte1,$colWitte2,$colWitte3,$colWitte4,$colWitte5,$colWitte6,$colWitte7,$colWitte8,$colWitte9,$colWitte10,$colWitte11,$colWitte12,$printAmountIk,$printAmountMemmel,$printAmountLoehne,$printAmountWitte){
+	public function updateJva($name,$nameExt,$address,$footer,$custNum,$custNumDesc,$colIk1,$colIk2,$colIk3,$colIk4,$colIk5,$colIk6,$colIk7,$colIk8,$colIk9,$colIk10,$colIk11,$colIk12,$colMemmel1,$colMemmel2,$colMemmel3,$colMemmel4,$colMemmel5,$colMemmel6,$colMemmel7,$colMemmel8,$colMemmel9,$colMemmel10,$colMemmel11,$colMemmel12,$colLoehne1,$colLoehne2,$colLoehne3,$colLoehne4,$colLoehne5,$colLoehne6,$colLoehne7,$colLoehne8,$colLoehne9,$colLoehne10,$colLoehne11,$colLoehne12,$colWitte1,$colWitte2,$colWitte3,$colWitte4,$colWitte5,$colWitte6,$colWitte7,$colWitte8,$colWitte9,$colWitte10,$colWitte11,$colWitte12,$colEk1,$colEk2,$colEk3,$colEk4,$colEk5,$colEk6,$colEk7,$colEk8,$colEk9,$colEk10,$colEk11,$colEk12,$printAmountIk,$printAmountMemmel,$printAmountLoehne,$printAmountWitte,$printAmountEk){
 		$result = "false";
 
 		$jvaColIk1 = $this->getColIdByName($colIk1);
@@ -345,7 +378,18 @@ class JvaModel extends CFormModel
 		$jvaColWitte10 = $this->getColIdByName($colWitte10);
 		$jvaColWitte11 = $this->getColIdByName($colWitte11);
 		$jvaColWitte12 = $this->getColIdByName($colWitte12);
-		
+		$jvaColEk1 = $this->getColIdByName($colEk1);
+		$jvaColEk2 = $this->getColIdByName($colEk2);
+		$jvaColEk3 = $this->getColIdByName($colEk3);
+		$jvaColEk4 = $this->getColIdByName($colEk4);
+		$jvaColEk5 = $this->getColIdByName($colEk5);
+		$jvaColEk6 = $this->getColIdByName($colEk6);
+		$jvaColEk7 = $this->getColIdByName($colEk7);
+		$jvaColEk8 = $this->getColIdByName($colEk8);
+		$jvaColEk9 = $this->getColIdByName($colEk9);
+		$jvaColEk10 = $this->getColIdByName($colEk10);
+		$jvaColEk11 = $this->getColIdByName($colEk11);
+		$jvaColEk12 = $this->getColIdByName($colEk12);
 		
 		$updateJva = $this->getJvaByName($name,$nameExt);
 		$updateJva->jvaName = $name;
@@ -417,7 +461,21 @@ class JvaModel extends CFormModel
 		$updateJva->jvaColWitte->col12 = $jvaColWitte12;
 		$updateJva->jvaColWitte->printAmount = $printAmountWitte;
 		$updateJva->jvaColWitte->save();
-		
+		$updateJva->jvaColE = $this->getDefColByJva($updateJva,"Ek");
+		$updateJva->jvaColE->col1 = $jvaColEk1;
+		$updateJva->jvaColE->col2 = $jvaColEk2;
+		$updateJva->jvaColE->col3 = $jvaColEk3;
+		$updateJva->jvaColE->col4 = $jvaColEk4;
+		$updateJva->jvaColE->col5 = $jvaColEk5;
+		$updateJva->jvaColE->col6 = $jvaColEk6;
+		$updateJva->jvaColE->col7 = $jvaColEk7;
+		$updateJva->jvaColE->col8 = $jvaColEk8;
+		$updateJva->jvaColE->col9 = $jvaColEk9;
+		$updateJva->jvaColE->col10 = $jvaColEk10;
+		$updateJva->jvaColE->col11 = $jvaColEk11;
+		$updateJva->jvaColE->col12 = $jvaColEk12;
+		$updateJva->jvaColE->printAmount = $printAmountEk;
+		$updateJva->jvaColE->save();
 				
 		//$updateJva->jvaColConfig = $updateJva->defaultColConfig->colConfigId;
 		$result = $updateJva->save();

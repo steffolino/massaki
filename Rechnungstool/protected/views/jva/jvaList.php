@@ -269,6 +269,11 @@
 		$("#addColName3-Ik option:eq(3)").attr('selected', true);
 		$("#addColName4-Ik option:eq(4)").attr('selected', true);
 		
+		$("#addColName1-Ek option:eq(1)").attr('selected', true);
+		$("#addColName2-Ek option:eq(2)").attr('selected', true);
+		$("#addColName3-Ek option:eq(3)").attr('selected', true);
+		$("#addColName4-Ek option:eq(4)").attr('selected', true);
+		
 		$("#addColName1-Memmel option:eq(5)").attr('selected', true);
 		$("#addColName2-Memmel option:eq(7)").attr('selected', true);
 		
@@ -283,6 +288,12 @@
 		$("#addColName7-Ik option:eq(0)").attr('selected', true);
 		$("#addColName8-Ik option:eq(0)").attr('selected', true);
 		$("#addColName9-Ik option:eq(0)").attr('selected', true);
+		
+		$("#addColName5-Ek option:eq(0)").attr('selected', true);
+		$("#addColName6-Ek option:eq(0)").attr('selected', true);
+		$("#addColName7-Ek option:eq(0)").attr('selected', true);
+		$("#addColName8-Ek option:eq(0)").attr('selected', true);
+		$("#addColName9-Ek option:eq(0)").attr('selected', true);
 		
 		$("#addColName3-Memmel option:eq(0)").attr('selected', true);
 		$("#addColName4-Memmel option:eq(0)").attr('selected', true);
@@ -396,10 +407,23 @@
 		jvaDataArray.push($('#colName7-Witte option:selected').text());
 		jvaDataArray.push($('#colName8-Witte option:selected').text());
 		jvaDataArray.push($('#colName9-Witte option:selected').text());
+		
+		jvaDataArray.push($('#colName1-Ek option:selected').text());
+		jvaDataArray.push($('#colName2-Ek option:selected').text());
+		jvaDataArray.push($('#colName3-Ek option:selected').text());
+		jvaDataArray.push($('#colName4-Ek option:selected').text());
+		jvaDataArray.push($('#colName5-Ek option:selected').text());
+		jvaDataArray.push($('#colName6-Ek option:selected').text());
+		jvaDataArray.push($('#colName7-Ek option:selected').text());
+		jvaDataArray.push($('#colName8-Ek option:selected').text());
+		jvaDataArray.push($('#colName9-Ek option:selected').text());
+		
+		
 		jvaDataArray.push($('#Druck-Ik').val());
 		jvaDataArray.push($('#Druck-Memmel').val());
 		jvaDataArray.push($('#Druck-Loehne').val());
 		jvaDataArray.push($('#Druck-Witte').val());
+		jvaDataArray.push($('#Druck-Ek').val());
 		// jvaDataArray.push($('#colName10 option:selected').text());
 		// jvaDataArray.push($('#colName11 option:selected').text());
 		// jvaDataArray.push($('#colName12 option:selected').text());
@@ -462,10 +486,22 @@
 			jvaDataArray.push($('#addColName7-Witte option:selected').text());
 			jvaDataArray.push($('#addColName8-Witte option:selected').text());
 			jvaDataArray.push($('#addColName9-Witte option:selected').text());
+			
+			jvaDataArray.push($('#addColName1-Ek option:selected').text());
+			jvaDataArray.push($('#addColName2-Ek option:selected').text());
+			jvaDataArray.push($('#addColName3-Ek option:selected').text());
+			jvaDataArray.push($('#addColName4-Ek option:selected').text());
+			jvaDataArray.push($('#addColName5-Ek option:selected').text());
+			jvaDataArray.push($('#addColName6-Ek option:selected').text());
+			jvaDataArray.push($('#addColName7-Ek option:selected').text());
+			jvaDataArray.push($('#addColName8-Ek option:selected').text());
+			jvaDataArray.push($('#addColName9-Ek option:selected').text());
+			
 			jvaDataArray.push($('#printAmount-Ik').val());
 			jvaDataArray.push($('#printAmount-Memmel').val());
 			jvaDataArray.push($('#printAmount-Loehne').val());
 			jvaDataArray.push($('#printAmount-Witte').val());
+			jvaDataArray.push($('#printAmount-Ek').val());
 			// jvaDataArray.push($('#JvaAddModel_colName10 option:selected').text());
 			// jvaDataArray.push($('#JvaAddModel_colName11 option:selected').text());
 			// jvaDataArray.push($('#JvaAddModel_colName12 option:selected').text());

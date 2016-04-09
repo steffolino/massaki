@@ -43,7 +43,7 @@ class Jvadata extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('jvaName, jvaAddress, jvaColConfig', 'required'),
-			array('jvaColConfig, jvaColMemm, jvaColLoeh, jvaColWitt', 'numerical', 'integerOnly'=>true),
+			array('jvaColConfig, jvaColMemm, jvaColLoeh, jvaColWitt, jvaColEk', 'numerical', 'integerOnly'=>true),
 			array('jvaName, jvaAddress', 'length', 'max'=>255),
 			array('jvaNameExt, jvaCustNum, jvaCustNumDesc', 'length', 'max'=>45),
 			array('jvaDeactivated', 'length', 'max'=>1),
@@ -67,6 +67,7 @@ class Jvadata extends CActiveRecord
 			'jvaColLoehne' => array(self::BELONGS_TO, 'Defaultcolconfig', 'jvaColLoeh'),
 			'jvaColMemmel' => array(self::BELONGS_TO, 'Defaultcolconfig', 'jvaColMemm'),
 			'jvaColWitte' => array(self::BELONGS_TO, 'Defaultcolconfig', 'jvaColWitt'),
+			'jvaColE' => array(self::BELONGS_TO, 'Defaultcolconfig', 'jvaColEk'),
 		);
 	}
 
@@ -88,6 +89,7 @@ class Jvadata extends CActiveRecord
 			'jvaColMemm' => 'Jva Col Memm',
 			'jvaColLoeh' => 'Jva Col Loeh',
 			'jvaColWitt' => 'Jva Col Witt',
+			'jvaColEk' => 'Jva Col EK',
 		);
 	}
 
@@ -121,7 +123,7 @@ class Jvadata extends CActiveRecord
 		$criteria->compare('jvaColMemm',$this->jvaColMemm);
 		$criteria->compare('jvaColLoeh',$this->jvaColLoeh);
 		$criteria->compare('jvaColWitt',$this->jvaColWitt);
-
+		$criteria->compare('jvaColEk',$this->jvaColEk);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
