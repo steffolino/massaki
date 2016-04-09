@@ -197,8 +197,10 @@ class DocumentImplementierung extends Document
 				$counterName = "Logistik Memmelsdorf%";
 		}else if($counter === "loehne"){
 				$counterName = "Logistik Loehne%";
-		}else{
+		}else if($counter === "witte"){
 				$counterName = "Wittekindshof%";	
+		}else{
+			$counterName = "EK%";
 		}
 		$jva = new JvaModel;
 		$jvaObject = $jva->getJvaByName($jvaName, $jvaNameExt);
@@ -234,8 +236,10 @@ class DocumentImplementierung extends Document
 				$number = "Logistik Memmelsdorf%";
 			}else if($numberCircle === "loehne"){
 				$number = "Logistik Loehne%";
+			}else if($numberCircle === "witte"){
+				$number = "Wittekindshof%";	
 			}else{
-				$number ="Witte%";	
+				$number = "EK%";
 			}
 		//Document::model()->with('docType')->findAll('jvaId=:jvaId AND documentId NOT IN collectiveinvoices.deliveryNoteId AND (docTypeName = "Rechnung" OR docTypeName = "Lieferschein")',array('jvaId'=>$jvaId));
 		return $document = Yii::app()->db->createCommand()

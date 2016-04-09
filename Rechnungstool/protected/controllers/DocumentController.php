@@ -50,8 +50,10 @@ class DocumentController extends Controller
 				$defaultColConfig = $jvaModel->getDefColByJva($jva,"Memmel");
 			}else if($numberCircle === "loehne"){
 				$defaultColConfig = $jvaModel->getDefColByJva($jva,"Loehne");
-			}else{
+			}else if($numberCircle  === "witte"){
 				$defaultColConfig = $jvaModel->getDefColByJva($jva,"Witte");	
+			}else{
+				$defaultColConfig = $jvaModel->getDefColByJva($jva,"Ek");
 			}
 		$printAmount = $defaultColConfig->printAmount;
 		if($docTypeName === "Sammelrechnung"){

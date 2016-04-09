@@ -113,6 +113,7 @@ var hot;
 									<option value='memmel'>Logistik Memmelsdorf</option>
 									<option value='loehne'>Logistik Loehne</option>
 									<option value='witte'>Wittekindshof</option>
+									<option value='ek'>EK</option>
 								  </select>
 								</div>
 						</div>
