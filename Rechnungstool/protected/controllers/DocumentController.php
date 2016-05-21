@@ -294,7 +294,7 @@ class DocumentController extends Controller
 
 		$filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/".$docType."/";
 		// $filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/";
-		$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
+		$fileName = str_replace(" ", "", $jvaName)."_".str_replace(" ", "", $jvaExt)."_".$docType."_".$curDate.".pdf";
 
 		$completeFilePathName = $filePath.$fileName;
 
