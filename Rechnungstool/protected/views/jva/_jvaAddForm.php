@@ -54,7 +54,7 @@ if(isset($jvaAddFormModel)){
 					}
 					//ADD PRE-DEFINED COLUMNS
 					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames,'htmlOptions' => array('id'=>   'addColName'.$i .$idTab)),'class'=>'col-sm-5', 'label' => 'Spalte '.$i));
-					if($i == 10){
+					if($i == 7){
 						$tab['content'] .= $form->textFieldGroup($jvaAddFormModel,'printAmount',array('widgetOptions'=>array('htmlOptions' => array('id'=>   'printAmount'.$idTab)), 'label'=>'Anzahl Ausdrucke'));
 					}
 				}
