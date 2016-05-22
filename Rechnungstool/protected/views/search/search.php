@@ -178,8 +178,9 @@
 		$("#filterRow").toggle('slow');
 	});
 	
-	$(document).on("click", "#headerSubmitBtn", function (e) {
-		e.preventDefault();
+	function doSearch(){
+		
+		
 		var selectedDocType;
 		$("#docSelection .btn").each(function() {
 			if($(this).hasClass('active')) {
@@ -226,6 +227,14 @@
 				$('#searchResults').html(data);
 		  });
 		}
+		
+		
+	}
+	
+	$(document).on("click", "#headerSubmitBtn", function (e) {
+		e.preventDefault();
+		doSearch();
+		
 		//DO AJAX SUBMIT FORM
 		
 	});
@@ -238,5 +247,33 @@
 			$(this).removeClass('btn-primary');
 	});
 	
+	$(document).on("click","#headerResetBtn", function(){
+		//$('#headerForm')[0].reset();
+		$("#filterRow").toggle('slow');
+		$("#select2-chosen-1").empty();
+		
+		 $("#SearchFormModel_freeSearchTerm").empty();
+		$("#docSelection .btn").each(function() {
+			if($(this).hasClass('active')) {
+				$(this).removeClass('active');
+				
+			}
+		});
+		 $(".editable").first().text('Empty');
+		 $(".editable").last().text('Empty');
+	});
+	
+	
+	$(document).keypress(function(e)  {
+		
+		
+	if (e.which == 13){
+		
+		doSearch();
+		return false; 
+		
+	} 
+		   
+  });
 
 </script>

@@ -75,7 +75,7 @@ $(document).ready(function () {
 <?php 
 if(isset($jvaEditFormModel) && !empty($jvaEditFormModel) && $jvaEditFormModel !== ""){
 	
-	array_splice($colNames, -6);
+	array_splice($colNames, -7);
 	
 	$form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 		'id'=>'jvaEditForm',

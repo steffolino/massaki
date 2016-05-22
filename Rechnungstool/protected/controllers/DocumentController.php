@@ -64,8 +64,11 @@ class DocumentController extends Controller
 			$gridDataProvider  =new CArrayDataProvider($possibleDocs, 	
 					array(
 						'keyField' => 'documentId',  
-						'id'=>'documentId'
-						,));
+						'id'=>'documentId',
+						'pagination'=>array(
+							'pageSize'=>100,
+						),
+						));
 			$gridColumns = array('documentId::ID','jvaName::Jva Name','timeStamp::Datum','counter::Zähler');
 			$this->renderPartial('_collectiveInvoice', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
 		

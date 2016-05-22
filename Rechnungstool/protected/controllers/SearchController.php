@@ -63,8 +63,10 @@ class SearchController extends Controller
 				$gridDataProvider  =new CArrayDataProvider($gridDataProviderData, 	
 					array(
 						'keyField' => 'documentId',  
-						'id'=>'documentId'
-						,));
+						'id'=>'documentId',
+						'pagination'=>array(
+							'pageSize'=>100,
+						)));
 				//TO DO: Amend!!!!
 				$gridColumns = array('jvaName::Jva Name','timeStamp::Zeit','counter::Zähler');
 				
@@ -109,8 +111,10 @@ class SearchController extends Controller
 				$gridDataProvider  =new CArrayDataProvider($gridDataProviderData, 	
 					array(
 						'keyField' => 'documentId',  
-						'id'=>'documentId'
-						,));
+						'id'=>'documentId',
+						'pagination'=>array(
+							'pageSize'=>100,
+						)));
 				
 				//TODO: To be amended!!!
 				$gridColumns = array('jvaName::Jva Name','timeStamp:.Zeit','counter::Zähler');

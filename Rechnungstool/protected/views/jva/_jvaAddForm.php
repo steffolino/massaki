@@ -32,7 +32,7 @@ if(isset($jvaAddFormModel)){
 				// array('label' => 'Sammelrechnung', 'content' => '<br/>'),
 			);
 			
-			array_splice($colNames, -6);
+			array_splice($colNames, -7);
 			
 			// echo "<pre>";
 			// var_dump($jvaAddFormModel);
