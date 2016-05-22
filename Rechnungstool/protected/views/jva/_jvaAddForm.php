@@ -32,7 +32,7 @@ if(isset($jvaAddFormModel)){
 				// array('label' => 'Sammelrechnung', 'content' => '<br/>'),
 			);
 			
-			array_splice($colNames, -3);
+			array_splice($colNames, -6);
 			
 			// echo "<pre>";
 			// var_dump($jvaAddFormModel);
@@ -40,7 +40,7 @@ if(isset($jvaAddFormModel)){
 			//var_dump($colNames);			
 			//Awesome C like fix
 			foreach($tabs as &$tab) {
-				for($i=1;$i<11;$i++){
+				for($i=1;$i<8;$i++){
 					if($tab['label'] == 'IK'){
 						$idTab = "-Ik";
 					}else if($tab['label'] == 'Logistik Memmelsdorf'){
