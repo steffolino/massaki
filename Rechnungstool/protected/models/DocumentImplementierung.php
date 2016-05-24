@@ -317,23 +317,23 @@ class DocumentImplementierung extends Document
 				$counter--;
 				$readCounter = "value" . $counter;
 				$sumNineTeen = $row[$readCounter];
-				//var_dump($sumNineTeen);
+				// var_dump("SUm nineteen:" .$sumNineTeen . "\n");
 				$counter--;
 				$readCounter = "value" . $counter;
 				$sumSeven = $row[$readCounter];
-				//var_dump($sumSeven);
+				// var_dump("SUm seven:".$sumSeven . "\n");
 				$counter--;
 				$readCounter = "value" . $counter;
 				$sumZero = $row[$readCounter];
-				//var_dump($sumZero);
+				// var_dump("SUm seven:". $sumZero . "\n");
 				
 			}
 		}
-		if($mode === 'brutto'){
-			$sum = ($sumNineTeen + $sumNineTeen * 0.19) + ($sumSeven + $sumSeven * 0.07) + ($sumZero);
-		}else{
+		//if($mode === 'brutto'){
+			//$sum = ($sumNineTeen + $sumNineTeen * 0.19) + ($sumSeven + $sumSeven * 0.07) + ($sumZero);
+		//}else{
 			$sum = $sumNineTeen  + $sumSeven  + $sumZero;
-		}
+		//}
 		return $sum;
 	}
 	
@@ -453,6 +453,7 @@ class DocumentImplementierung extends Document
 			array_push($documentArray,$document->timeStamp);
 			$documentValues = $documentValuesImpl->getDocumentValuesByDocumentId($document->documentId);
 			$sum = $this->getSumDataPerDocument($documentValues,'brutto');
+			// var_dump("SUM TOTAL:" . $sum . " for documentID ".$documentId."\n");
 			//$sum= 0;
 			array_push($documentArray,$sum);
 			array_push($resultArray,$documentArray);

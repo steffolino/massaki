@@ -90,7 +90,7 @@ echo '
 													'id'=>'CollectiveGrid',
 													'type' => 'striped bordered',
 													'dataProvider' => $gridDataProvider,
-													'template' => "{items}",
+													'template' => "{items}{pager}",
 													'selectableRows' => 2,
 													'bulkActions' => array(
 													'actionButtons' => array(
