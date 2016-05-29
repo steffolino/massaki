@@ -52,7 +52,7 @@
 				console.log("0: "+tableData[i][parseInt(rowLength-3)]);
 				if( tableData[i][parseInt(rowLength-3)] !== '') {
 					zeroTotal = tableData[i][parseInt(rowLength-3)];
-					zeroTotal = zeroTotal.replace(" ", "").
+					zeroTotal = zeroTotal.replace(" ", "");
 					zeroTotal = zeroTotal.replace(",", ".");
 				} 
 				if( tableData[i][parseInt(rowLength-2)] !== '') {
@@ -69,63 +69,82 @@
 				// console.log("19:"+tableData[i][parseInt(rowLength-1)]);
 			}
 		}
-		var warenwertNetto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) * 0.93 + parseFloat(nineTeenTotal) * 0.81).toFixed(2);
-		var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
-		var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
-		var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
-		var MwSt0 = parseFloat(zeroTotal).toFixed(2);
-		doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
+			var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
+			var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
+			var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
+			var MwSt0 = parseFloat(zeroTotal).toFixed(2);
+			var warenwertNetto = parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)).toFixed(2);
+			
+		doTheTransferDeliveryNotice(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
 		console.log("0: " + MwSt0 + " " + warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
 	} ;
 	
 	function doTheTransferDeliveryNotice(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {
-		console.log("doingTheTransfer: "+ warenwertNetto+ MwSt19+ MwSt7+ MwSt0+ warenwertBrutto);
 		if(typeof(warenwertNetto) !== 'undefined') {
-			$(".deliveryNoticeExtra #warenwertNetto").val(warenwertNetto);
+			$(".deliveryNoticeExtra #warenwertNetto").val(warenwertNetto.replace(" ", ""));
+			$(".deliveryNoticeExtra #warenwertNetto").val(warenwertNetto.replace(".", ","));
 		} else {
-			$(".deliveryNoticeExtra #warenwertNetto").val('0.00');			
+			$(".deliveryNoticeExtra #warenwertNetto").val('0,00');
 		}
 		if(typeof(warenwertBrutto) !== 'undefined') {
-			$(".deliveryNoticeExtra #warenwertBrutto").val(warenwertBrutto);
+			$(".deliveryNoticeExtra #warenwertBrutto").val(warenwertBrutto.replace(" ", ""));
+			$(".deliveryNoticeExtra #warenwertBrutto").val(warenwertBrutto.replace(".", ","));
 		} else {
-			$(".deliveryNoticeExtra #warenwertBrutto").val('0.00');			
+			$(".deliveryNoticeExtra #warenwertBrutto").val('0,00');			
 		}
 		if(typeof(MwSt0) !== 'undefined') {
-			$(".deliveryNoticeExtra #mwst0").val(MwSt0);
+			$(".deliveryNoticeExtra #mwst0").val(MwSt0.replace(" ", ""));
+			$(".deliveryNoticeExtra #mwst0").val(MwSt0.replace(".", ","));
 		} else {
-			$(".deliveryNoticeExtra #mwst0").val('0.00');			
+			$(".deliveryNoticeExtra #mwst0").val('0,00');			
 		}
 		if(typeof(MwSt7) !== 'undefined') {
-			$(".deliveryNoticeExtra #mwst7").val(MwSt7);
+			$(".deliveryNoticeExtra #mwst7").val(MwSt7.replace(" ", ""));
+			$(".deliveryNoticeExtra #mwst7").val(MwSt7.replace(".", ","));
 		} else {
-			$(".deliveryNoticeExtra #mwst7").val('0.00');			
+			$(".deliveryNoticeExtra #mwst7").val('0,00');
 		}
 		if(typeof(MwSt19) !== 'undefined') {
-			$(".deliveryNoticeExtra #mwst19").val(MwSt19);
+			$(".deliveryNoticeExtra #mwst19").val(MwSt19.replace(" ", ""));
+			$(".deliveryNoticeExtra #mwst19").val(MwSt19.replace(".", ","));
 		} else {
-			$(".deliveryNoticeExtra #mwst19").val('0.00');			
+			$(".deliveryNoticeExtra #mwst19").val('0,00');			
 		}
 		var rest = parseFloat(parseFloat(warenwertBrutto));
+		rest = rest.toString().replace(" ", "");
+		rest = rest.replace(",", ".");
+		//rest = float
+		rest = parseFloat(rest);
+
+		
 		if ($(".deliveryNoticeExtra #bezahltExternVal").val() !== '') {
-			rest = rest - parseFloat($(".deliveryNoticeExtra #bezahltExternVal").val());
-			console.log(parseFloat($(".deliveryNoticeExtra #bezahltExternVal").val()));
-			console.log(parseFloat($(".deliveryNoticeExtra #bereitsBerechnet").val()));
-			console.log(rest);
+			var extern = $(".deliveryNoticeExtra #bezahltExternVal").val();
+			extern = extern.toString().replace(",", ".");
+			rest = rest - parseFloat(extern);
 		}
-		if($("#bereitsBerechnet").val() !== '') {
-			rest = rest - parseFloat($(".deliveryNoticeExtra #bereitsBerechnet").val()).toFixed(2);
+		if($(".deliveryNoticeExtra #bereitsBerechnet").val() !== '') {
+			var bereits = $(".deliveryNoticeExtra #bereitsBerechnet").val();
+			bereits = bereits.toString().replace(" ", "");
+			bereits = bereits.replace(",", ".");
+			rest = rest - parseFloat(bereits).toFixed(2);
 		}
-		$(".deliveryNoticeExtra #restbetrag").val(rest.toFixed(2));
-		console.log("done transferring");
+		
+		rest = rest.toFixed(2);
+		rest = rest.toString();//.replace(" ", "");
+		console.log("rest " + rest);
+		rest = rest.replace(".", ",");
+		console.log("rest2 " + rest);
+		$(".deliveryNoticeExtra #restbetrag").val(rest);
 	}
+
 
 	$(document).on("click", "#deliveryNoticeNueber", function () {
 		// console.log("#deliveryNoticeNueber");
 		parseAndCalcAndTranferDeliveryNotice();
 	});
 	
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
 
   $(document).on("click","#writingDoc",function(){
 
@@ -194,23 +213,13 @@ $(document).ready(function () {
 		// alert(deliveryNoticeExtraVals);
 		
 		deliveryNoticeExtra = Array();		
-			var j=0;
 		
-			deliveryNoticeExtraVals.each(function(i, v){
-				if(j == 5) {
-					//DATE  
-					deliveryNoticeExtra[i] = $(this).val();					
-				} else {
-					deliveryNoticeExtra[i] = parseFloat($(this).val());
-				}
-				j++;
-				console.log($(this).val());
-			});
-			
-		// });
+		deliveryNoticeExtraVals.each(function(i, v) {
+			deliveryNoticeExtra[i] = $(this).val();	
+			console.log($(this).val());
+		});
 
-		return deliveryNoticeExtra;
-
+			return deliveryNoticeExtra;
 	}
 
 });
@@ -238,7 +247,6 @@ echo '
 			<div class="row deliveryNoticeExtra">
 				<div class="form-group form-group-sm">
 					<div class="col-md-2 col-md-offset-4">
-						<button type=button id="deliveryNoticeNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
 					</div>
 					<label class="col-md-2 control-label" for="warenwertNetto">Warenwert netto</label>
 					<div class="col-md-2 form-group-sm">
@@ -246,12 +254,12 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row deliveryNoticeExtra">
-			<div class="form-group form-group-sm">
-					<label class="col-md-2 col-md-offset-6 control-label" for="mwst0">MwSt (0%)</label>
-					<div class="col-md-2 form-group-sm">
-						<input type="text" id="mwst0" class="form-control" placeholder="MwSt (0%)">
-					</div>
+			<div class="row deliveryNoticeExtra" style="display:none;">
+				<div class="form-group form-group-sm">
+						<label class="col-md-2 col-md-offset-6 control-label" for="mwst0">MwSt (0%)</label>
+						<div class="col-md-2 form-group-sm">
+							<input type="text" id="mwst0" class="form-control" placeholder="MwSt (0%)">
+						</div>
 				</div>
 			</div>
 			<div class="row deliveryNoticeExtra">
@@ -302,6 +310,9 @@ echo '
 					<label class="col-md-2 col-md-offset-6 control-label" for="restbetrag">Restbetrag</label>
 					<div class="col-md-2 form-group-sm">
 						<input type="numeric" step="0.01" min="0.00" id="restbetrag" class="form-control" placeholder="Restbetrag">
+					</div>
+					<div class="col-md-2 form-group-sm">
+						<button type=button id="deliveryNoticeNueber" class="btn btn-xs btn-warning"><i class="fa fa-backward">&nbsp;Aktualisieren</i></input>
 					</div>
 				</div>
 			</div>

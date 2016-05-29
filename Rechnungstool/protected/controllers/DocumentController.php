@@ -231,8 +231,12 @@ class DocumentController extends Controller
 		$content = $_POST["content"];
 		if(isset($_POST["invoiceExtra"])){
 			$invoiceExtra = $_POST["invoiceExtra"];
-		}else{
-			$invoiceExtra = "";
+		} else if (isset($_POST["deliveryNoticeExtra"])) { 
+			$invoiceExtra = $_POST["deliveryNoticeExtra"] ;
+		} else if (isset($_POST["creditNoteExtra"])) { 
+			$invoiceExtra = $_POST["creditNoteExtra"] ;
+		} else {
+			$invoiceExtra = "";	
 		}
 		if(isset($_POST["contentNumeric"])){
 			$contentNumeric = $_POST["contentNumeric"];
@@ -298,7 +302,10 @@ class DocumentController extends Controller
 		$filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/".$docType."/";
 		// $filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/";
 		$fileName = str_replace(" ", "", $jvaName)."_".str_replace(" ", "", $jvaExt)."_".$docType."_".$curDate.".pdf";
-
+		$umls = ["ä", "ü", "ö", "Ä", "Ü", "Ö", "ß"];
+		$NoUmls = ["ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"];
+		$fileName = str_replace($umls, $NoUmls, $fileName);
+		
 		$completeFilePathName = $filePath.$fileName;
 
 		// $result = $neuDoc->insertNewDocument($docType,$jvaId,$contactPerson,$allRows,$counterType,$defaultDocument, $completeFilePathName);
@@ -435,6 +442,9 @@ class DocumentController extends Controller
 			$filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/".$docType."/";
 			// $filePath = Yii::getPathOfAlias('webroot')."/pdf/temp/";
 			$fileName = str_replace(" ", "", $jvaName)."_".$docType."_".$curDate.".pdf";
+			$umls = ["ä", "ü", "ö", "Ä", "Ü", "Ö"];
+			$NoUmls = ["ae", "ue", "oe", "Ae", "Ue", "Oe"];
+			$fileName = str_replace($umls, $NoUmls, $fileName);
 
 			$completeFilePathName = $filePath.$fileName;
 

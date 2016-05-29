@@ -175,13 +175,21 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 						// $lastKey = end(array_keys($displayData));
 						foreach($displayData as $row) {
 								if(strstr(strtolower($row[0]), 'gesamt')) {
+									echo "<tr>";
+									foreach ($row as $data) {
+										echo "<td style='border:none;'>";
+									}
+									echo "</tr>";
 									echo "<tr class='totalRow'>";
 									$i = 0;
 									foreach ($row as $data) {
 										if($i >= (sizeOf($row) - 3) && $data !== "") {
 											echo "<td style='text-align:right'><b>".$data."€</b></td>";
+										} else if($data === "") {
+											echo "<td style='border-left:none; border-right:none;'><b>".$data."</b></td>";
+											//GESAMT
 										} else {
-											echo "<td><b>".$data."</b></td>";
+											echo "<td style='border-right:none;'><b>".$data."</b></td>";
 										}
 										$i++;
 									}
@@ -190,7 +198,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 									echo "<tr>";
 									$i = 0;
 									foreach ($row as $data) {
-										if($i >= (sizeOf($row) - 3) && $data !== "") {
+										if($i >= (sizeOf($row) - 6) && $data !== "") {
 											echo "<td style='text-align:right'>".$data."€</td>";
 										} else {
 											echo "<td>".$data." </td>";
@@ -217,23 +225,23 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 							<p class="smallExtra">Warenwert netto</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo number_format(floatval($invoiceExtra[0]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo $invoiceExtra[0] ." €"; ?></p>
 						</div>
 					</div>
-					<div class="row">
+					<!--div class="row">
 						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
 							<p class="smallExtra">MwSt 0%</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[1])) echo number_format(floatval($invoiceExtra[1]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php //if(!empty($invoiceExtra[1])) echo $invoiceExtra[1]." €"; ?></p>
 						</div>
-					</div>
+					</div-->
 					<div class="row">
 						<div class="col-xs-2 invoiceExtra col-xs-offset-6">
 							<p class="smallExtra">MwSt 7%</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[2])) echo number_format(floatval($invoiceExtra[2]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[2])) echo $invoiceExtra[2] ." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -241,7 +249,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 						<p class="smallExtra">MwSt 19%</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[3])) echo number_format(floatval($invoiceExtra[3]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[3])) echo $invoiceExtra[3] ." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -249,7 +257,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 							<p class="smallExtra">Warenwert brutto</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[4])) echo number_format(floatval($invoiceExtra[4]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[4])) echo $invoiceExtra[4] ." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -261,7 +269,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 							<p class="smallExtra"><?php if(!empty($invoiceExtra[5])) echo $invoiceExtra[5]; ?></p>
 						</div>
 						<div class="col-xs-1 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[6])) echo number_format(floatval($invoiceExtra[6]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[6])) echo $invoiceExtra[6] ." €"; ?></p>
 						</div>
 						<br/>
 					</div>
@@ -270,7 +278,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 							<p class="smallExtra">Bereits berechnet</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[7])) echo number_format(floatval($invoiceExtra[7]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[7])) echo $invoiceExtra[7] ." €"; ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -278,7 +286,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 							<p class="smallExtra">Restbetrag</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra ">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[8])) echo number_format(floatval($invoiceExtra[8]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[8])) echo $invoiceExtra[8]." €"; ?></p>
 						</div>
 					</div>
 			</div>

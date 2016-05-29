@@ -360,7 +360,7 @@ var hot;
 		$(".panel-body-exclusive").hide();
 		$("#previewCancelGroup").hide('fast');
 		$("#docContentEmpty").show();
-	})
+	});
 
 	/***
 	** !!! TODO: fixed!
@@ -583,7 +583,7 @@ var hot;
 		if(jQuery.isEmptyObject(displayData)) {
 			switch(headerLength){
 					case 0:
-						displayData = [];
+						displayData = [[""],[""]];
 						break;
 					case 1:
 						displayData = [[""]];
@@ -669,7 +669,7 @@ var hot;
 		  colHeaders: header,
 		  manualColumnResize: true,
 		  manualRowMove: true,
-		  colWidths: [160, 160, 160, 160, 100, 100, 100, 100, 100, 100],
+		  colWidths: [120, 120, 120, 120, 75, 85, 85, 85, 85, 85, 85],
 		  contextMenu: true,
 		});
 		
@@ -820,6 +820,7 @@ var hot;
 						}
 						if(j === jDeletableRow) {
 							hot.setDataAtCell(j,k, '');
+							hot.setDataAtCell(j+1,k, '');
 						}
 						if((parseInt(headerLength - k) > 2) && (parseInt(headerLength - k) < 6))  {  //&& (parseInt(j) !== lastVisRow)) {
 							hot.setDataAtCell(parseInt(lastVisRow), headerLength-3, '0.00');
@@ -832,6 +833,10 @@ var hot;
 						} 						
 					}
 			}
+			// hot.setDataAtCell(parseInt(lastVisRow), 0, '');
+			// hot.setDataAtCell(parseInt(lastVisRow), headerLength, '');
+			// hot.setDataAtCell(parseInt(lastVisRow), headerLength-1, '');
+			// hot.setDataAtCell(parseInt(lastVisRow), headerLength-2, '=SUM('+charArray[headerLength-2]+'1:'+charArray[headerLength-2]+parseInt(hot.countRows()-1)+')');
 			hot.setDataAtCell(parseInt(lastVisRow+1), 0, 'Gesamt:');
 			hot.setDataAtCell(parseInt(lastVisRow+1), headerLength, '=SUM('+charArray[headerLength]+'1:'+charArray[headerLength]+parseInt(hot.countRows()-1)+')');
 			hot.setDataAtCell(parseInt(lastVisRow+1), headerLength-1, '=SUM('+charArray[headerLength-1]+'1:'+charArray[headerLength-1]+parseInt(hot.countRows()-1)+')');

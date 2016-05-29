@@ -50,7 +50,7 @@
 				console.log("0: "+tableData[i][parseInt(rowLength-3)]);
 				if( tableData[i][parseInt(rowLength-3)] !== '') {
 					zeroTotal = tableData[i][parseInt(rowLength-3)];
-					zeroTotal = zeroTotal.replace(" ", "").
+					zeroTotal = zeroTotal.replace(" ", "");
 					zeroTotal = zeroTotal.replace(",", ".");
 				} 
 				if( tableData[i][parseInt(rowLength-2)] !== '') {
@@ -67,56 +67,77 @@
 				// console.log("19:"+tableData[i][parseInt(rowLength-1)]);
 			}
 		}
-		var warenwertNetto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) * 0.93 + parseFloat(nineTeenTotal) * 0.81).toFixed(2);
-		var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
-		var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
-		var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
-		var MwSt0 = parseFloat(zeroTotal).toFixed(2);
-		doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
+			var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
+			var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
+			var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
+			var MwSt0 = parseFloat(zeroTotal).toFixed(2);
+			var warenwertNetto = parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)).toFixed(2);
+			doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
-		console.log("0: " + MwSt0 + " " + warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
+		// console.log("0: " + MwSt0 + " " + warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
 	} ;
 	
 	function doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {
 		if(typeof(warenwertNetto) !== 'undefined') {
-			$("#warenwertNetto").val(warenwertNetto);
+			$("#warenwertNetto").val(warenwertNetto.replace(" ", ""));
+			$("#warenwertNetto").val(warenwertNetto.replace(".", ","));
 		} else {
-			$("#warenwertNetto").val('0.00');			
+			$("#warenwertNetto").val('0,00');
 		}
 		if(typeof(warenwertBrutto) !== 'undefined') {
-			$("#warenwertBrutto").val(warenwertBrutto);
+			$("#warenwertBrutto").val(warenwertBrutto.replace(" ", ""));
+			$("#warenwertBrutto").val(warenwertBrutto.replace(".", ","));
 		} else {
-			$("#warenwertBrutto").val('0.00');			
+			$("#warenwertBrutto").val('0,00');			
 		}
 		if(typeof(MwSt0) !== 'undefined') {
-			$("#mwst0").val(MwSt0);
+			$("#mwst0").val(MwSt0.replace(" ", ""));
+			$("#mwst0").val(MwSt0.replace(".", ","));
 		} else {
-			$("#mwst0").val('0.00');			
+			$("#mwst0").val('0,00');			
 		}
 		if(typeof(MwSt7) !== 'undefined') {
-			$("#mwst7").val(MwSt7);
+			$("#mwst7").val(MwSt7.replace(" ", ""));
+			$("#mwst7").val(MwSt7.replace(".", ","));
 		} else {
-			$("#mwst7").val('0.00');			
+			$("#mwst7").val('0,00');			
 		}
 		if(typeof(MwSt19) !== 'undefined') {
-			$("#mwst19").val(MwSt19);
+			$("#mwst19").val(MwSt19.replace(" ", ""));
+			$("#mwst19").val(MwSt19.replace(".", ","));
 		} else {
-			$("#mwst19").val('0.00');			
+			$("#mwst19").val('0,00');			
 		}
+
 		var rest = parseFloat(parseFloat(warenwertBrutto));
+		rest = rest.toString().replace(" ", "");
+		rest = rest.replace(",", ".");
+		//rest = float
+		rest = parseFloat(rest);
+		
 		if ($("#bezahltExternVal").val() !== '') {
-			rest = rest - parseFloat($("#bezahltExternVal").val());
-			console.log(parseFloat($("#bezahltExternVal").val()));
-			console.log(parseFloat($("#bereitsBerechnet").val()));
-			console.log(rest);
+			var extern = $("#bezahltExternVal").val();
+			extern = extern.toString().replace(",", ".");
+			rest = rest - parseFloat(extern);
 		}
 		if($("#bereitsBerechnet").val() !== '') {
-			rest = rest - parseFloat($("#bereitsBerechnet").val()).toFixed(2);
+			var bereits = $("#bereitsBerechnet").val();
+			bereits = bereits.toString().replace(" ", "");
+			bereits = bereits.replace(",", ".");
+			rest = rest - parseFloat(bereits).toFixed(2);
 		}
-		$("#restbetrag").val(rest.toFixed(2));
+
+		rest = rest.toFixed(2);
+		rest = rest.toString().replace(" ", "");
+		rest = rest.replace(".", ",");
+		$("#restbetrag").val(rest);
 	}
 
 	$(document).on("click", "#invoiceNueber", function () {
+		parseAndCalcAndTranferInvoice();
+	});
+
+	$(document).on("click", "#invoiceAktual", function () {
 		parseAndCalcAndTranferInvoice();
 	});
 
@@ -172,16 +193,10 @@
 						}else{
 							$("#printed").prop('checked', false);
 						}
-						$("#previewModal").modal('show');
+						jQuery("#previewModal").modal('show');
 						// alert("data transferred to PHP");
 				  });	
 		}
-
-	
-$(document).ready(function () {
-  		
-});
-
   	
 	function getInvoiceExtraHTML(invoiceExtra) {
 
@@ -196,13 +211,7 @@ $(document).ready(function () {
 		var j=0;
 	
 		invoiceExtraVals.each(function(i, v){
-			if(j == 5) {
-				//DATE  
-				invoiceExtra[i] = $(this).val();					
-			} else {
-				invoiceExtra[i] = parseFloat($(this).val());
-			}
-			j++;
+			invoiceExtra[i] = $(this).val();					
 			console.log($(this).val());
 		});
 		
@@ -231,7 +240,7 @@ echo '
 					<div class="row invoiceExtra">
 						<div class="form-group form-group-sm">
 							<div class="col-md-2 col-md-offset-4">
-								<button type=button id="invoiceNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
+								<!--button type=button id="invoiceNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input-->
 							</div>
 							<label class="col-md-2 control-label" for="warenwertNetto">Warenwert netto</label>
 							<div class="col-md-2 form-group-sm">
@@ -239,8 +248,8 @@ echo '
 							</div>
 						</div>
 					</div>
-					<div class="row invoiceExtra">
-					<div class="form-group form-group-sm">
+					<div class="row invoiceExtra" style="display:none;">
+						<div class="form-group form-group-sm">
 							<label class="col-md-2 col-md-offset-6 control-label" for="mwst0">MwSt (0%)</label>
 							<div class="col-md-2 form-group-sm">
 								<input type="text" id="mwst0" class="form-control" placeholder="MwSt (0%)">
@@ -275,7 +284,7 @@ echo '
 						<div class="form-group form-group-sm">
 							<label class="col-md-2 col-md-offset-6 control-label" for="bezahltExternDate">Bezahlt von Externen</label>
 							<div class="col-md-2 form-group-sm">
-								<input type="text" id="bezahltExternDate" class="form-control" placeholder="Datum">
+								<input type="text" id="bezahltExternDate" class="form-control" placeholder="Datum / Kommentar">
 							</div>
 							<div class="col-md-2 form-group-sm">
 								<input type="text" id="bezahltExternVal" class="form-control" placeholder="Betrag">
@@ -295,6 +304,9 @@ echo '
 							<label class="col-md-2 col-md-offset-6 control-label" for="restbetrag">Restbetrag</label>
 							<div class="col-md-2 form-group-sm">
 								<input type="numeric" step="0.01" min="0.00" id="restbetrag" class="form-control" placeholder="Restbetrag">
+							</div>
+							<div class="col-md-2 form-group-sm">
+								<button type=button id="invoiceNueber" class="btn btn-xs btn-warning"><i class="fa fa-backward">&nbsp;Aktualisieren</i></input>
 							</div>
 						</div>
 					</div>

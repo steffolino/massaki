@@ -32,7 +32,7 @@
 				console.log("0: "+tableData[i][parseInt(rowLength-3)]);
 				if( tableData[i][parseInt(rowLength-3)] !== '') {
 					zeroTotal = tableData[i][parseInt(rowLength-3)];
-					zeroTotal = zeroTotal.replace(" ", "").
+					zeroTotal = zeroTotal.replace(" ", "");
 					zeroTotal = zeroTotal.replace(",", ".");
 				} 
 				if( tableData[i][parseInt(rowLength-2)] !== '') {
@@ -49,55 +49,72 @@
 				// console.log("19:"+tableData[i][parseInt(rowLength-1)]);
 			}
 		}
-		var warenwertNetto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) * 0.93 + parseFloat(nineTeenTotal) * 0.81).toFixed(2);
-		var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
-		var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
-		var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
-		var MwSt0 = parseFloat(zeroTotal).toFixed(2);
-		doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
+			var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
+			var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
+			var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
+			var MwSt0 = parseFloat(zeroTotal).toFixed(2);
+			var warenwertNetto = parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)).toFixed(2);
+			
+		doTheTransferCreditNote(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
 		console.log("0: " + MwSt0 + " " + warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
 	} ;
 	
 	function doTheTransferCreditNote(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto) {
-		console.log("doingTheTransfer: "+ warenwertNetto+ MwSt19+ MwSt7+ MwSt0+ warenwertBrutto);
+		console.log("doing transfer ...");
 		if(typeof(warenwertNetto) !== 'undefined') {
-			$(".creditNoteExtra #warenwertNetto").val(warenwertNetto);
+			$(".creditNoteExtra #warenwertNetto").val(warenwertNetto.replace(" ", ""));
+			$(".creditNoteExtra #warenwertNetto").val(warenwertNetto.replace(".", ","));
 		} else {
-			$(".creditNoteExtra #warenwertNetto").val('0.00');			
+			$(".creditNoteExtra #warenwertNetto").val('0,00');
 		}
 		if(typeof(warenwertBrutto) !== 'undefined') {
-			$(".creditNoteExtra #warenwertBrutto").val(warenwertBrutto);
+			$(".creditNoteExtra #warenwertBrutto").val(warenwertBrutto.replace(" ", ""));
+			$(".creditNoteExtra #warenwertBrutto").val(warenwertBrutto.replace(".", ","));
 		} else {
-			$(".creditNoteExtra #warenwertBrutto").val('0.00');			
+			$(".creditNoteExtra #warenwertBrutto").val('0,00');			
 		}
 		if(typeof(MwSt0) !== 'undefined') {
-			$(".creditNoteExtra #mwst0").val(MwSt0);
+			$(".creditNoteExtra #mwst0").val(MwSt0.replace(" ", ""));
+			$(".creditNoteExtra #mwst0").val(MwSt0.replace(".", ","));
 		} else {
-			$(".creditNoteExtra #mwst0").val('0.00');
+			$(".creditNoteExtra #mwst0").val('0,00');			
 		}
 		if(typeof(MwSt7) !== 'undefined') {
-			$(".creditNoteExtra #mwst7").val(MwSt7);
+			$(".creditNoteExtra #mwst7").val(MwSt7.replace(" ", ""));
+			$(".creditNoteExtra #mwst7").val(MwSt7.replace(".", ","));
 		} else {
-			$(".creditNoteExtra #mwst7").val('0.00');			
+			$(".creditNoteExtra #mwst7").val('0,00');			
 		}
 		if(typeof(MwSt19) !== 'undefined') {
-			$(".creditNoteExtra #mwst19").val(MwSt19);
+			$(".creditNoteExtra #mwst19").val(MwSt19.replace(" ", ""));
+			$(".creditNoteExtra #mwst19").val(MwSt19.replace(".", ","));
 		} else {
-			$(".creditNoteExtra #mwst19").val('0.00');			
+			$(".creditNoteExtra #mwst19").val('0,00');			
 		}
 		var rest = parseFloat(parseFloat(warenwertBrutto));
+		rest = rest.toString().replace(" ", "");
+		rest = rest.replace(",", ".");
+		//rest = float
+		rest = parseFloat(rest);
+
+		
 		if ($(".creditNoteExtra #bezahltExternVal").val() !== '') {
-			rest = rest - parseFloat($(".creditNoteExtra #bezahltExternVal").val());
-			console.log(parseFloat($(".creditNoteExtra #bezahltExternVal").val()));
-			console.log(parseFloat($(".creditNoteExtra #bereitsBerechnet").val()));
-			console.log(rest);
+			var extern = $(".creditNoteExtra #bezahltExternVal").val();
+			extern = extern.toString().replace(",", ".");
+			rest = rest - parseFloat(extern);
 		}
-		if($("#bereitsBerechnet").val() !== '') {
-			rest = rest - parseFloat($(".creditNoteExtra #bereitsBerechnet").val()).toFixed(2);
+		if($(".creditNoteExtra #bereitsBerechnet").val() !== '') {
+			var bereits = $(".creditNoteExtra #bereitsBerechnet").val();
+			bereits = bereits.toString().replace(" ", "");
+			bereits = bereits.replace(",", ".");
+			rest = rest - parseFloat(bereits).toFixed(2);
 		}
-		$(".creditNoteExtra #restbetrag").val(rest.toFixed(2));
-		console.log("done transferring");
+
+		rest = rest.toFixed(2);
+		rest = rest.toString().replace(" ", "");
+		rest = rest.replace(".", ",");
+		$(".creditNoteExtra #restbetrag").val(rest);
 	}
 
 	$(document).on("click", "#creditNoteNueber", function () {
@@ -105,7 +122,7 @@
 		parseAndCalcAndTranferCreditNote();
 	});
 	
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
 
   $(document).on("click","#writingDoc",function(){
 
@@ -176,33 +193,14 @@ $(document).ready(function () {
 		
 		creditNoteExtra = Array();
 		
-		// for(var i = 0; i < creditNoteExtraKids.length; i++) {
-			// creditNoteExtra[i] = creditNoteExtraVals[i].val();
-		// }
-		
-		// creditNoteExtraKids.each(function(i, v){
-			// creditNoteExtra[i] = Array();
-			// creditNoteExtra[i] = $(this).text();
-			// creditNoteExtra[i][0] = creditNoteExtraVals[i];
-			// console.log();
-			var j=0;
-		
-			creditNoteExtraVals.each(function(i, v){
-				if(j == 5) {
-					//DATE  
-					creditNoteExtra[i] = $(this).val();					
-				} else {
-					creditNoteExtra[i] = parseFloat($(this).val());
-				}
-				j++;
-				console.log($(this).val());
-			});
+		creditNoteExtraVals.each(function(i, v) {
+			creditNoteExtra[i] = $(this).val();					
+			console.log($(this).val());
+		});
 			
-		// });
-
 		return creditNoteExtra;
 
-	}
+	};
 
 });
 </script>
@@ -229,7 +227,6 @@ echo '
 			<div class="row creditNoteExtra">
 				<div class="form-group form-group-sm">
 					<div class="col-md-2 col-md-offset-4">
-						<button type=button id="creditNoteNueber" class="btn btn-xs btn-warning">&Uuml;bertragen&nbsp;<i class="fa fa-forward"></i></input>
 					</div>
 					<label class="col-md-2 control-label" for="warenwertNetto">Warenwert netto</label>
 					<div class="col-md-2 form-group-sm">
@@ -237,7 +234,7 @@ echo '
 					</div>
 				</div>
 			</div>
-			<div class="row creditNoteExtra">
+			<div class="row creditNoteExtra" style="display:none;">
 			<div class="form-group form-group-sm">
 					<label class="col-md-2 col-md-offset-6 control-label" for="mwst0">MwSt (0%)</label>
 					<div class="col-md-2 form-group-sm">
@@ -293,6 +290,9 @@ echo '
 					<label class="col-md-2 col-md-offset-6 control-label" for="restbetrag">Restbetrag</label>
 					<div class="col-md-2 form-group-sm">
 						<input type="numeric" step="0.01" min="0.00" id="restbetrag" class="form-control" placeholder="Restbetrag">
+					</div>
+					<div class="col-md-2 form-group-sm">
+						<button type=button id="creditNoteNueber" class="btn btn-xs btn-warning"><i class="fa fa-backward">&nbsp;Aktualisieren</i></input>
 					</div>
 				</div>
 			</div>

@@ -186,12 +186,15 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 									echo "<tr>";
 									$i = 0;
 									foreach ($row as $data) {
+										//NUMMERNKREI$
 										if($i == (sizeOf($row)-3) && $data !== "") {
 											echo "<td style='text-align:center'>".$data."</td>";
 										}
+										//MONEY$
 										if($i == (sizeOf($row)-1) && $data !== "") {
-											echo "<td style='text-align:right'>".$data." €</td>";											
+											echo "<td style='text-align:right'>". str_replace(".", ",", $data)." €</td>";											
 										} 
+										//DATE$
 										if ($i == (sizeOf($row)-2) && $data !== "") {
 											// $date = new DateTime($data);
 											// $date->format('d.m.Y');
@@ -223,7 +226,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 							<p class="smallExtra">Gesamtbetrag:</p>
 						</div>
 						<div class="col-xs-2 invoiceExtra">
-							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo number_format(floatval($invoiceExtra[0]), 2,","," ")." €"; ?></p>
+							<p class="smallExtra"><?php if(!empty($invoiceExtra[0])) echo $invoiceExtra[0] ." €"; ?></p>
 						</div>
 				</div>
 				<!--div class="row">
