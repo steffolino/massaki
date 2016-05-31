@@ -332,6 +332,9 @@ class DocumentImplementierung extends Document
 		//if($mode === 'brutto'){
 			//$sum = ($sumNineTeen + $sumNineTeen * 0.19) + ($sumSeven + $sumSeven * 0.07) + ($sumZero);
 		//}else{
+		$sumNineTeen = str_replace(' ','',$sumNineTeen);
+		$sumSeven = str_Replace(' ','',$sumSeven);
+		$sumZero = str_replace(' ','',$sumZero);
 			$sum = $sumNineTeen  + $sumSeven  + $sumZero;
 		//}
 		return $sum;
@@ -483,6 +486,8 @@ class DocumentImplementierung extends Document
 			$zeroTotal = $zeroTotal + $this->getZeroTax($documentValues);
 			$sevenTotal = $sevenTotal + $this->getSevenTax($documentValues);
 			$nineteenTotal = $nineteenTotal + $this->getNineTeenTax($documentValues);
+			$totalBrutto = str_replace(' ','',$totalBrutto);
+			$totalNetto = str_replace(' ','',$totalNetto);
 		}
 		array_push($resultArray,$totalNetto);
 		array_push($resultArray,$zeroTotal);
