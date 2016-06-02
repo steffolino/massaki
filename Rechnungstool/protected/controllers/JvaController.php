@@ -142,6 +142,7 @@ class JvaController extends Controller
 			$jvaColIk1 = $_POST['data'][6];
 			$jvaColIk2 = $_POST['data'][7];
 			$jvaColIk3 = $_POST['data'][8];
+			$jvaColIk3 = $_POST['data'][9];
 			$jvaColIk5 = $_POST['data'][10];
 		
 			$jvaColMemmel1 = $_POST['data'][11];
