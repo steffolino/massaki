@@ -40,7 +40,7 @@ if(isset($jvaAddFormModel)){
 			//var_dump($colNames);			
 			//Awesome C like fix
 			foreach($tabs as &$tab) {
-				for($i=1;$i<7;$i++){
+				for($i=1;$i<6;$i++){
 					if($tab['label'] == 'IK'){
 						$idTab = "-Ik";
 					}else if($tab['label'] == 'Logistik Memmelsdorf'){
@@ -54,7 +54,7 @@ if(isset($jvaAddFormModel)){
 					}
 					//ADD PRE-DEFINED COLUMNS
 					$tab['content'] .= $form->dropDownListGroup($jvaAddFormModel,'colName'.$i, array('widgetOptions'=>array('data'=>$colNames,'htmlOptions' => array('id'=>   'addColName'.$i .$idTab)),'class'=>'col-sm-5', 'label' => 'Spalte '.$i));
-					if($i == 6){
+					if($i == 5){
 						$tab['content'] .= $form->textFieldGroup($jvaAddFormModel,'printAmount',array('widgetOptions'=>array('htmlOptions' => array('id'=>   'printAmount'.$idTab)), 'label'=>'Anzahl Ausdrucke'));
 					}
 				}
