@@ -86,33 +86,30 @@ class JvaController extends Controller
 			$jvaColMemmel3 = $_POST['data'][13];
 			$jvaColMemmel4 = $_POST['data'][14];
 			$jvaColMemmel5 = $_POST['data'][15];
-			$jvaColMemmel6 = $_POST['data'][16];
-			$jvaColMemmel7 = $_POST['data'][17];
-			$jvaColMemmel8 = $_POST['data'][18];
-			$jvaColMemmel9 = $_POST['data'][19];
-			$jvaColLoehne1 = $_POST['data'][20];
-			$jvaColLoehne2 = $_POST['data'][21];
-			$jvaColLoehne3 = $_POST['data'][22];
-			$jvaColLoehne4 = $_POST['data'][23];
-			$jvaColLoehne5 = $_POST['data'][24];
+	
+			$jvaColLoehne1 = $_POST['data'][16];
+			$jvaColLoehne2 = $_POST['data'][17];
+			$jvaColLoehne3 = $_POST['data'][18];
+			$jvaColLoehne4 = $_POST['data'][19];
+			$jvaColLoehne5 = $_POST['data'][20];
 		
-			$jvaColWitte1 = $_POST['data'][25];
-			$jvaColWitte2 = $_POST['data'][26];
-			$jvaColWitte3 = $_POST['data'][27];
-			$jvaColWitte4 = $_POST['data'][28];
-			$jvaColWitte5 = $_POST['data'][29];
+			$jvaColWitte1 = $_POST['data'][21];
+			$jvaColWitte2 = $_POST['data'][22];
+			$jvaColWitte3 = $_POST['data'][23];
+			$jvaColWitte4 = $_POST['data'][24];
+			$jvaColWitte5 = $_POST['data'][25];
 
-			$jvaColEk1 = $_POST['data'][30];
-			$jvaColEk2 = $_POST['data'][31];
-			$jvaColEk3 = $_POST['data'][32];
-			$jvaColEk4 = $_POST['data'][33];
-			$jvaColEk5 = $_POST['data'][34];
+			$jvaColEk1 = $_POST['data'][26];
+			$jvaColEk2 = $_POST['data'][27];
+			$jvaColEk3 = $_POST['data'][28];
+			$jvaColEk4 = $_POST['data'][29];
+			$jvaColEk5 = $_POST['data'][30];
 
-			$jvaPrintAmountIk = $_POST['data'][35];
-			$jvaPrintAmountMemmel = $_POST['data'][36];
-			$jvaPrintAmountLoehne = $_POST['data'][37];
-			$jvaPrintAmountWitte = $_POST['data'][38];
-			$jvaPrintAmountEk = $_POST['data'][39];
+			$jvaPrintAmountIk = $_POST['data'][31];
+			$jvaPrintAmountMemmel = $_POST['data'][32];
+			$jvaPrintAmountLoehne = $_POST['data'][33];
+			$jvaPrintAmountWitte = $_POST['data'][34];
+			$jvaPrintAmountEk = $_POST['data'][35];
 			//echo $jvaCol9;
 			// $jvaCol10 = $_POST['data'][15];
 			// $jvaCol11 = $_POST['data'][16];
@@ -145,37 +142,37 @@ class JvaController extends Controller
 			$jvaColIk1 = $_POST['data'][6];
 			$jvaColIk2 = $_POST['data'][7];
 			$jvaColIk3 = $_POST['data'][8];
-			$jvaColIk4 = $_POST['data'][9];
+			$jvaColIk5 = $_POST['data'][10];
 		
-			$jvaColMemmel1 = $_POST['data'][10];
-			$jvaColMemmel2 = $_POST['data'][11];
-			$jvaColMemmel3 = $_POST['data'][12];
-			$jvaColMemmel4 = $_POST['data'][13];
-			$jvaColMemmel5 = $_POST['data'][14];
+			$jvaColMemmel1 = $_POST['data'][11];
+			$jvaColMemmel2 = $_POST['data'][12];
+			$jvaColMemmel3 = $_POST['data'][13];
+			$jvaColMemmel4 = $_POST['data'][14];
+			$jvaColMemmel5 = $_POST['data'][15];
+	
+			$jvaColLoehne1 = $_POST['data'][16];
+			$jvaColLoehne2 = $_POST['data'][17];
+			$jvaColLoehne3 = $_POST['data'][18];
+			$jvaColLoehne4 = $_POST['data'][19];
+			$jvaColLoehne5 = $_POST['data'][20];
+		
+			$jvaColWitte1 = $_POST['data'][21];
+			$jvaColWitte2 = $_POST['data'][22];
+			$jvaColWitte3 = $_POST['data'][23];
+			$jvaColWitte4 = $_POST['data'][24];
+			$jvaColWitte5 = $_POST['data'][25];
+
+			$jvaColEk1 = $_POST['data'][26];
+			$jvaColEk2 = $_POST['data'][27];
+			$jvaColEk3 = $_POST['data'][28];
+			$jvaColEk4 = $_POST['data'][29];
+			$jvaColEk5 = $_POST['data'][30];
 			
-			$jvaColLoehne1 = $_POST['data'][15];
-			$jvaColLoehne2 = $_POST['data'][16];
-			$jvaColLoehne3 = $_POST['data'][17];
-			$jvaColLoehne4 = $_POST['data'][18];
-			$jvaColLoehne5 = $_POST['data'][19];
-		
-			$jvaColWitte1 = $_POST['data'][20];
-			$jvaColWitte2 = $_POST['data'][21];
-			$jvaColWitte3 = $_POST['data'][22];
-			$jvaColWitte4 = $_POST['data'][23];
-			$jvaColWitte5 = $_POST['data'][24];
-		
-			$jvaColEk1 = $_POST['data'][25];
-			$jvaColEk2 = $_POST['data'][26];
-			$jvaColEk3 = $_POST['data'][27];
-			$jvaColEk4 = $_POST['data'][28];
-			$jvaColEk5 = $_POST['data'][29];
-			
-			$jvaPrintAmountIk = $_POST['data'][30];
-			$jvaPrintAmountMemmel = $_POST['data'][31];
-			$jvaPrintAmountLoehne = $_POST['data'][32];
-			$jvaPrintAmountWitte = $_POST['data'][33];
-			$jvaPrintAmountEk = $_POST['data'][34];
+			$jvaPrintAmountIk = $_POST['data'][31];
+			$jvaPrintAmountMemmel = $_POST['data'][32];
+			$jvaPrintAmountLoehne = $_POST['data'][33];
+			$jvaPrintAmountWitte = $_POST['data'][34];
+			$jvaPrintAmountEk = $_POST['data'][35];
 			// $jvaCol10 = $_POST['data'][15];
 			// $jvaCol11 = $_POST['data'][16];
 			// $jvaCol12 = $_POST['data'][17];
