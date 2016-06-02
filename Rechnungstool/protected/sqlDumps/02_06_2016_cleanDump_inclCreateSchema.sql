@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `rechnungstool` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `rechnungstool`;
 -- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: rechnungstool
@@ -26,7 +28,7 @@ CREATE TABLE `coldef` (
   `colDefId` int(11) NOT NULL AUTO_INCREMENT,
   `colName` varchar(255) NOT NULL,
   PRIMARY KEY (`colDefId`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +37,7 @@ CREATE TABLE `coldef` (
 
 LOCK TABLES `coldef` WRITE;
 /*!40000 ALTER TABLE `coldef` DISABLE KEYS */;
-INSERT INTO `coldef` VALUES (0,' '),(1,'Artikelnummer'),(2,'Artikelbeschreibung'),(3,'Artikelanzahl'),(4,'Artikelirgendwas'),(5,'Rechnung'),(6,'Buchnummer'),(97,'0% MwSt'),(98,'7% MwSt'),(99,'19% MwSt');
+INSERT INTO `coldef` VALUES (0,' '),(1,'Buchnummer'),(2,'Name'),(3,'Unterbringung'),(4,'Artikelbeschreibung'),(5,'Sonstiges'),(96,'Menge'),(97,'0% MwSt'),(98,'7% MwSt'),(99,'19% MwSt'),(100,'Gesamt 0%'),(101,'Gesamt 7%'),(102,'Gesamt 19%');
 /*!40000 ALTER TABLE `coldef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -47,9 +49,9 @@ DROP TABLE IF EXISTS `collectiveinvoice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `collectiveinvoice` (
-  `collectInvoiceId` int(11) NOT NULL AUTO_INCREMENT,
+  `collectInvoiceId` int(11) NOT NULL,
   `deliveryNoteId` int(11) NOT NULL,
-  PRIMARY KEY (`collectInvoiceId`),
+  PRIMARY KEY (`collectInvoiceId`,`deliveryNoteId`),
   KEY `deliveryNoteId_idx` (`deliveryNoteId`),
   CONSTRAINT `deliveryNoteId` FOREIGN KEY (`deliveryNoteId`) REFERENCES `document` (`documentId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -130,13 +132,14 @@ CREATE TABLE `defaultcolconfig` (
   `col3` int(11) DEFAULT '0',
   `col4` int(11) DEFAULT '0',
   `col5` int(11) DEFAULT '0',
-  `col6` int(11) DEFAULT '0',
-  `col7` int(11) DEFAULT '0',
-  `col8` int(11) DEFAULT '0',
-  `col9` int(11) DEFAULT '0',
-  `col10` int(11) NOT NULL DEFAULT '97',
-  `col11` int(11) NOT NULL DEFAULT '98',
-  `col12` int(11) NOT NULL DEFAULT '99',
+  `col6` int(11) DEFAULT '96',
+  `col7` int(11) DEFAULT '97',
+  `col8` int(11) DEFAULT '98',
+  `col9` int(11) DEFAULT '99',
+  `col10` int(11) NOT NULL DEFAULT '100',
+  `col11` int(11) NOT NULL DEFAULT '101',
+  `col12` int(11) NOT NULL DEFAULT '102',
+  `printAmount` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`colConfigId`),
   KEY `col1_idx` (`col1`),
   KEY `col2_idx` (`col2`),
@@ -150,19 +153,19 @@ CREATE TABLE `defaultcolconfig` (
   KEY `col10_idx` (`col10`),
   KEY `col11_idx` (`col11`),
   KEY `col12_idx` (`col12`),
-  CONSTRAINT `col1` FOREIGN KEY (`col1`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col10` FOREIGN KEY (`col10`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col11` FOREIGN KEY (`col11`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col12` FOREIGN KEY (`col12`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col2` FOREIGN KEY (`col2`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col3` FOREIGN KEY (`col3`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col4` FOREIGN KEY (`col4`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col5` FOREIGN KEY (`col5`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col6` FOREIGN KEY (`col6`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col7` FOREIGN KEY (`col7`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col8` FOREIGN KEY (`col8`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `col9` FOREIGN KEY (`col9`) REFERENCES `coldef` (`colDefId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+  CONSTRAINT `col1` FOREIGN KEY (`col1`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col10` FOREIGN KEY (`col10`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col11` FOREIGN KEY (`col11`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col12` FOREIGN KEY (`col12`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col2` FOREIGN KEY (`col2`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col3` FOREIGN KEY (`col3`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col4` FOREIGN KEY (`col4`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col5` FOREIGN KEY (`col5`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col6` FOREIGN KEY (`col6`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col7` FOREIGN KEY (`col7`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col8` FOREIGN KEY (`col8`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `col9` FOREIGN KEY (`col9`) REFERENCES `coldef` (`colDefId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +174,6 @@ CREATE TABLE `defaultcolconfig` (
 
 LOCK TABLES `defaultcolconfig` WRITE;
 /*!40000 ALTER TABLE `defaultcolconfig` DISABLE KEYS */;
-INSERT INTO `defaultcolconfig` VALUES (1,1,2,3,4,0,0,0,0,0,97,98,99),(8,5,4,2,1,3,0,0,0,0,97,98,99),(9,1,2,3,0,0,0,0,0,0,97,98,99),(10,3,1,2,0,0,0,0,0,0,97,98,99),(11,3,1,2,0,0,0,0,0,0,97,98,99),(12,3,0,0,0,0,0,0,0,0,97,98,99),(13,3,0,0,0,0,0,0,0,0,97,98,99),(14,3,0,0,0,0,0,0,0,0,97,98,99),(15,3,0,0,0,0,0,0,0,0,97,98,99),(16,3,0,0,0,0,0,0,0,0,97,98,99),(17,3,2,0,0,0,0,0,0,0,97,98,99),(18,3,0,0,0,0,0,0,0,0,97,98,99),(19,3,0,0,0,0,0,0,0,0,97,98,99),(20,0,0,0,0,0,0,0,0,0,97,98,99),(21,1,6,0,0,0,0,0,0,0,97,98,99),(22,0,0,0,0,0,0,0,0,0,97,98,99),(23,0,0,0,0,0,0,0,0,0,97,98,99),(24,0,0,0,0,0,0,0,0,0,97,98,99),(25,0,0,0,0,0,0,0,0,0,97,98,99),(26,0,0,0,0,0,0,0,0,0,97,98,99),(27,0,0,0,0,0,0,0,0,0,97,98,99),(28,0,0,0,0,0,0,0,0,0,97,98,99),(29,0,0,0,0,0,0,0,0,0,97,98,99),(30,0,0,0,0,0,0,0,0,0,97,98,99),(31,0,0,0,0,0,0,0,0,0,97,98,99),(32,0,0,0,0,0,0,0,0,0,97,98,99),(33,0,0,0,0,0,0,0,0,0,97,98,99),(34,0,0,0,0,0,0,0,0,0,97,98,99),(35,0,0,0,0,0,0,0,0,0,97,98,99),(36,3,0,0,0,0,0,0,0,0,97,98,99),(37,2,0,0,0,0,0,0,3,0,97,98,99),(38,1,0,0,0,0,0,0,0,0,97,98,99),(39,4,0,0,0,0,0,0,0,0,97,98,99),(40,3,0,0,0,0,0,0,0,0,97,98,99),(41,2,0,0,0,0,0,0,0,0,97,98,99),(42,1,0,0,0,0,0,0,0,0,97,98,99),(43,4,0,0,0,0,0,0,0,0,97,98,99),(44,3,0,0,0,0,0,0,0,0,97,98,99),(45,2,0,0,0,0,0,0,0,0,97,98,99),(46,2,0,0,0,0,0,0,0,0,97,98,99),(47,2,0,0,0,0,0,0,0,0,97,98,99),(48,1,0,0,0,0,0,0,0,0,97,98,99),(49,1,0,0,0,0,0,0,0,0,97,98,99),(50,1,0,0,0,0,0,0,0,0,97,98,99),(51,1,0,0,0,0,0,0,0,0,97,98,99),(52,5,3,1,2,0,0,0,0,0,97,98,99),(58,0,0,0,0,0,0,0,0,0,97,98,99),(59,1,2,6,0,0,0,0,0,0,97,98,99);
 /*!40000 ALTER TABLE `defaultcolconfig` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,8 +216,9 @@ CREATE TABLE `document` (
   `docTypeId` int(11) NOT NULL,
   `pdf_location` varchar(255) DEFAULT NULL,
   `contact_person` varchar(255) DEFAULT NULL,
-  `printed` varchar(1) DEFAULT NULL,
-  `timeStamp` datetime(6) DEFAULT NULL,
+  `printed` varchar(1) DEFAULT '0',
+  `timeStamp` date DEFAULT NULL,
+  `defaultDoc` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`documentId`),
   KEY `jvaId_idx` (`jvaId`),
   KEY `yearCounter_idx` (`yearCounter`),
@@ -224,7 +227,7 @@ CREATE TABLE `document` (
   CONSTRAINT `documentType` FOREIGN KEY (`docTypeId`) REFERENCES `doctype` (`docTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `jvaId` FOREIGN KEY (`jvaId`) REFERENCES `jvadata` (`jvaDataId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `yearCounter` FOREIGN KEY (`yearCounter`) REFERENCES `yearcounter` (`yearCounterId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=229 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +236,6 @@ CREATE TABLE `document` (
 
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
-INSERT INTO `document` VALUES (3,'B 18',1,0,2,NULL,'Alfred E. Neumann',NULL,NULL),(4,'B 19',1,0,2,'Auf der Platte','Alfred E. Neumann',NULL,NULL),(5,'A 0',1,0,1,'Auf der Platte','Alfred E. Neumann',NULL,NULL);
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,8 +275,8 @@ CREATE TABLE `documentvalues` (
   `header12` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`valueId`),
   KEY `documentId_idx` (`documentId`),
-  CONSTRAINT `documentId` FOREIGN KEY (`documentId`) REFERENCES `document` (`documentId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  CONSTRAINT `documentId` FOREIGN KEY (`documentId`) REFERENCES `document` (`documentId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1112 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +285,6 @@ CREATE TABLE `documentvalues` (
 
 LOCK TABLES `documentvalues` WRITE;
 /*!40000 ALTER TABLE `documentvalues` DISABLE KEYS */;
-INSERT INTO `documentvalues` VALUES (1,4,'5','6','Horst','7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Artikelbeschreibung','Artikelnummer','Artikenanzahl','Rechnung',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,4,'6','7','Detelef','8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Artikelbeschreibung','Artikelnummer','Artikenanzahl','Rechnung',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,5,'5','6','Horst','7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Artikelbeschreibung','Artikelnummer','Artikenanzahl','Rechnung',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,5,'6','7','Detelef','8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Artikelbeschreibung','Artikelnummer','Artikenanzahl','Rechnung',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,3,'7','6','Hans','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Artikelbeschreibung','Artikelnummer','Artikenanzahl','Rechnung',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,3,'23','12','Stefan','123',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Artikelbeschreibung','Artikelnummer','Artikelanzahl','Rechnung',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `documentvalues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,10 +305,22 @@ CREATE TABLE `jvadata` (
   `jvaCustNum` varchar(45) DEFAULT NULL,
   `jvaCustNumDesc` varchar(45) DEFAULT NULL,
   `jvaDeactivated` varchar(1) DEFAULT 'n',
+  `jvaColMemm` int(11) DEFAULT '2',
+  `jvaColLoeh` int(11) DEFAULT '3',
+  `jvaColWitt` int(11) DEFAULT '4',
+  `jvaColEk` int(11) DEFAULT '1',
   PRIMARY KEY (`jvaDataId`),
   KEY `jvaColConfig_idx` (`jvaColConfig`),
-  CONSTRAINT `jvaColConfig` FOREIGN KEY (`jvaColConfig`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+  KEY `jvaColMemmel_idx` (`jvaColMemm`),
+  KEY `jvaColLoehne_idx` (`jvaColLoeh`),
+  KEY `jvaColWitte_idx` (`jvaColWitt`),
+  KEY `jvaColEk_idx` (`jvaColEk`),
+  CONSTRAINT `jvaColE` FOREIGN KEY (`jvaColEk`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `jvaColIk` FOREIGN KEY (`jvaColConfig`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `jvaColLoehne` FOREIGN KEY (`jvaColLoeh`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `jvaColMemmel` FOREIGN KEY (`jvaColMemm`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `jvaColWitte` FOREIGN KEY (`jvaColWitt`) REFERENCES `defaultcolconfig` (`colConfigId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +329,6 @@ CREATE TABLE `jvadata` (
 
 LOCK TABLES `jvadata` WRITE;
 /*!40000 ALTER TABLE `jvadata` DISABLE KEYS */;
-INSERT INTO `jvadata` VALUES (0,'JVA Ebing','Am Schwana 3 96147 Rattelsdorf',1,'IK','Herzlichst, Ihr Bjoern Zinkni','123456','1','n'),(9,'JVA Haupt','',8,'unten','MfG Massak GmbH','123456','','y'),(10,'JVA Hamburg','',9,'Extra','MfG Massak GmbH','123456','','y'),(11,'JVA Bremen','',10,'Zusatz','MfG Massak GmbH','123456','asd','y'),(12,'JVA Berlin','',11,'Moabit','MfG Massak GmbH','123456','asd','y'),(13,'JVA Berlin','',12,'Mitte','MfG Massak GmbH','123456','asd','y'),(14,'JVA Berlin','was da los',13,'Friedrichshain','MfG Massak GmbH','123456','','y'),(15,'JVA Berlin','',14,'Neukölln','MfG Massak GmbH','123456','123','y'),(16,'JVA Berlin','was da los',15,'Hermannplatz','MfG Massak GmbH','123456','','y'),(17,'JVA Hannover','',16,'asd','MfG Massak GmbH','123456','','y'),(18,'JVA Kassel','',17,'asd','MfG Massak GmbH','123456','','n'),(19,'JVA Würzburg','was da los',18,'asd','MfG Massak GmbH','123456','','y'),(20,'JVA Aschaffenburg','was da los',19,'asd','MfG Massak GmbH','123456','','y'),(21,'JVA Frankfurt','',20,'','MfG Massak GmbH','123456','','y'),(22,'JVA Leipzig','',21,'','MfG Massak GmbH','123456','','n'),(23,'JVA Dresden','',22,'','MfG Massak GmbH','123456','','y'),(24,'JVA Erfurt','',23,'','MfG Massak GmbH','123456','','y'),(25,'JVA Coburg','',24,'','MfG Massak GmbH','123456','','n'),(26,'JVA Forchheim','',25,'','MfG Massak GmbH','123456','','n'),(27,'JVA Ebrach','',26,'','MfG Massak GmbH','123456','','n'),(28,'JVA Bamberg','',27,'1','MfG Massak GmbH','123456','','y'),(29,'JVA Bamberg','',28,'2','MfG Massak GmbH','123456','','n'),(30,'JVA Bamberg','',29,'3','MfG Massak GmbH','123456','','n'),(31,'JVA Bamberg','',30,'4','MfG Massak GmbH','123456','','n'),(32,'JVA Bamberg','',31,'5','MfG Massak GmbH','123456','','n'),(33,'JVA Bamberg','',32,'6','MfG Massak GmbH','123456','','y'),(34,'JVA Bamberg','',33,'7','MfG Massak GmbH','123456','','n'),(35,'JVA Bamberg','',34,'8','MfG Massak GmbH','123456','','n'),(36,'JVA Bamberg','',35,'9','MfG Massak GmbH','123456','','n'),(37,'JVA Bamberg','',36,'10','MfG Massak GmbH','123456','','n'),(38,'JVA Bamberg','',37,'11','MfG Massak GmbH','123456123','JVA hallo halli ','n'),(39,'JVA Bamberg','',38,'12','MfG Massak GmbH','123456','','n'),(40,'JVA Bamberg','',39,'13','MfG Massak GmbH','123456','','n'),(41,'JVA Bamberg','',40,'14','MfG Massak GmbH','123456','','n'),(42,'JVA Bamberg','',41,'15','MfG Massak GmbH','123456','','n'),(43,'JVA Bamberg','',42,'16','MfG Massak GmbH','123456','','n'),(44,'JVA Bamberg','',43,'17','MfG Massak GmbH','123456','','n'),(45,'JVA Bamberg','',44,'18','MfG Massak GmbH','123456','huha','n'),(46,'JVA Bamberg','',45,'19','MfG Massak GmbH','123456','asd','n'),(47,'JVA Bamberg','',46,'20','MfG Massak GmbH','123456','','n'),(48,'JVA Bamberg','',47,'21','MfG Massak GmbH','123456','','n'),(49,'JVA Bamberg','',48,'22','MfG Massak GmbH','123456','','n'),(50,'JVA Bamberg','',49,'23','MfG Massak GmbH','123456','','y'),(52,'JVA Bamberg','fasd',50,'24','MfG Massak GmbH','123456','f','n'),(53,'JVA El Palmar','98765 Conil',52,'Casa Alquitara','Saludo cordial','123987','Vale','n'),(54,'TEST','',59,'123','','','','n');
 /*!40000 ALTER TABLE `jvadata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +344,7 @@ CREATE TABLE `lastusedcounter` (
   `lastUsedCounterStatus` int(11) NOT NULL,
   `lastUsedCounterName` varchar(45) NOT NULL,
   PRIMARY KEY (`lastUsedCounterId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,7 +353,7 @@ CREATE TABLE `lastusedcounter` (
 
 LOCK TABLES `lastusedcounter` WRITE;
 /*!40000 ALTER TABLE `lastusedcounter` DISABLE KEYS */;
-INSERT INTO `lastusedcounter` VALUES (1,1,'A'),(2,20,'B'),(3,0,'C'),(4,0,'D');
+INSERT INTO `lastusedcounter` VALUES (1,0,'IK'),(2,0,'Logistik Memmelsdorf'),(3,0,'Logistik Loehne'),(4,0,'Wittekindshof'),(5,0,'EK');
 /*!40000 ALTER TABLE `lastusedcounter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,7 +390,7 @@ CREATE TABLE `yearcounter` (
   `yearCounterId` int(11) NOT NULL AUTO_INCREMENT,
   `yearCounter` varchar(45) NOT NULL,
   PRIMARY KEY (`yearCounterId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,7 +399,7 @@ CREATE TABLE `yearcounter` (
 
 LOCK TABLES `yearcounter` WRITE;
 /*!40000 ALTER TABLE `yearcounter` DISABLE KEYS */;
-INSERT INTO `yearcounter` VALUES (1,'2015');
+INSERT INTO `yearcounter` VALUES (1,'2016'),(2,'xxx');
 /*!40000 ALTER TABLE `yearcounter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -400,4 +412,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-20 14:09:50
+-- Dump completed on 2016-06-02 14:49:25
