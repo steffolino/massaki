@@ -73,7 +73,9 @@ jQuery(function ($) {
 
 </script>
 <?php 
-echo '
+echo '<div class="alert alert-warning">
+		<p>Vor dem Erstellen einer neuen Sammelrechnung laden Sie bitte die Seite neu (F5)</p>
+		</div>
 <div class="panel panel-info">
 	<div class="panel-heading">
 		<h3 class="panel-heading">Sammelrechnung</h3>
