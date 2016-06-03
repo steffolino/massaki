@@ -377,6 +377,8 @@ class DocumentController extends Controller
 			$jvaExt = $jvaNamePlusExtArray[1];
 			$counterType = $_POST['counterType'];
 			$jva = $jvaModel->getJvaByName(trim($jvaName), trim($jvaExt));
+			$defaultDocument = "";
+		$jvaId = $jva->jvaDataId;
 			//This is for re-rendering of the yiiBooster
 			// if($result > 0){
 				// $doc = new DocumentImplementierung;

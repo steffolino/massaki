@@ -65,7 +65,7 @@ class SearchController extends Controller
 						'keyField' => 'documentId',  
 						'id'=>'documentId',
 						'pagination'=>array(
-							'pageSize'=>100,
+							'pageSize'=>500,
 						)));
 				//TO DO: Amend!!!!
 				$gridColumns = array('jvaName::Jva Name','timeStamp::Zeit','counter::Zähler');
@@ -113,7 +113,7 @@ class SearchController extends Controller
 						'keyField' => 'documentId',  
 						'id'=>'documentId',
 						'pagination'=>array(
-							'pageSize'=>100,
+							'pageSize'=>500,
 						)));
 				
 				//TODO: To be amended!!!
