@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+/* @import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic"); */
+
 /*!
  * bootswatch v3.3.5
  * Homepage: http://bootswatch.com
@@ -12,6 +13,10 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@font-face {
+	font-family: Lato;
+	src: "../fonts/Latfo-Regular.tff";
+}
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

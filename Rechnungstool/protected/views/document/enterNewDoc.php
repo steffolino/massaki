@@ -15,6 +15,7 @@
 
 <script>
 var hot;
+var G_HOT_INIT = 0;
 </script>
 
 <style>
@@ -577,8 +578,27 @@ var hot;
 		var header = data[0];
 		var displayData = data[1];
 		var headerLength = header.length;
+		var displayLength = displayData.length;
 		
 		console.log("displayData: " + displayData);
+		console.log("displayData Lenght: " + displayData.length);
+		console.log("header Lenght: " + headerLength);
+		
+
+		//Strings need to be converted to floats
+		for (var i=0; i < displayLength; i++) {
+			for(var j = 0; j<headerLength; j++) {
+				//last six columns = mwst vals // need index 5,6,7
+				if((headerLength - j < 7) && (headerLength - j > 3)) {
+					console.log("doing index : " + j);
+					displayData[i][j] = displayData[i][j].replace(",", ".");
+					// displayData[i][j] = parseFloat(displayData[i][j]);
+				}
+			}
+		}
+		// $.each(displayData, (function (index, val) {
+			// console.log(index + " " + val);
+		// }));
 		
 		if(jQuery.isEmptyObject(displayData)) {
 			switch(headerLength){
@@ -793,17 +813,42 @@ var hot;
 	var headerLength = header.length;
 	createRowCallback();
 	Handsontable.hooks.add('afterCreateRow', createRowCallback, hot);
+	Handsontable.hooks.add('afterRemoveRow', removeRowCallback, hot);
 
+	function removeRowCallback () {
+			var plugin = hot.getPlugin('autoRowSize');
+			var plugin2 = hot.getPlugin('autoColumnSize');
+			var lastVisRow = plugin.getLastVisibleRow();
+			var lastVisCol = plugin2.getLastVisibleColumn();
+			var headerLength = lastVisCol;
+			var a = 97;
+			var charArray = {};
+			for (var i = 0; i<26; i++) {
+				charArray[i] = String.fromCharCode(a + i);
+			}
+			hot.setDataAtCell(parseInt(lastVisRow-1), 0, 'Gesamt:');
+			hot.setDataAtCell(parseInt(lastVisRow-1), headerLength, '=SUM('+charArray[headerLength]+'1:'+charArray[headerLength]+parseInt(hot.countRows()-1)+')');
+			hot.setDataAtCell(parseInt(lastVisRow-1), headerLength-1, '=SUM('+charArray[headerLength-1]+'1:'+charArray[headerLength-1]+parseInt(hot.countRows()-1)+')');
+			hot.setDataAtCell(parseInt(lastVisRow-1), headerLength-2, '=SUM('+charArray[headerLength-2]+'1:'+charArray[headerLength-2]+parseInt(hot.countRows()-1)+')');
+			hot.setCellMeta (parseInt(lastVisRow-1), 0, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow-1), headerLength, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow-1), headerLength-1, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow-1), headerLength-2, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow-1), headerLength-3, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow-1), headerLength-4, 'readOnly', true);
+			hot.setCellMeta (parseInt(lastVisRow-1), headerLength-5, 'readOnly', true);
+	}
+	
 	function createRowCallback () {
 			var plugin = hot.getPlugin('autoRowSize');
 			var plugin2 = hot.getPlugin('autoColumnSize');
 			var lastVisRow = plugin.getLastVisibleRow();
 			var lastVisCol = plugin2.getLastVisibleColumn();
 			var headerLength = lastVisCol;
-			console.log("countRows: " + hot.countRows());
-			// console.log("lastRow: "+lastVisRow);
-			console.log("hL: " + headerLength);
-			console.log("lastVisROw: " + lastVisRow);
+			// console.log("countRows: " + hot.countRows());
+			// // console.log("lastRow: "+lastVisRow);
+			// console.log("hL: " + headerLength);
+			// console.log("lastVisROw: " + lastVisRow);
 			var a = 97;
 			var charArray = {};
 			for (var i = 0; i<26; i++) {
@@ -822,11 +867,17 @@ var hot;
 							hot.setDataAtCell(j,k, '');
 							hot.setDataAtCell(j+1,k, '');
 						}
-						if((parseInt(headerLength - k) > 2) && (parseInt(headerLength - k) < 6))  {  //&& (parseInt(j) !== lastVisRow)) {
-							hot.setDataAtCell(parseInt(lastVisRow), headerLength-3, '0.00');
-							hot.setDataAtCell(parseInt(lastVisRow), headerLength-4, '0.00');
-							hot.setDataAtCell(parseInt(lastVisRow), headerLength-5, '0.00');
-							hot.setDataAtCell(parseInt(lastVisRow), headerLength-6, '0');
+						if(G_HOT_INIT > 0) {
+							if((parseInt(headerLength - k) > 2) && (parseInt(headerLength - k) < 6))  {  //&& (parseInt(j) !== lastVisRow)) {
+								if(hot.getDataAtCell(parseInt(lastVisRow), headerLength-3) === null || "") {
+									hot.setDataAtCell(parseInt(lastVisRow), headerLength-3, '0.00');
+									hot.setDataAtCell(parseInt(lastVisRow), headerLength-4, '0.00');
+									hot.setDataAtCell(parseInt(lastVisRow), headerLength-5, '0.00');
+									hot.setDataAtCell(parseInt(lastVisRow), headerLength-6, '0');
+								} else {
+									console.log("data at cell: " + hot.getDataAtCell(parseInt(lastVisRow), headerLength-3));
+								}
+							}
 						}
 						if((parseInt(headerLength - k) < 3))  {  //&& (parseInt(j) !== lastVisRow)) {
 							hot.setDataAtCell(parseInt(j), k, '='+charArray[parseInt(headerLength-6)]+parseInt(j+1)+'*'+charArray[parseInt(k-3)]+parseInt(j+1));
@@ -848,6 +899,8 @@ var hot;
 			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-3, 'readOnly', true);
 			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-4, 'readOnly', true);
 			hot.setCellMeta (parseInt(lastVisRow+1), headerLength-5, 'readOnly', true);
+			G_HOT_INIT += 1;
+			console.log("global hot: " + G_HOT_INIT);
 			// hot.alter('insert_row', lastVisRow);
 		}		
 	}
