@@ -329,15 +329,16 @@ class DocumentImplementierung extends Document
 				
 			}
 		}
-		//if($mode === 'brutto'){
-			//$sum = ($sumNineTeen + $sumNineTeen * 0.19) + ($sumSeven + $sumSeven * 0.07) + ($sumZero);
-		//}else{
+	
 		$sumNineTeen = str_replace(' ','',$sumNineTeen);
 		$sumSeven = str_Replace(' ','',$sumSeven);
 		$sumZero = str_replace(' ','',$sumZero);
+		//var_dump($sumNineTeen .' ' . $sumSeven . ' '.$sumZero);
 			$sum = $sumNineTeen  + $sumSeven  + $sumZero;
-		//}
-		return $sum;
+			
+			
+		
+		return $sum ;
 	}
 	
 	public function getZeroTax($arrayOfDocumentValues){
@@ -483,12 +484,16 @@ class DocumentImplementierung extends Document
 			$documentValues = $documentValuesImpl->getDocumentValuesByDocumentId($document->documentId);
 			$totalBrutto = $totalBrutto +  $this->getSumDataPerDocument($documentValues,'brutto');
 			$totalNetto = $totalNetto + $this->getSumDataPerDocument($documentValues,'netto');
+			//var_dump($totalNetto);
 			$zeroTotal = $zeroTotal + $this->getZeroTax($documentValues);
 			$sevenTotal = $sevenTotal + $this->getSevenTax($documentValues);
 			$nineteenTotal = $nineteenTotal + $this->getNineTeenTax($documentValues);
 			$totalBrutto = str_replace(' ','',$totalBrutto);
 			$totalNetto = str_replace(' ','',$totalNetto);
+			
+			
 		}
+		$totalNetto = number_format($totalNetto,2,",",".");
 		array_push($resultArray,$totalNetto);
 		array_push($resultArray,$zeroTotal);
 		array_push($resultArray,$sevenTotal);

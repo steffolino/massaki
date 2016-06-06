@@ -22,8 +22,8 @@
 		}
 		
 		public function searchWithFilter(){
-			$singleEscape = array(" ","_","?","&");
-			$multiEscape = array("*","%");
+			$singleEscape = array("_","?","&");
+			$multiEscape = array("*","%"," ");
 			$searchTerm = $this->freeSearchTerm ;
 			$searchTerm = str_replace($singleEscape,'?',$searchTerm);
 			$searchTerm = str_replace($multiEscape,'%',$searchTerm);
@@ -204,7 +204,7 @@
 						->select()
 						->from('document, docType, jvaData, documentvalues')
 						->where('document.docTypeId = docType.docTypeId AND document.jvaId=jvaData.jvaDataId and documentvalues.documentId = document.documentId')	
-						->andWhere('(contact_person  LIKE :searchTerm OR jvaName LIKE :searchTerm OR value1 LIKE :searchTerm OR value2 LIKE :searchTerm OR value3 LIKE :searchTerm OR value4 LIKE :searchTerm OR value5 LIKE :searchTerm OR value6 LIKE :searchTerm OR value7 LIKE :searchTerm OR value8 LIKE :searchTerm  OR value9 LIKE :searchTerm  OR value10 LIKE :searchTerm  OR value11 LIKE :searchTerm  OR value12 LIKE :searchTerm OR counter LIKE :searchTerm OR jvaData.jvaNameExt LIKE :searchTerm)', array(':searchTerm' =>$searchTerm))
+						->andWhere('(contact_person  LIKE :searchTerm OR jvaName LIKE :searchTerm OR value1 LIKE :searchTerm OR value2 LIKE :searchTerm OR value3 LIKE :searchTerm OR value4 LIKE :searchTerm OR value5 LIKE :searchTerm OR value6 LIKE :searchTerm OR value7 LIKE :searchTerm OR value8 LIKE :searchTerm  OR value9 LIKE :searchTerm  OR value10 LIKE :searchTerm  OR value11 LIKE :searchTerm  OR value12 LIKE :searchTerm OR counter LIKE :searchTerm OR jvaData.jvaNameExt LIKE :searchTerm OR concat(jvaName,jvaData.jvaNameExt) like :searchTerm)', array(':searchTerm' =>$searchTerm))
 						->group('document.documentId')
 						->queryAll();
 			}
@@ -213,19 +213,19 @@
 		}
 		
 		public function searchWithoutFilter(){
-			$singleEscape = array(" ","_","?","&");
-			$multiEscape = array("*","%");
+			$singleEscape = array("_","?","&");
+			$multiEscape = array("*","%"," ");
 			$searchTerm = $this->freeSearchTerm ;
 			$searchTerm = str_replace($singleEscape,'?',$searchTerm);
 			$searchTerm = str_replace($multiEscape,'%',$searchTerm);
 			$searchTerm = "%". $searchTerm ."%";
-			
+			//var_dump($searchTerm);
 			//$document = Document::model()->with('jva','docType','jva.jvaColIk','jva.jvaColMemmel','documentvalues','jva.jvaColLoehne','jva.jvaColWitte')->findAll('contact_person=:searchTerm OR jvaName=:searchTerm OR value1=:searchTerm OR value2=:searchTerm OR value3=:searchTerm OR value4=:searchTerm OR value5=:searchTerm OR value6=:searchTerm OR value7=:searchTerm OR value8=:searchTerm  OR value9=:searchTerm  OR value10=:searchTerm  OR value11=:searchTerm  OR value12=:searchTerm OR counter=:searchTerm', array(':searchTerm'=>"%$searchTerm%"));
 			$document = Yii::app()->db->createCommand()
 						->select()
 						->from('document, docType, jvaData, documentvalues')
 						->where('document.docTypeId = docType.docTypeId AND document.jvaId=jvaData.jvaDataId and documentvalues.documentId = document.documentId')	
-						->andWhere('(contact_person  LIKE :searchTerm OR jvaName LIKE :searchTerm OR value1 LIKE :searchTerm OR value2 LIKE :searchTerm OR value3 LIKE :searchTerm OR value4 LIKE :searchTerm OR value5 LIKE :searchTerm OR value6 LIKE :searchTerm OR value7 LIKE :searchTerm OR value8 LIKE :searchTerm  OR value9 LIKE :searchTerm  OR value10 LIKE :searchTerm  OR value11 LIKE :searchTerm  OR value12 LIKE :searchTerm OR counter LIKE :searchTerm OR jvaData.jvaNameExt LIKE :searchTerm)', array(':searchTerm' =>$searchTerm))
+						->andWhere('(contact_person  LIKE :searchTerm OR jvaName LIKE :searchTerm OR value1 LIKE :searchTerm OR value2 LIKE :searchTerm OR value3 LIKE :searchTerm OR value4 LIKE :searchTerm OR value5 LIKE :searchTerm OR value6 LIKE :searchTerm OR value7 LIKE :searchTerm OR value8 LIKE :searchTerm  OR value9 LIKE :searchTerm  OR value10 LIKE :searchTerm  OR value11 LIKE :searchTerm  OR value12 LIKE :searchTerm OR counter LIKE :searchTerm OR jvaData.jvaNameExt LIKE :searchTerm OR concat(jvaName,jvaData.jvaNameExt) like :searchTerm)', array(':searchTerm' =>$searchTerm))
 						->group('document.documentId')
 						->queryAll();
 			return $document;

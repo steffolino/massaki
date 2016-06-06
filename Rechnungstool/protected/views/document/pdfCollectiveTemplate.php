@@ -192,7 +192,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 										}
 										//MONEY$
 										if($i == (sizeOf($row)-1) && $data !== "") {
-											echo "<td style='text-align:right'>". str_replace(".", ",", $data)." €</td>";											
+											echo "<td style='text-align:right'>". number_format($data,2,",",".")." €</td>";											
 										} 
 										//DATE$
 										if ($i == (sizeOf($row)-2) && $data !== "") {

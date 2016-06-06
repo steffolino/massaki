@@ -68,7 +68,7 @@ class SearchController extends Controller
 							'pageSize'=>500,
 						)));
 				//TO DO: Amend!!!!
-				$gridColumns = array('jvaName::Jva Name','timeStamp::Zeit','counter::Zähler');
+				$gridColumns = array('jvaName::Jva Name','jvaNameExt::Jva Name Extension','timeStamp::Zeit','counter::Zähler');
 				
 				if(!empty($gridDataProvider)){
 					$this->renderPartial('_searchResultsGrid', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
@@ -117,7 +117,7 @@ class SearchController extends Controller
 						)));
 				
 				//TODO: To be amended!!!
-				$gridColumns = array('jvaName::Jva Name','timeStamp:.Zeit','counter::Zähler');
+				$gridColumns = array('jvaName::Jva Name','jvaNameExt::Jva Name Extension','timeStamp::Zeit','counter::Zähler');
 				if(!empty($gridDataProvider)){
 					$this->renderPartial('_searchResultsGrid', array('gridDataProvider'=> $gridDataProvider ,'gridColumns'=>$gridColumns), false, true);
 				}else{
