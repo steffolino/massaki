@@ -269,16 +269,11 @@
 		$("#addColName3-Ik option:eq(3)").attr('selected', true);
 		$("#addColName4-Ik option:eq(4)").attr('selected', true);
 		
-		$("#addColName1-Ek option:eq(1)").attr('selected', true);
-		$("#addColName2-Ek option:eq(2)").attr('selected', true);
-		$("#addColName3-Ek option:eq(3)").attr('selected', true);
-		$("#addColName4-Ek option:eq(4)").attr('selected', true);
+		$("#addColName1-Ek option:eq(4)").attr('selected', true);
 		
-		$("#addColName1-Memmel option:eq(5)").attr('selected', true);
-		$("#addColName2-Memmel option:eq(7)").attr('selected', true);
+		$("#addColName1-Memmel option:eq(4)").attr('selected', true);
 		
-		$("#addColName1-Loehne option:eq(5)").attr('selected', true);
-		$("#addColName2-Loehne option:eq(7)").attr('selected', true);
+		$("#addColName1-Loehne option:eq(4)").attr('selected', true);
 		
 		$("#addColName1-Witte option:eq(4)").attr('selected', true);
 		
@@ -289,12 +284,16 @@
 		$("#addColName8-Ik option:eq(0)").attr('selected', true);
 		$("#addColName9-Ik option:eq(0)").attr('selected', true);
 		
+		$("#addColName2-Ek option:eq(0)").attr('selected', true);
+		$("#addColName3-Ek option:eq(0)").attr('selected', true);
+		$("#addColName4-Ek option:eq(0)").attr('selected', true);
 		$("#addColName5-Ek option:eq(0)").attr('selected', true);
 		$("#addColName6-Ek option:eq(0)").attr('selected', true);
 		$("#addColName7-Ek option:eq(0)").attr('selected', true);
 		$("#addColName8-Ek option:eq(0)").attr('selected', true);
 		$("#addColName9-Ek option:eq(0)").attr('selected', true);
 		
+		$("#addColName2-Memmel option:eq(0)").attr('selected', true);
 		$("#addColName3-Memmel option:eq(0)").attr('selected', true);
 		$("#addColName4-Memmel option:eq(0)").attr('selected', true);
 		$("#addColName5-Memmel option:eq(0)").attr('selected', true);
@@ -303,6 +302,7 @@
 		$("#addColName8-Memmel option:eq(0)").attr('selected', true);
 		$("#addColName9-Memmel option:eq(0)").attr('selected', true);
 		
+		$("#addColName2-Loehne option:eq(0)").attr('selected', true);
 		$("#addColName3-Loehne option:eq(0)").attr('selected', true);
 		$("#addColName4-Loehne option:eq(0)").attr('selected', true);
 		$("#addColName5-Loehne option:eq(0)").attr('selected', true);

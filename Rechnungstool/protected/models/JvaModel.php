@@ -106,11 +106,7 @@ class JvaModel extends CFormModel
 		}
 		
 	}
-
 	
-	
-		
-		
 	public function getDefColByJvaIKMemmLoehWitt ($jva){
 		return DefaultColConfig::model()->findByPK($jva->jvaColIK, $jva->jvaColMemm,$jva->jvaColLoeh, $jva->jvaColWitt,$jva->jvaColEk);
 	}

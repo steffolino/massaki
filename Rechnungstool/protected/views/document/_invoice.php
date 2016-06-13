@@ -68,10 +68,12 @@
 			}
 		}
 			var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
-			var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
-			var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
-			var MwSt0 = parseFloat(zeroTotal).toFixed(2);
-			var warenwertNetto = parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)).toFixed(2);
+			console.log("mwst 19 calc: " + (precise_round((nineTeenTotal * 0.19), 2)));
+			var MwSt19 = precise_round(parseFloat(nineTeenTotal * 0.19), 2);
+			console.log("MwST19: " + MwSt19);
+			var MwSt7 = precise_round(parseFloat(sevenTotal * 0.07), 2);
+			var MwSt0 = precise_round(parseFloat(zeroTotal), 2);
+			var warenwertNetto = precise_round(parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)), 2);
 			doTheTransfer(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
 		// console.log("0: " + MwSt0 + " " + warenwertNetto + " " + warenwertBrutto + " " + MwSt19 + " " + MwSt7);
@@ -219,8 +221,14 @@
 		return invoiceExtra;
 
 	}
-
 });
+
+	function precise_round(num, decimals) {
+		var t=Math.pow(10, decimals);   
+		return (Math.round((num * t) + (decimals>0?1:0)*(Math.sign(num) * (10 / Math.pow(100, decimals)))) / t).toFixed(decimals);
+    }
+
+
 </script>
 <?php 
 echo '

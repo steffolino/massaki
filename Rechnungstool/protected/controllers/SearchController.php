@@ -22,7 +22,6 @@ class SearchController extends Controller
 		$docImpl->updatePrintedStatus($document->documentId,$_POST['printedFlag']);
 		echo "true";
 	}
-	
 
 	public function actionGetPreviewPdf(){
 		
@@ -55,7 +54,6 @@ class SearchController extends Controller
 	
 	public function actionSearch ()
 	{
-		
 			if(isset($_POST['searchTerm']) && !isset($_POST['filtersEnabled'])){
 				$formModel = new SearchFormModel;
 				$formModel->freeSearchTerm = $_POST['searchTerm'];
@@ -130,9 +128,6 @@ class SearchController extends Controller
 				$model->myattr = 'Datum';
 				$this->render('search', array('model' => $model, 'formModel' => $formModel));	
 			}
-		
-			
-	
-		
-	}
+
+		}
 }

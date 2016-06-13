@@ -869,7 +869,7 @@ var G_HOT_INIT = 0;
 						}
 						if(G_HOT_INIT > 0) {
 							if((parseInt(headerLength - k) > 2) && (parseInt(headerLength - k) < 6))  {  //&& (parseInt(j) !== lastVisRow)) {
-								if(hot.getDataAtCell(parseInt(lastVisRow), headerLength-3) === null || "") {
+								if(hot.getDataAtCell(parseInt(lastVisRow), headerLength-3) === null || hot.getDataAtCell(parseInt(lastVisRow), headerLength-3) === "") {
 									hot.setDataAtCell(parseInt(lastVisRow), headerLength-3, '0.00');
 									hot.setDataAtCell(parseInt(lastVisRow), headerLength-4, '0.00');
 									hot.setDataAtCell(parseInt(lastVisRow), headerLength-5, '0.00');
@@ -924,5 +924,5 @@ var G_HOT_INIT = 0;
 		}
 		hot.alter('insert_row', GesamtIndex+1);
 	}
-
+	
 </script>

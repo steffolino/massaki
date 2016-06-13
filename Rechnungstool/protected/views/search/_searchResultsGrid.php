@@ -67,7 +67,7 @@ $(document).ready(function () {
 																var tbodyrow = $(\'#documentIdSearch table tbody tr\');
 																tbodyrow.each(function(){
 																	if($(this).hasClass("selected")){
-																		var value = $(this).find("td:eq(3)").text();
+																		var value = $(this).find("td:eq(4)").text();
 																		result.push(value);
 																	}
 																});

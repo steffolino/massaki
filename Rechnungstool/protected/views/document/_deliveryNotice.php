@@ -70,10 +70,12 @@
 			}
 		}
 			var warenwertBrutto = parseFloat(parseFloat(zeroTotal) + parseFloat(sevenTotal) + parseFloat(nineTeenTotal)).toFixed(2);
-			var MwSt19 = (parseFloat(nineTeenTotal) * 0.19).toFixed(2);
-			var MwSt7 = (parseFloat(sevenTotal) * 0.07).toFixed(2);
-			var MwSt0 = parseFloat(zeroTotal).toFixed(2);
-			var warenwertNetto = parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)).toFixed(2);
+			console.log("mwst 19 calc: " + (precise_round((nineTeenTotal * 0.19), 2)));
+			var MwSt19 = precise_round(parseFloat(nineTeenTotal * 0.19), 2);
+			console.log("MwST19: " + MwSt19);
+			var MwSt7 = precise_round(parseFloat(sevenTotal * 0.07), 2);
+			var MwSt0 = precise_round(parseFloat(zeroTotal), 2);
+			var warenwertNetto = precise_round(parseFloat(parseFloat(warenwertBrutto) - parseFloat(MwSt19) - parseFloat(MwSt7)), 2);
 			
 		doTheTransferDeliveryNotice(warenwertNetto, MwSt19, MwSt7, MwSt0, warenwertBrutto);
 		// var restbetrag = parseFloat();
