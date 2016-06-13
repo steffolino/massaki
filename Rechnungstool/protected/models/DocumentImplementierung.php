@@ -317,11 +317,11 @@ class DocumentImplementierung extends Document
 				$counter--;
 				$readCounter = "value" . $counter;
 				$sumNineTeen = $row[$readCounter];
-				// var_dump("SUm nineteen:" .$sumNineTeen . "\n");
+				 //var_dump("SUm nineteen:" .$sumNineTeen . "\n");
 				$counter--;
 				$readCounter = "value" . $counter;
 				$sumSeven = $row[$readCounter];
-				// var_dump("SUm seven:".$sumSeven . "\n");
+				//var_dump("SUm seven:".$sumSeven . "\n");
 				$counter--;
 				$readCounter = "value" . $counter;
 				$sumZero = $row[$readCounter];
@@ -333,8 +333,12 @@ class DocumentImplementierung extends Document
 		$sumNineTeen = str_replace(' ','',$sumNineTeen);
 		$sumSeven = str_Replace(' ','',$sumSeven);
 		$sumZero = str_replace(' ','',$sumZero);
+		$sumNineTeen = str_replace(',','.',$sumNineTeen);
+		$sumSeven = str_replace(',','.',$sumSeven);
+		$sumZero = str_replace(',','.',$sumZero);
 		//var_dump($sumNineTeen .' ' . $sumSeven . ' '.$sumZero);
-			$sum = $sumNineTeen  + $sumSeven  + $sumZero;
+		
+			$sum =  $sumNineTeen  +  $sumSeven  + $sumZero;
 			
 			
 		
