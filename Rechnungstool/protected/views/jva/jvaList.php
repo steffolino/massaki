@@ -361,12 +361,14 @@
 		var  jvaDataArray =[];		
 				
 		if($("#jvaDetailsEditContent").is(":visible")){	
-		console.log("is visibe");
+		// console.log("is visibe");
 		jvaDataArray.push($('#jvaName').val());
 		jvaDataArray.push($('#jvaNameExt').val());
 		jvaDataArray.push($('#jvaCustNum').val());
 		jvaDataArray.push($('#jvaCustNumDesc').val());
 		jvaDataArray.push($('#jvaFooter').val());
+		// var jvaAddress = $('#jvaAddress').val().replace(/\n/g, "<br />");
+		// jvaDataArray.push(jvaAddress);
 		jvaDataArray.push($('#jvaAddress').val());
 		jvaDataArray.push($('#colName1-Ik option:selected').text());
 		jvaDataArray.push($('#colName2-Ik option:selected').text());
@@ -431,6 +433,8 @@
 			jvaDataArray.push($('#JvaAddModel_jvaCustNumDesc').val());
 			jvaDataArray.push($('#JvaAddModel_jvaFooter').val());
 			jvaDataArray.push($('#JvaAddModel_jvaAddress').val());
+			// var jvaAddress = $('#jvaAddress').val().replace(/\n/g, "<br />");
+			// jvaDataArray.push(jvaAddress);
 			jvaDataArray.push($('#addColName1-Ik option:selected').text());
 			jvaDataArray.push($('#addColName2-Ik option:selected').text());
 			jvaDataArray.push($('#addColName3-Ik option:selected').text());

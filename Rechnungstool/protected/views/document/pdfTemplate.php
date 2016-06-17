@@ -128,7 +128,7 @@ require_once('../Rechnungstool/pdf/pdf_constants.php');
 					// echo "<p>".$jva->jvaNameExt."</p>";
 				// }
 				?>
-				<p><?php echo $jva->jvaAddress; ?></p>
+				<p><?php echo preg_replace('/\n/', '<br/>',$jva->jvaAddress); ?></p>
 			</div>
 			<div class="col-xs-5 col-xs-offset-1">
 				<div class=row>
