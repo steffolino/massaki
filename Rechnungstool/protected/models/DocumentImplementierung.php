@@ -20,11 +20,19 @@ class DocumentImplementierung extends Document
 		$lastUsedCounter = $lastUsedCounterImpl->getLastUsedCounterByName(strtoupper($counterType));
 		$counterTypeId = $lastUsedCounter->lastUsedCounterId;
 		$counterName = $lastUsedCounter->lastUsedCounterName;
+		$counterName = str_replace("Logistik ","",$counterName);
 		$counterStatus = $lastUsedCounter->lastUsedCounterStatus;
 		$lastUsedCounterImpl->incrementCounter($counterTypeId);
-		$newDoc->counter = $counterName . " " . $counterStatus;
+		
 		$newDoc->yearCounter0 =yearcounter::model()->findByPK(1)->yearCounterId;
 		$newDoc->yearCounter = yearcounter::model()->findByPK(1)->yearCounterId;
+		$yearCounterModel = new Yearcounterimplementierung;
+		$yearCounterForCounter = $yearCounterModel->getYearFromYearCounter($newDoc->yearCounter);
+		if(strstr($counterName,"Loehne")){
+			$newDoc->counter = $counterName . " 40/" . $counterStatus . "/" . $yearCounterForCounter;	
+		}else{
+			$newDoc->counter = $counterName . " " . $counterStatus . "/" . $yearCounterForCounter;
+		}
 		
 		date_default_timezone_set('Europe/Berlin');
 		$newDoc->timeStamp = date('Y-m-d H:i:s');
@@ -194,9 +202,9 @@ class DocumentImplementierung extends Document
 		if($counter === "ik"){
 				$counterName = "IK%";
 		}else if($counter === "memmel"){
-				$counterName = "Logistik Memmelsdorf%";
+				$counterName = "%Memmelsdorf%";
 		}else if($counter === "loehne"){
-				$counterName = "Logistik Loehne%";
+				$counterName = "%Loehne%";
 		}else if($counter === "witte"){
 				$counterName = "Wittekindshof%";	
 		}else{
@@ -233,9 +241,9 @@ class DocumentImplementierung extends Document
 		if($numberCircle === "ik"){
 				$number = "IK%";
 			}else if($numberCircle === "memmel"){
-				$number = "Logistik Memmelsdorf%";
+				$number = "%Memmelsdorf%";
 			}else if($numberCircle === "loehne"){
-				$number = "Logistik Loehne%";
+				$number = "%Loehne%";
 			}else if($numberCircle === "witte"){
 				$number = "Wittekindshof%";	
 			}else{

@@ -23,11 +23,14 @@
 		
 		public function searchWithFilter(){
 			$singleEscape = array("_","?","&");
-			$multiEscape = array("*","%"," ");
+			$multiEscape = array("*","%"," ","/");
 			$searchTerm = $this->freeSearchTerm ;
 			$searchTerm = str_replace($singleEscape,'?',$searchTerm);
 			$searchTerm = str_replace($multiEscape,'%',$searchTerm);
 			$searchTerm = "%". $searchTerm ."%";
+			$umls = ["ä", "ü", "ö", "Ä", "Ü", "Ö", "ß"];
+			$NoUmls = ["ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"];
+		$searchTerm = str_replace($umls, $NoUmls, $searchTerm);
 			if(isset($this->jvaName) && !empty($this->jvaName)){
 				$nameArray = explode("|",$this->jvaName);
 				$this->jvaName = trim($nameArray[0]);	
@@ -214,11 +217,14 @@
 		
 		public function searchWithoutFilter(){
 			$singleEscape = array("_","?","&");
-			$multiEscape = array("*","%"," ");
+			$multiEscape = array("*","%"," ","/");
 			$searchTerm = $this->freeSearchTerm ;
 			$searchTerm = str_replace($singleEscape,'?',$searchTerm);
 			$searchTerm = str_replace($multiEscape,'%',$searchTerm);
 			$searchTerm = "%". $searchTerm ."%";
+			$umls = ["ä", "ü", "ö", "Ä", "Ü", "Ö", "ß"];
+			$NoUmls = ["ae", "ue", "oe", "Ae", "Ue", "Oe", "ss"];
+			$searchTerm = str_replace($umls, $NoUmls, $searchTerm);
 			//var_dump($searchTerm);
 			//$document = Document::model()->with('jva','docType','jva.jvaColIk','jva.jvaColMemmel','documentvalues','jva.jvaColLoehne','jva.jvaColWitte')->findAll('contact_person=:searchTerm OR jvaName=:searchTerm OR value1=:searchTerm OR value2=:searchTerm OR value3=:searchTerm OR value4=:searchTerm OR value5=:searchTerm OR value6=:searchTerm OR value7=:searchTerm OR value8=:searchTerm  OR value9=:searchTerm  OR value10=:searchTerm  OR value11=:searchTerm  OR value12=:searchTerm OR counter=:searchTerm', array(':searchTerm'=>"%$searchTerm%"));
 			$document = Yii::app()->db->createCommand()
